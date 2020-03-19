@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel {
 
@@ -20,7 +22,7 @@ public class LoginPanel extends JPanel {
     private JLabel numberOfWins = new JLabel("Winners");
     private JLabel getNumberOfWins = new JLabel();
     private JLabel daresInProgress = new JLabel("Active Dares");
-    private JLabel changeToSomethingElse = new JLabel("No");
+    private JLabel changeToSomethingElse = new JLabel("NO ACTIVE DARES FOR YOU ");
     private JButton newDare = new JButton("NEW DARE");
 
     public LoginPanel (){
@@ -63,12 +65,21 @@ public class LoginPanel extends JPanel {
         setUpDarePanel();
         setUpWinnersPanel();
         popupPanel.add(newDare);
-        newDare.setBackground(Color.MAGENTA);
+        newDare.setBackground(Color.ORANGE);
         TitledBorder title;
         title = BorderFactory.createTitledBorder("New Dare");
         newDare.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleColor(Color.BLACK);
+        newDare.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frontPanel.setVisible(false);
+                popupPanel.setVisible(false);
+               bkgroundPanel.add(new DarePanel());
+
+            }
+        });
 
 
     }
@@ -86,7 +97,9 @@ public class LoginPanel extends JPanel {
         popupPanel.add(welcomePanel);
         welcomePanel.add(welcomeText);
         welcomeName = new JLabel(getNameTxt());
+        welcomePanel.setPreferredSize(new Dimension(200,200));
         welcomePanel.add(welcomeName);
+
         welcomePanel.setBackground(Color.PINK);
         TitledBorder title;
         //  title = BorderFactory.createTitledBorder("PanelRight");
@@ -102,7 +115,7 @@ public class LoginPanel extends JPanel {
         darePanel.add(changeToSomethingElse);
         darePanel.setBackground(Color.GREEN);
         TitledBorder title;
-        title = BorderFactory.createTitledBorder("PanelRight");
+      //  title = BorderFactory.createTitledBorder("PanelRight");
         title = BorderFactory.createTitledBorder("Dare Panel");
         darePanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
@@ -111,14 +124,16 @@ public class LoginPanel extends JPanel {
     public void setUpWinnersPanel(){
         JPanel winnerPanel = new JPanel(new BorderLayout());
         popupPanel.add(winnerPanel);
+        winnerPanel.setBackground(Color.WHITE);
         TitledBorder title;
-        title = BorderFactory.createTitledBorder("PanelRight");
-        title = BorderFactory.createTitledBorder("Winner panel ");
+      //  title = BorderFactory.createTitledBorder("PanelRight");
+        title = BorderFactory.createTitledBorder("YOUR MEDAL PLAZA");
         winnerPanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
-        winnerPanel.add(numberOfWins);
-        winnerPanel.add(getNumberOfWins);
-        ImageIcon icon2 = new ImageIcon("C:\\MAU\\Objektorienterade strömmar\\guiForDare\\images\\iconsmedals.jpg");
+        //winnerPanel.add(numberOfWins);
+       // numberOfWins.setText("");
+      //  winnerPanel.add(getNumberOfWins);
+        ImageIcon icon2 = new ImageIcon("images/iconMedals.jpg");
         Image image2 = icon2.getImage();
         Image newImg2 = image2.getScaledInstance(130,130, Image.SCALE_SMOOTH);
         icon2 = new ImageIcon(newImg2);
