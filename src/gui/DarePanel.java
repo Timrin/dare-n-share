@@ -13,7 +13,7 @@ public class DarePanel extends JPanel implements ActionListener {
 
     private JPanel dareInfoPanel = new JPanel(new FlowLayout());
     private JLabel txtExplainingDare = new JLabel();
-    private JButton yes = new JButton("Yes");
+    private JCheckBox yes = new JCheckBox("Yes");
 
     private JPanel friendsPanel = new JPanel(new FlowLayout());
     private JLabel addingFriend = new JLabel();
