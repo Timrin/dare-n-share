@@ -9,6 +9,8 @@ public interface Dare {
 
     void start();
     void stop();
+    User getInstigator();
+    User getChallenged();
 
 
 }
