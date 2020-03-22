@@ -8,14 +8,30 @@ package dareSetUp;
 
 public class GoalDare implements Dare {
     private Score score;
+    private boolean goalAchieved = true;
 
     @Override
     public void start() {
+        if (goalAchieved == false){
+            // start
+        }
+    }
+    @Override
+    public void stop() {
+        if (goalAchieved ==true){
+            // stop + winner
+            // if about score
+        }
 
     }
 
     @Override
-    public void stop() {
+    public User getInstigator() {
+        return null;
+    }
 
+    @Override
+    public User getChallenged() {
+        return null;
     }
 }

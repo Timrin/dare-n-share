@@ -1,5 +1,6 @@
 package gui;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -81,6 +82,10 @@ public class DarePanel extends JPanel implements ActionListener {
         startDareBtn.addActionListener(this);
         startDareBtn.setBorderPainted(true);
         startDareBtn.setBackground(Color.GREEN);
+    }
+
+    public JButton getStartDareBtn(){
+        return getStartDareBtn();
     }
 
 

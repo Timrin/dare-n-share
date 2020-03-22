@@ -11,6 +11,7 @@ public class YesNoScore implements Score {
      * Method to determine yes or no. todo refactor name.
      * */
     public boolean didYouFail(){
+
         return false;
     }
 
@@ -23,4 +24,6 @@ public class YesNoScore implements Score {
     public void addToScore() {
 
     }
+
+
 }

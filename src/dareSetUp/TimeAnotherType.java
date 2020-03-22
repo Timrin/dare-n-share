@@ -8,4 +8,17 @@ package dareSetUp;
 public class TimeAnotherType extends TimeDare {
     private AnotherTypeOfScore anotherTypeOfScore;
 
+   public TimeAnotherType(){
+       super();
+   }
+
+    @Override
+    public User getInstigator() {
+        return null;
+    }
+
+    @Override
+    public User getChallenged() {
+        return null;
+    }
 }
