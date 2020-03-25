@@ -1,5 +1,7 @@
 package dareSetUp;
 
+
+
 /**
  * This class should maybe be abstract? todo if so.
  * Time dare is a type of dare, set to be active in a selcted amount of time (days).
@@ -7,7 +9,7 @@ package dareSetUp;
  * Implements Dare, because every dare has a start and a stop.
  * */
 
-public abstract class TimeDare implements Dare {
+public class TimeDare implements Dare {
     private Score score;
     private int timeOfDare;
     private boolean goalAcheived = true;
@@ -18,22 +20,31 @@ public abstract class TimeDare implements Dare {
     }
 
     @Override
-    public  void start(){
-        if (goalAcheived == false){
-            // start
-        }
+    public  boolean start(){
+        return goalAcheived = false;
     }
 
     @Override
-    public  void stop(){
-        if(goalAcheived == true){
-            // stop + winner
-        }
+    public boolean stop(){
+        return goalAcheived=true;
+    }
+
+
+    public int getTimeOfDare() {
+        return timeOfDare;
+    }
+
+    public void setTimeOfDare(int timeOfDare) {
+        this.timeOfDare = timeOfDare;
     }
 
     @Override
-    public abstract User getInstigator();
+    public User getInstigator(){
+        return null;
+    }
 
     @Override
-    public abstract User getChallenged();
+    public User getChallenged(){
+        return null;
+    }
 }

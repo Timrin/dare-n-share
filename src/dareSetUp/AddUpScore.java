@@ -7,5 +7,5 @@ package dareSetUp;
  * Example : steps per day: steps = 10K = 1 point, steps = 15K = 1,5 points etc.. ?
  * */
 
-public class AnotherTypeOfScore {
+public class AddUpScore {
 }

@@ -7,8 +7,8 @@ package dareSetUp;
 public interface Dare {
     // int ID; // hvorfor skal den ha en verdi?
 
-    void start();
-    void stop();
+    boolean start();
+    boolean stop();
     User getInstigator();
     User getChallenged();
 

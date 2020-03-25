@@ -1,6 +1,7 @@
 package gui;
 
-import javax.print.DocFlavor;
+import dareSetUp.DareController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ public class DarePanel extends JPanel implements ActionListener {
 
     private JPanel btnPanel = new JPanel(new BorderLayout());
     private JButton startDareBtn = new JButton("IT´S ON LIKE DONKEY KONG");
+    private DareController dareController;
 
 
 
@@ -31,12 +33,25 @@ public class DarePanel extends JPanel implements ActionListener {
         setDareInfoPanel();
         setFriendsPanel();
         setBtnPanel();
+        yes.addActionListener(this);
+        friends.addActionListener(this);
 
     }
 
+    public JCheckBox getYes() {
+        return yes;
+    }
+    /**
+     * Midlertidig metode, for hardkoding av dontEatMeat challenge.
+     * -- Prototype kode
+     * */
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==yes){
+            dareController.setUpDareAfterGUI();
+            dareController.setOpponent(getFriends());
 
+        }
 
     }
 
@@ -46,6 +61,11 @@ public class DarePanel extends JPanel implements ActionListener {
         popUpPanel.setPreferredSize(new Dimension(390,400));
 
     }
+
+    public String getFriends() {
+        return (String) friends.getSelectedItem();
+    }
+
 
     public void setHeaderPanel(){
         popUpPanel.add(headerPanel);

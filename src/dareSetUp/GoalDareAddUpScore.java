@@ -4,6 +4,6 @@ package dareSetUp;
  * the first dayt, it may take a week.
  * */
 
-public class GoalDareAnotherType {
+public class GoalDareAddUpScore {
 
 }

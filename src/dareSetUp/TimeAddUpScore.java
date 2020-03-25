@@ -5,10 +5,10 @@ package dareSetUp;
  * @see TimeDare
  * */
 
-public class TimeAnotherType extends TimeDare {
-    private AnotherTypeOfScore anotherTypeOfScore;
+public class TimeAddUpScore extends TimeDare {
+    private AddUpScore addUpScore;
 
-   public TimeAnotherType(){
+   public TimeAddUpScore(){
        super();
    }
 
