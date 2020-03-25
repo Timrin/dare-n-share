@@ -1,3 +1,7 @@
+/**
+ * GUI for prototype
+ * @author: Julia Björnberg
+ */
 package gui;
 
 import dareSetUp.DareController;
@@ -24,6 +28,7 @@ public class DarePanel extends JPanel implements ActionListener {
     private JPanel btnPanel = new JPanel(new BorderLayout());
     private JButton startDareBtn = new JButton("IT´S ON LIKE DONKEY KONG");
     private DareController dareController;
+    private LoginPanel loginPanel;
 
 
 
@@ -35,6 +40,7 @@ public class DarePanel extends JPanel implements ActionListener {
         setBtnPanel();
         yes.addActionListener(this);
         friends.addActionListener(this);
+        startDareBtn.addActionListener(this);
 
     }
 
@@ -47,9 +53,16 @@ public class DarePanel extends JPanel implements ActionListener {
      * */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==yes){
+      /*  if (e.getSource()==yes){
             dareController.setUpDareAfterGUI();
             dareController.setOpponent(getFriends());
+        }
+
+       */
+        if(startDareBtn.isSelected()){
+            new InfoDarePanel();
+
+
 
         }
 
