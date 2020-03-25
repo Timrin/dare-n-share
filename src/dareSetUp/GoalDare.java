@@ -11,17 +11,13 @@ public class GoalDare implements Dare {
     private boolean goalAchieved = true;
 
     @Override
-    public void start() {
-        if (goalAchieved == false){
-            // start
-        }
+    public boolean start() {
+        return goalAchieved = false;
     }
+
     @Override
-    public void stop() {
-        if (goalAchieved ==true){
-            // stop + winner
-            // if about score
-        }
+    public boolean stop() {
+        return goalAchieved = true;
 
     }
 
