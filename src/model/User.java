@@ -26,6 +26,8 @@ public class User implements Serializable {
 
 	public User(){}//todo remove me
 
+	public User(String name){}//todo remove me
+
 	public User(String name, ImageIcon profilePicture, String email) {
 		this.name = name;
 		this.profilePicture = profilePicture;

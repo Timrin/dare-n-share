@@ -19,6 +19,7 @@ public class TimeYesNoDare extends TimeDare  {
 
     public TimeYesNoDare() {
         super();
+
     }
 
 
@@ -26,6 +27,18 @@ public class TimeYesNoDare extends TimeDare  {
         start();
         yesNoScore.addToScore(value);
 
+    }
+
+    public void endDare(){
+        stop();
+        yesNoScore.getCurrentScore();
+    }
+
+    public void addToScore(){
 
     }
+
+
+
+
 }
