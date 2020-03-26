@@ -1,5 +1,6 @@
 package Client;
 
+import dareSetUp.Dare;
 import dareSetUp.User;
 
 import java.io.IOException;
@@ -14,18 +15,32 @@ public class ClientInputStreams extends Thread {
     private ObjectInputStream ois;
     private Socket socket;
     private User user;
+    private ClientController controller;
 
-    public ClientInputStreams(Socket socket) {
+
+    public ClientInputStreams(User user, ClientController controller, Socket socket) {
+        this.controller = controller;
         this.socket = socket;
+        this.user = user;
 
         try {
             ois = new ObjectInputStream(socket.getInputStream());
-            ois.readObject(); //TODO skriva vilket objekt som ska läsas? Hur ska vi göra paket av dares?
-            //controller.newDare();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        }
+        }
+
+    public void run() {
+        while (true) {
+            try {
+                Dare dare = (Dare) ois.readObject();
+                controller.setDare(dare);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }

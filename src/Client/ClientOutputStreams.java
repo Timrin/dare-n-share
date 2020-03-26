@@ -1,8 +1,6 @@
 package Client;
 
 import dareSetUp.Dare;
-import dareSetUp.GoalDare;
-import dareSetUp.TimeDare;
 import dareSetUp.User;
 
 import java.io.IOException;
@@ -18,42 +16,32 @@ public class ClientOutputStreams extends Thread {
     private ObjectOutputStream oos;
     private Socket socket;
     private User user;
-    private Dare dare;
-    private GoalDare goalDare;
-    private TimeDare timeDare;
-
     /**
      * Will connect objectOutputStream to clients socket when initiated.
+     *
      * @param socket
      */
-    public ClientOutputStreams(Socket socket) {
+    public ClientOutputStreams(User user,Socket socket) {
+        this.user = user;
         this.socket = socket;
         try {
-            if (oos == null){
+            if (oos == null) {
                 oos = new ObjectOutputStream(socket.getOutputStream());
+                oos.writeObject(this.user);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void run() {
+    public void sendDare(Dare dare) {
         try {
-            oos.writeObject(user);
-            while (socket.isConnected()) {
-                System.out.println("Client: thread is connected");
-
-                if (dare.equals(goalDare)) {
-                    oos.writeObject(goalDare);
-                    System.out.println("You have been challenged to a targeted dare");
-                } else if (dare.equals(timeDare)) {
-                    oos.writeObject(timeDare);
-                    System.out.println("You have been challenged to a time-set dare");
-                }
-            }
+            oos.writeObject(dare);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
 
