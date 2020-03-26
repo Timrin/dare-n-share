@@ -24,6 +24,7 @@ public class ServerController extends Thread {
         dareBuffer = new Server.Buffer<>();
         userMap = new HashMap<>();
         userDareMap = new UserDareMap();
+        start();
     }
 
     public void addDare(Dare dare){
@@ -41,6 +42,7 @@ public class ServerController extends Thread {
             try {
                 Socket socket = serverSocket.accept();
                 new ClientHandler(socket).start();
+                System.out.println("New client connected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -67,13 +69,16 @@ public class ServerController extends Thread {
         public void run() {
             try {
                 user = (User) ois.readObject();
+                System.out.println(user.getName() + " has connected");
                 userMap.put(user,new ClientConnection(ois, oos));
                 userDareMap.put(user);
 
                 while(!socket.isClosed()){
                     Object obj = ois.readObject();
+                    System.out.println("Object received");
 
                     if(obj instanceof Dare){
+                        System.out.println("Object identified as Dare");
                         addDare((Dare) obj);
                     }
                     else if(obj instanceof User){
@@ -93,15 +98,26 @@ public class ServerController extends Thread {
             while(true){
                 try{
                     Dare dare = dareBuffer.get();
-                    if(userMap.containsKey(dare.getChallenged())) {
-                        ObjectOutputStream oos = userMap.get(dare.getChallenged()).getOos();
+                    if(userMap.containsKey(dare.getChallenged().getUser())) {
+                        ObjectOutputStream oos = userMap.get(dare.getChallenged().getUser()).getOos();
                         oos.writeObject(dare);
                         oos.flush();
+                        System.out.println("Dare sent to something");
+                    }
+                    if(userMap.containsKey(dare.getInstigator().getUser())){
+                        ObjectOutputStream oos2 = userMap.get(dare.getInstigator().getUser()).getOos();
+                        oos2.writeObject(dare);
+                        oos2.flush();
+                        System.out.println("Dare sent to someone else idk");
                     }
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        ServerController controller = new ServerController(2324);
     }
 }
