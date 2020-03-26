@@ -12,26 +12,17 @@ import java.io.Serializable;
  * Implements Dare, because every dare has a start and a stop.
  * */
 
-public class TimeDare implements Dare, Serializable {
+public class TimeDare extends Dare {
     private Score score;
     private int timeOfDare;
     private boolean goalAcheived = true;
 
 
-    public TimeDare(){
+
+    public TimeDare(User user1, User user2){
+        super(user1,user2);
 
     }
-
-    @Override
-    public  boolean start(){
-        return goalAcheived = false;
-    }
-
-    @Override
-    public boolean stop(){
-        return goalAcheived=true;
-    }
-
 
     public int getTimeOfDare() {
         return timeOfDare;
@@ -41,13 +32,5 @@ public class TimeDare implements Dare, Serializable {
         this.timeOfDare = timeOfDare;
     }
 
-    @Override
-    public User getInstigator(){
-        return null;
-    }
 
-    @Override
-    public User getChallenged(){
-        return null;
-    }
 }

@@ -10,30 +10,15 @@ import java.io.Serializable;
  * Implements Dare, because every dare has a start and a stop.
  */
 
-public class GoalDare implements Dare, Serializable {
+public class GoalDare extends Dare  {
     private Score score;
-    private boolean goalAchieved = true;
+    private User user;
 
-    @Override
-    public boolean start() {
-        return !goalAchieved;
-            // start
-    }
-    @Override
-    public boolean stop() {
-        return goalAchieved;
-            // stop + winner
-            // if about score
+    public GoalDare(User user,User user1){
+        super(user1,user);
+
     }
 
-    @Override
-    public User getInstigator() {
-        return null;
-    }
 
-    @Override
-    public User getChallenged() {
-        return null;
-    }
 
 }

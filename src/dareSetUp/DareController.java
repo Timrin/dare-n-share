@@ -1,9 +1,16 @@
 package dareSetUp;
 
+import Client.ClientController;
 import gui.DarePanel;
 import gui.LoginPanel;
 import model.Participant;
 import model.User;
+
+
+/***
+ * Finn en løsning på score.
+ *
+ * **/
 
 public class DareController {
     private LoginPanel loginPanel;
@@ -23,66 +30,86 @@ public class DareController {
     private User user;
 
     private DontEatMeat dontEatMeat;
+    private ClientController clientController;
 
 
     public DareController() {
+
 
     }
 
 
     // Starts the dare after pushing the button "its on like donkey kong" in gui
     public void setUpDareAfterGUI() {
-        dontEatMeat = new DontEatMeat();
+        User anders = new User();
+        anders.setName("Anders Tegnell");
+         // create a new dare  + assign users to dare
+        dontEatMeat = new DontEatMeat(user,anders);
         dontEatMeat.setTimeOfDare(3);
 
-      /*  if (TimeDare instanceof TimeYesNoDare) {
-            new DontEatMeat(participant,user);
+        //send dare to server via client
+        sendToClient(dontEatMeat);
+
+    }
+
+    public void updateScore(YesOrNo yesOrNo){
+
+        if (yesOrNo.equals("Yes")){
+            dontEatMeat.setScore(YesOrNo.Yes);
         }
-        if (TimeDare instanceof TimeAddUpScore) {
-
-        }*/
-    }
-    public void setGoalDare(TimeDare timeDare) {
+        if (yesOrNo.equals("No")){
+            dontEatMeat.setScore(YesOrNo.No);
+        }
 
     }
+
+    
+
+
 
 
     // Bør kalles på i GUI
     public Dare getCategoryFromGUI(Challenges enumChallenges) {
+        User anders = new User();
+        anders.setName("Anders Tegnell");
 
         switch (enumChallenges) {
             case DontEatMeat:
-                new DontEatMeat();
+                dare =new DontEatMeat(user, anders);
                 dontEatMeat.setTimeOfDare(3);  // prototypen
                 break;
             case TimesAddUp:
-                new TimeAddUpScore();
+               dare= new TimeAddUpScore();
                 break;
-            case GoalAddup:
-                new GoalDareAddUpScore();
+         /*   case GoalAddup:
+               dare = (Dare) new GoalDareAddUpScore();
                 break;
             case GoalYesNo:
-                new GoalYesNo();
-                break;
+               dare = (Dare) new GoalYesNo();
+                break;   */
             case TimesYesNo:
-                new TimeYesNoDare();
+                dare = new TimeYesNoDare(user,anders);
                 break;
         }
         return dare;
     }
-     // gets the Challenger user from gui - prototype
-    public void getUserFromGUI(String name) {
-        name = loginPanel.getNameTxt();
-        new User(name);
-        //user.setName(loginPanel.getNameTxt());
+
+    public void sendToClient(Dare toSend){
+        clientController.sendDare(toSend);
+    }
+
+    // gets the Challenger user from gui - prototype
+    public void loginUser(String name) {
+        name = loginPanel.getNameTxt(); //??
+        this.user = new User(name);
+         //todo legg til i actionlistener for login-button
+        clientController = new ClientController(user);
         // send til clienten
     }
 
-
     // GUI setter challengede participant fra JComboBox fra gui når start button er aktivert
     public Participant setChallengedParticipant(String opponent) {
-        user = new User(opponent);  //??
-        //this.user.setName(opponent);
+        user = new User(opponent);
         return new Participant(this.user, dare);
     }
 

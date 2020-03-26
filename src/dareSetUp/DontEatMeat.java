@@ -8,8 +8,8 @@ public class DontEatMeat extends TimeYesNoDare{
     private Participant participant;
     private YesOrNo yesOrNo;
 
-    public DontEatMeat(){
-        super();
+    public DontEatMeat(User user1, User user2){
+        super(user1,user2);
         this.participant = participant;
         this.user = user;
     }
@@ -24,9 +24,13 @@ public class DontEatMeat extends TimeYesNoDare{
 
     public void setScore(YesOrNo yesOrNo){
         if (yesOrNo.equals("Yes")){
-
+            addToScore(1000);
+        }
+        if (yesOrNo.equals("No")){
+            addToScore(-100);
         }
     }
+
 
 
 

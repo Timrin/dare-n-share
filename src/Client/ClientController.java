@@ -1,7 +1,9 @@
 package Client;
 
 import dareSetUp.Dare;
-import dareSetUp.User;
+import dareSetUp.Score;
+import model.User;
+
 
 import java.io.IOException;
 import java.net.Socket;
@@ -9,23 +11,24 @@ import java.net.UnknownHostException;
 
 public class ClientController {
     private Socket connection;
-    private String ip;
-    private int port;
+    private final static String ip = "127.0.0.1";
+    private final static int port=2324;
     private User user;
     private ClientInputStreams inputStream;
     private ClientOutputStreams outputStream;
 
     private BufferOfDares <Dare> dareBuffer;
     private Dare dare;
+    private Score score;
 
     /**
      * All methods that is required to able contacts to interact with one another, and to transmit messages
      */
 
-    public ClientController(User user, String ip, int port) {
+    public ClientController(User user) {
         this.user = user;
-        this.ip = ip;
-        this.port = port;
+        //this.ip = ip;
+        //this.port = port;
         try {
             connection = new Socket(ip, port);
             startSend();
@@ -63,6 +66,14 @@ public class ClientController {
 
     public void sendDare(Dare dare) {
         outputStream.sendDare(dare);
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public void sendScore (Score score){
+        outputStream.sendScore(score);
     }
 
 
