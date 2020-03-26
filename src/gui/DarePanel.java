@@ -63,8 +63,6 @@ public class DarePanel extends JPanel implements ActionListener {
            // new InfoDarePanel();
 
 
-
-
         }
 
     }

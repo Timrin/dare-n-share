@@ -1,6 +1,9 @@
 package dareSetUp;
 
 
+import model.User;
+
+import java.io.Serializable;
 
 /**
  * This class should maybe be abstract? todo if so.
@@ -9,7 +12,7 @@ package dareSetUp;
  * Implements Dare, because every dare has a start and a stop.
  * */
 
-public class TimeDare implements Dare {
+public class TimeDare implements Dare, Serializable {
     private Score score;
     private int timeOfDare;
     private boolean goalAcheived = true;

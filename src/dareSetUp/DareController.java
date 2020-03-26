@@ -3,6 +3,7 @@ package dareSetUp;
 import gui.DarePanel;
 import gui.LoginPanel;
 import model.Participant;
+import model.User;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +37,6 @@ public class DareController implements ActionListener {
     public void setUpDareAfterGUI(){
         if (TimeDare instanceof TimeYesNoDare) {
             new DontEatMeat(participant,user);
-
         }
         if (TimeDare instanceof TimeAddUpScore) {
 
