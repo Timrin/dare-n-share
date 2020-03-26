@@ -8,7 +8,7 @@ import java.net.Socket;
 /**
  * Class that can interact with server though sending and receiving
  */
-
+@Deprecated
 public class Client {
     private Socket connection;
     private String ip;

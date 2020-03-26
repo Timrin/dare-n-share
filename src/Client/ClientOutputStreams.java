@@ -2,6 +2,7 @@ package Client;
 
 import dareSetUp.Dare;
 
+import dareSetUp.Score;
 import model.User;
 
 
@@ -18,7 +19,8 @@ public class ClientOutputStreams extends Thread {
     private ObjectOutputStream oos;
     private Socket socket;
     private User user;
-    /**
+
+     /**
      * Will connect objectOutputStream to clients socket when initiated.
      *
      * @param socket
@@ -43,7 +45,12 @@ public class ClientOutputStreams extends Thread {
             e.printStackTrace();
         }
 
+    }
 
+    public void sendScore(Score score){
+        try {
+            oos.writeObject(score);
+        }catch (IOException e){}
     }
 
 

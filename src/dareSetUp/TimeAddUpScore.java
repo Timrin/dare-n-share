@@ -8,20 +8,20 @@ import model.User;
  * @see TimeDare
  * */
 
-public class TimeAddUpScore extends TimeDare {
-    private AddUpScore addUpScore;
-
-   public TimeAddUpScore(){
-       super();
-   }
-
-    @Override
-    public User getInstigator() {
-        return null;
-    }
-
-    @Override
-    public User getChallenged() {
-        return null;
-    }
-}
+//public class TimeAddUpScore extends TimeDare {
+//    private AddUpScore addUpScore;
+//
+//    public TimeAddUpScore() {
+//        super();
+//    }
+//
+//    @Override
+//    public User getInstigator() {
+//        return null;
+//    }
+//
+//    @Override
+//    public User getChallenged() {
+//        return null;
+//    }
+//}

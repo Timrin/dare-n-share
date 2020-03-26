@@ -1,4 +1,4 @@
 package dareSetUp;
 
-public class GoalYesNo {
+public class GoalYesNo  {
 }

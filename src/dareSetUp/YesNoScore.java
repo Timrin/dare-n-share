@@ -41,4 +41,5 @@ public class YesNoScore implements Score {
     }
 
 
+
 }

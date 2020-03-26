@@ -1,6 +1,7 @@
 package dareSetUp;
 
 import model.Participant;
+import model.User;
 
 import java.io.Serializable;
 
@@ -17,11 +18,9 @@ public class TimeYesNoDare extends TimeDare  {
     private Participant participant;
 
 
-    public TimeYesNoDare() {
-        super();
-
+    public TimeYesNoDare(User user1, User user2) {
+        super(user1,user2);
     }
-
 
     public void setDare() {
         start();
@@ -34,8 +33,8 @@ public class TimeYesNoDare extends TimeDare  {
         yesNoScore.getCurrentScore();
     }
 
-    public void addToScore(){
-
+    public void addToScore(int value){
+        yesNoScore.addToScore(value);
     }
 
 
