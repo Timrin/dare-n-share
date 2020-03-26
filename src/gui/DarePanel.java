@@ -60,7 +60,8 @@ public class DarePanel extends JPanel implements ActionListener {
 
        */
         if(startDareBtn.isSelected()){
-            new InfoDarePanel();
+           // new InfoDarePanel();
+
 
 
 
@@ -112,9 +113,23 @@ public class DarePanel extends JPanel implements ActionListener {
         popUpPanel.add(btnPanel);
         btnPanel.setBackground(Color.ORANGE);
         btnPanel.add(startDareBtn);
-        startDareBtn.addActionListener(this);
+        startDareBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popUpPanel.setVisible(false);
+                setUpDareInfo();
+                new InfoDarePanel();
+            }
+        });
         startDareBtn.setBorderPainted(true);
         startDareBtn.setBackground(Color.GREEN);
+    }
+
+    public void setUpDareInfo(){
+        popUpPanel.setVisible(true);
+        popUpPanel.add(headerPanel);
+
+
     }
 
     public JButton getStartDareBtn(){
