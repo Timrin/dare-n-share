@@ -5,9 +5,6 @@ import gui.LoginPanel;
 import model.Participant;
 import model.User;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class DareController {
     private LoginPanel loginPanel;
     private DarePanel darePanel;
@@ -29,9 +26,9 @@ public class DareController {
 
 
     public DareController() {
-        timeYesNoDare.setTimeOfDare(3);
 
     }
+
 
     // Starts the dare after pushing the button "its on like donkey kong" in gui
     public void setUpDareAfterGUI() {
@@ -45,22 +42,51 @@ public class DareController {
 
         }*/
     }
-
-
-
-    public void setGoalDare(TimeDare timeDare){
+    public void setGoalDare(TimeDare timeDare) {
 
     }
 
-    public void setChallengedParticipant(String opponent) {
-        user = new User();
-        this.user.setName(opponent);
+
+    // Bør kalles på i GUI
+    public Dare getCategoryFromGUI(Challenges enumChallenges) {
+
+        switch (enumChallenges) {
+            case DontEatMeat:
+                new DontEatMeat();
+                dontEatMeat.setTimeOfDare(3);  // prototypen
+                break;
+            case TimesAddUp:
+                new TimeAddUpScore();
+                break;
+            case GoalAddup:
+                new GoalDareAddUpScore();
+                break;
+            case GoalYesNo:
+                new GoalYesNo();
+                break;
+            case TimesYesNo:
+                new TimeYesNoDare();
+                break;
+        }
+        return dare;
+    }
+     // gets the Challenger user from gui - prototype
+    public void getUserFromGUI(String name) {
+        name = loginPanel.getNameTxt();
+        new User(name);
+        //user.setName(loginPanel.getNameTxt());
+        // send til clienten
+    }
+
+
+    // GUI setter challengede participant fra JComboBox fra gui når start button er aktivert
+    public Participant setChallengedParticipant(String opponent) {
+        user = new User(opponent);  //??
+        //this.user.setName(opponent);
+        return new Participant(this.user, dare);
     }
 
     public void getTimeOfDare() {
 
     }
-
-
-
 }

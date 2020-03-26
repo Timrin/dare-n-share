@@ -6,6 +6,7 @@ import model.User;
 public class DontEatMeat extends TimeYesNoDare{
     private User user;
     private Participant participant;
+    private YesOrNo yesOrNo;
 
     public DontEatMeat(){
         super();
@@ -17,6 +18,17 @@ public class DontEatMeat extends TimeYesNoDare{
     public void setDare() {
         super.setDare();
     }
+    public void endDare(){
+        super.endDare();
+    }
+
+    public void setScore(YesOrNo yesOrNo){
+        if (yesOrNo.equals("Yes")){
+
+        }
+    }
+
+
 
     public void setParticipant(Participant participant){
         this.participant=participant;
@@ -32,4 +44,6 @@ public class DontEatMeat extends TimeYesNoDare{
     public Participant getParticipant() {
         return participant;
     }
+
+
 }

@@ -7,6 +7,7 @@ package dareSetUp;
 
 public class YesNoScore implements Score {
     private int score;
+    private YesOrNo yesOrNo;
 
     public YesNoScore() {
         this.score = 0;
@@ -16,10 +17,15 @@ public class YesNoScore implements Score {
     /**
      * Method to determine yes or no. todo refactor name.
      */
-    public boolean didYouFail() {
-
-        return false;
-    }
+   /* public int didYouFail(YesOrNo yesOrNo) {
+        if (yesOrNo.equals("Yes")){
+            score+=1000;
+        }
+        if (yesOrNo.equals("No")){
+            score-=1000;
+        }
+        return score;
+    }*/
 
     @Override
     public int getCurrentScore() {

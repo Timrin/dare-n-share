@@ -39,5 +39,15 @@ public class Participant implements Serializable {
 		return dare;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
 
+	public void setScore(Score score) {
+		this.score = score;
+	}
+
+	public void setDare(Dare dare) {
+		this.dare = dare;
+	}
 }

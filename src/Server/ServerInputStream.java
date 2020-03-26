@@ -1,7 +1,6 @@
 package Server;
 
 import dareSetUp.Dare;
-
 import model.User;
 
 import java.io.ObjectInputStream;

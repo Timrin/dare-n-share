@@ -9,6 +9,7 @@ import java.util.List;
  * place and get challenges in a hashmap, it will both contain a User as well as an Arraylist of Dares. Will describe dependencies later on.
  * @param <T>
  */
+@Deprecated
 public class BufferOfDares <T> {
    private HashMap <T, ArrayList<Dare>> buffer = new HashMap<>();
 
