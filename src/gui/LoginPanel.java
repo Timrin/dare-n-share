@@ -20,11 +20,17 @@ public class LoginPanel extends JPanel {
     private JButton loginBtn = new JButton("Login");
     private JPanel popupPanel = new JPanel(new GridLayout(4,1));
     private JLabel welcomeText = new JLabel("Welcome");
+
+
+
     private JLabel welcomeName = new JLabel();
     private JLabel numberOfWins = new JLabel("Winners");
     private JLabel getNumberOfWins = new JLabel();
     private JLabel daresInProgress = new JLabel("Active Dares");
-    private JLabel changeToSomethingElse = new JLabel("NO ACTIVE DARES FOR YOU ");
+
+
+    private JButton seeDare = new JButton("See dare info");
+    private JLabel changeToSomethingElse = new JLabel("Your active dares");
     private JButton newDare = new JButton("NEW DARE");
 
     private DarePanel darePanel;
@@ -35,10 +41,26 @@ public class LoginPanel extends JPanel {
         setBkgroundPanel();
         setFrontPanel();
 
-        darePanel = new DarePanel(this);
+        darePanel = new DarePanel(this,dareController);
         darePanel.setVisible(false);
         this.dareController = dareController;
 
+    }
+
+    public String getWelcomeName() {
+        return welcomeName.getText();
+    }
+
+    public void setWelcomeName(String welcomeName) {
+        this.welcomeName.setText(welcomeName);
+    }
+
+    public String getChangeToSomethingElse() {
+        return changeToSomethingElse.getText();
+    }
+
+    public void setNameOfDare (String changeToSomethingElse) {
+        this.changeToSomethingElse.setText(changeToSomethingElse);
     }
 
     public void setBkgroundPanel (){
@@ -87,7 +109,7 @@ public class LoginPanel extends JPanel {
             frontPanel.setVisible(false);
             popupPanel.setVisible(false);
             darePanel.setVisible(true);
-            bkgroundPanel.add(new DarePanel(this));
+            bkgroundPanel.add(darePanel);
 
         });
 
@@ -127,6 +149,11 @@ public class LoginPanel extends JPanel {
         title = BorderFactory.createTitledBorder("Dare Panel");
         darePanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
+        darePanel.add(seeDare);
+        seeDare.setBackground(Color.GREEN);
+
+        seeDare.addActionListener(e -> popupPanel.add(new InfoDarePanel()));
+
     }
 
     public void setUpWinnersPanel(){

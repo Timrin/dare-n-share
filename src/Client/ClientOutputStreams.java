@@ -32,6 +32,7 @@ public class ClientOutputStreams extends Thread {
             if (oos == null) {
                 oos = new ObjectOutputStream(socket.getOutputStream());
                 oos.writeObject(this.user);
+                System.out.println(user + "OutputClient");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +42,7 @@ public class ClientOutputStreams extends Thread {
     public void sendDare(Dare dare) {
         try {
             oos.writeObject(dare);
+            System.out.println(dare + "Dare");
         } catch (IOException e) {
             e.printStackTrace();
         }

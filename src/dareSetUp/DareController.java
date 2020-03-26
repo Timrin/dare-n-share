@@ -113,5 +113,12 @@ public class DareController {
         // Get opponent user from client
         // set in gui
     }
+
+    /*
+     -metod som tar emot en dare från clientontroller, skickar till GUI.
+     - metod som skickar motståndare till GUI
+     - skickar poäng till GUI
+
+     */
 }
 
