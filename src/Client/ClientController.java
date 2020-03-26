@@ -27,8 +27,9 @@ public class ClientController {
      * All methods that is required to able contacts to interact with one another, and to transmit messages
      */
 
-    public ClientController(User user) {
+    public ClientController(User user, DareController dareController) {
         this.user = user;
+        this.dareController= dareController;
         //this.ip = ip;
         //this.port = port;
         try {
@@ -61,7 +62,7 @@ public class ClientController {
     }
 
     public void setDare(Dare dare) {
-        this.dare = dare; //Todo send dare to other controller
+      //  this.dare = dare; //Todo send dare to other controller
         dareController.getDareFromClient(dare);
     }
 

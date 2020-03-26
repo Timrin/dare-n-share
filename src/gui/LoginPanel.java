@@ -36,14 +36,17 @@ public class LoginPanel extends JPanel {
     private DarePanel darePanel;
 
     private DareController dareController;
+    private InfoDarePanel infoDarePanel;
 
-    public LoginPanel (DareController dareController){
+    public LoginPanel (){
+        dareController = new DareController(this);
         setBkgroundPanel();
         setFrontPanel();
 
         darePanel = new DarePanel(this,dareController);
         darePanel.setVisible(false);
-        this.dareController = dareController;
+
+        infoDarePanel = new InfoDarePanel(this);
 
     }
 
@@ -161,7 +164,7 @@ public class LoginPanel extends JPanel {
         seeDare.setBackground(Color.GREEN);
 
         seeDare.addActionListener(e -> {
-            bkgroundPanel.add(new InfoDarePanel(this));
+            bkgroundPanel.add(infoDarePanel);
             darePanel.setVisible(false);
             frontPanel.setVisible(false);
             popupPanel.setVisible(false);
@@ -198,11 +201,13 @@ public class LoginPanel extends JPanel {
         frame.setBackground(Color.PINK);
         frame.setPreferredSize(new Dimension(400,520));
         frame.pack();
-        frame.add(new LoginPanel(this.dareController));
+        frame.add(new LoginPanel());
         frame.setVisible(true);
 
     }
-
+    public InfoDarePanel getInfodare (){
+        return infoDarePanel;
+    }
 
 
     public static void main(String[] args) {
@@ -211,7 +216,7 @@ public class LoginPanel extends JPanel {
         frame.setBackground(Color.PINK);
         frame.setPreferredSize(new Dimension(400,520));
         frame.pack();
-        frame.add(new LoginPanel(new DareController()));
+        frame.add(new LoginPanel());
         frame.setVisible(true);
 
 

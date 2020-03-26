@@ -5,6 +5,8 @@ import dareSetUp.YesOrNo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InfoDarePanel extends JPanel {
     private JPanel bkgroundPanel2 = new JPanel();
@@ -15,6 +17,8 @@ public class InfoDarePanel extends JPanel {
     private JPanel panelForCurrentScore = new JPanel();
     private JPanel panelForOpponent = new JPanel();
     private JLabel lblForWelcome = new JLabel("Welcome");
+
+
     private JLabel lblHeaderDareName = new JLabel();
     private JLabel lblTime = new JLabel("Did you eat meat today?");
     private JLabel lblGetDays = new JLabel();
@@ -26,6 +30,7 @@ public class InfoDarePanel extends JPanel {
     private JCheckBox yesCheckBox = new JCheckBox("Yes");
     private JCheckBox noCheckBox = new JCheckBox("NO");
 
+
     private JLabel lblCurrentScore = new JLabel();
     private JLabel lblGetCurrentScore = new JLabel();
 
@@ -35,7 +40,7 @@ public class InfoDarePanel extends JPanel {
 
     private JPanel frontPanel = new JPanel();
 
-    private DareController dareController;
+    //private DareController dareController;
     private LoginPanel loginPanel;
 
 
@@ -43,6 +48,7 @@ public class InfoDarePanel extends JPanel {
         this.loginPanel = loginPanel;
 
       //  setFrontPanel();
+       // setBkgroundPanel();
         setBkgroundPanel2();
         setPanelForGrid();
         setPanelForHeader();
@@ -57,6 +63,10 @@ public class InfoDarePanel extends JPanel {
        this.lblHeaderDareName.setText(lblHeaderDareName);
     }
 
+    public String getLblHeaderDareName() {
+        return lblHeaderDareName.getText();
+    }
+
     public void setLblGetDays(String lblGetDays) {
         this.lblGetDays.setText(lblGetDays);
     }
@@ -67,6 +77,10 @@ public class InfoDarePanel extends JPanel {
 
     public void setLblGetOpponent(String lblGetOpponent) {
         this.lblGetOpponent.setText(lblGetOpponent);
+    }
+
+    public String getOpponent(){
+        return lblGetOpponent.getText();
     }
 
     public void setBkgroundPanel2(){
@@ -92,6 +106,7 @@ public class InfoDarePanel extends JPanel {
         panelForGrid.add(panelForHeader);
         panelForHeader.add(lblForWelcome);
         panelForHeader.add(lblHeaderDareName);
+        lblHeaderDareName.setText(getLblHeaderDareName());
         panelForGrid.setPreferredSize(new Dimension(400,400));
 
 
@@ -105,6 +120,16 @@ public class InfoDarePanel extends JPanel {
         panelForYesNo.add(lblForQuestion);
         panelForYesNo.add(yesCheckBox);
         panelForYesNo.add(noCheckBox);
+        panelForYesNo.add(addAnswer);
+        addAnswer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (yesCheckBox.isSelected()) {
+                    lblGetCurrentScore.setText("1000");
+                }
+                else lblGetCurrentScore.setText("0 , Better luck next time");
+            }
+        });
 
 
 

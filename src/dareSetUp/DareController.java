@@ -34,7 +34,9 @@ public class DareController {
     private ClientController clientController;
 
 
-    public DareController() {
+    public DareController(LoginPanel loginPanel) {
+        this.loginPanel = loginPanel;
+
 
 
     }
@@ -99,7 +101,7 @@ public class DareController {
     public void loginUser(String name) {
         this.user = new User(name);
         //todo legg til i actionlistener for login-button
-        clientController = new ClientController(user);
+        clientController = new ClientController(user,this);
         // send til clienten
     }
 
@@ -112,7 +114,7 @@ public class DareController {
     public void getDareFromClient(Dare dare) {
         // set in gui dare.toString
         // Sette skriftlig informasjon om current dare i GUI.
-        infoDarePanel.setLblHeaderUserName(dare.toString());
+        loginPanel.getInfodare().setLblHeaderDareName(dare.toString());
     }
 
     public void getOpponent(User user) {
