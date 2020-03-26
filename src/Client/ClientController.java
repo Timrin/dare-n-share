@@ -44,7 +44,6 @@ public class ClientController {
      * Creates objects of ClientObjectOutputStreams, connects through socket and initiates its thread. This method will be called in controller to connect to actual user
      * @param
      */
-
     private void startSend() { //Todo detta kanske ändras beroende på vad det är som ska skickas
        outputStream = new ClientOutputStreams(user, connection);
        outputStream.start();
@@ -54,7 +53,6 @@ public class ClientController {
      * Is called when "request of challenge is made". Is to be called in controller to connect to actual user.
      * @param
      */
-
     private void startReceive() { //Todo detta kanske ändras beroende på vad det är som ska skickas
         inputStream = new ClientInputStreams(user, this, connection);
         outputStream.start();

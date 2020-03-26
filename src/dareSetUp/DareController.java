@@ -9,7 +9,6 @@ import model.User;
 
 /***
  * Finn en løsning på score.
- *
  * **/
 
 public class DareController {
@@ -51,7 +50,7 @@ public class DareController {
         sendToClient(dontEatMeat);
 
     }
-
+    // Skal ta imot yes or no enum fra GUI, og legge til score deretter.
     public void updateScore(YesOrNo yesOrNo){
 
         if (yesOrNo.equals("Yes")){

@@ -11,7 +11,6 @@ public class YesNoScore implements Score {
 
     public YesNoScore() {
         this.score = 0;
-
     }
 
     /**
