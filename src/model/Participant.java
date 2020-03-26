@@ -3,10 +3,12 @@ package model;
 import dareSetUp.Dare;
 import dareSetUp.Score;
 
+import java.io.Serializable;
+
 /**
  * This class represents a users participation in a dare, it holds data associated to a specific user in a specific dare.
  */
-public class Participant {
+public class Participant implements Serializable {
 	private User user;
 
 	private Score score;
@@ -36,4 +38,6 @@ public class Participant {
 	public Dare getDare() {
 		return dare;
 	}
+
+
 }

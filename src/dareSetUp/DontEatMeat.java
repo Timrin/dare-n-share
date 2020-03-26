@@ -1,12 +1,13 @@
 package dareSetUp;
 
 import model.Participant;
+import model.User;
 
 public class DontEatMeat extends TimeYesNoDare{
     private User user;
     private Participant participant;
 
-    public DontEatMeat(Participant participant, User user){
+    public DontEatMeat(){
         super();
         this.participant = participant;
         this.user = user;
@@ -15,7 +16,20 @@ public class DontEatMeat extends TimeYesNoDare{
     @Override
     public void setDare() {
         super.setDare();
-
     }
 
+    public void setParticipant(Participant participant){
+        this.participant=participant;
+    }
+    public void setUser(User user){
+        this.user=user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
 }

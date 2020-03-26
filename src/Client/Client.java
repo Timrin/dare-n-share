@@ -1,6 +1,7 @@
 package Client;
 
-import dareSetUp.User;
+
+import model.User;
 
 import java.net.Socket;
 

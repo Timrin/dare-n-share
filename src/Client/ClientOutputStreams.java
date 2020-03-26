@@ -1,7 +1,9 @@
 package Client;
 
 import dareSetUp.Dare;
-import dareSetUp.User;
+
+import model.User;
+
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
