@@ -61,9 +61,13 @@ public class DarePanel extends JPanel implements ActionListener {
        */
         if(startDareBtn.isSelected()){
            // new InfoDarePanel();
-
+            if (e.getSource()==yes){
+                dareController.setUpDareAfterGUI();
+                dareController.setChallengedParticipant(String.valueOf(friends));
+            }
 
         }
+
 
     }
 

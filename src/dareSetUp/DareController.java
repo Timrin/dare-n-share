@@ -8,7 +8,7 @@ import model.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DareController implements ActionListener {
+public class DareController {
     private LoginPanel loginPanel;
     private DarePanel darePanel;
     private Dare dare;
@@ -25,46 +25,42 @@ public class DareController implements ActionListener {
     private Participant participant;
     private User user;
 
+    private DontEatMeat dontEatMeat;
 
 
     public DareController() {
-        darePanel.getStartDareBtn().addActionListener(this);
         timeYesNoDare.setTimeOfDare(3);
 
     }
 
     // Starts the dare after pushing the button "its on like donkey kong" in gui
-    public void setUpDareAfterGUI(){
-        if (TimeDare instanceof TimeYesNoDare) {
+    public void setUpDareAfterGUI() {
+        dontEatMeat = new DontEatMeat();
+        dontEatMeat.setTimeOfDare(3);
+
+      /*  if (TimeDare instanceof TimeYesNoDare) {
             new DontEatMeat(participant,user);
         }
         if (TimeDare instanceof TimeAddUpScore) {
 
-        }
-    }
-
-    public void setOpponent(String opponent){
-        new User();
-        user.setName(opponent);
-    }
-    public void getTimeOfDare(){
-
+        }*/
     }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (darePanel.getStartDareBtn().isSelected()) {
 
-            if (TimeDare instanceof TimeYesNoDare) {
-                timeYesNoDare.start();
-            }
-            if (TimeDare instanceof TimeAddUpScore) {
-                timeAddUpScore.start();
-            }
-
-
-        }
+    public void setGoalDare(TimeDare timeDare){
 
     }
+
+    public void setChallengedParticipant(String opponent) {
+        user = new User();
+        this.user.setName(opponent);
+    }
+
+    public void getTimeOfDare() {
+
+    }
+
+
+
 }
