@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @see TimeDare
  */
 
-public class TimeYesNoDare extends TimeDare  {
+public abstract class TimeYesNoDare extends TimeDare  {
     private YesNoScore yesNoScore;
     private int value;
     private Participant participant;
@@ -36,6 +36,8 @@ public class TimeYesNoDare extends TimeDare  {
     public void addToScore(int value){
         yesNoScore.addToScore(value);
     }
+
+    public abstract String toString();
 
 
 

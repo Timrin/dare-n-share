@@ -81,9 +81,9 @@ public class DareController {
             case GoalYesNo:
                dare = (Dare) new GoalYesNo();
                 break;   */
-            case TimesYesNo:
+           /* case TimesYesNo:
                 dare = new TimeYesNoDare(user,anders);
-                break;
+                break;*/
         }
         return dare;
     }
@@ -106,7 +106,12 @@ public class DareController {
         return new Participant(this.user, dare);
     }
 
-    public void getTimeOfDare() {
-
+    public void getDareFromClient(Dare dare){
+      // set in gui dare.toString
+    }
+    public void getOpponent(User user){
+        // Get opponent user from client
+        // set in gui
     }
 }
+

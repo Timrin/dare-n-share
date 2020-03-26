@@ -1,6 +1,7 @@
 package Client;
 
 import dareSetUp.Dare;
+import dareSetUp.DareController;
 import dareSetUp.Score;
 import model.User;
 
@@ -20,6 +21,7 @@ public class ClientController {
     private BufferOfDares <Dare> dareBuffer;
     private Dare dare;
     private Score score;
+    private DareController dareController;
 
     /**
      * All methods that is required to able contacts to interact with one another, and to transmit messages
@@ -60,6 +62,12 @@ public class ClientController {
 
     public void setDare(Dare dare) {
         this.dare = dare; //Todo send dare to other controller
+        dareController.getDareFromClient(dare);
+    }
+
+    public void setOpponent(User user){
+        // Sever sends opponent user with dare?
+        // Set user at dareController.setOpponent(User user) ?
     }
 
     public void sendDare(Dare dare) {
