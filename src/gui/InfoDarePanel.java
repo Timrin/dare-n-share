@@ -1,6 +1,7 @@
 package gui;
 
 import dareSetUp.DareController;
+import dareSetUp.YesOrNo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,17 +15,17 @@ public class InfoDarePanel extends JPanel {
     private JPanel panelForCurrentScore = new JPanel();
     private JPanel panelForOpponent = new JPanel();
     private JLabel lblForWelcome = new JLabel("Welcome");
-    private JLabel lblHeaderUserName = new JLabel();
-    private JLabel lblTime = new JLabel("Days of our Dare");
+    private JLabel lblHeaderDareName = new JLabel();
+    private JLabel lblTime = new JLabel("Did you eat meat today?");
     private JLabel lblGetDays = new JLabel();
-    private JTextField nameTxt = new JTextField();
-    private JLabel nameLbl = new JLabel("Username");
-    private JButton loginBtn = new JButton("Login");
+    private JButton addAnswer = new JButton("Add answer");
 
     private JLabel lblTxtForDareInfo = new JLabel();
     private JLabel lblForQuestion = new JLabel();
-    private JCheckBox yesCheckBox = new JCheckBox("YES");
+
+    private JCheckBox yesCheckBox = new JCheckBox("Yes");
     private JCheckBox noCheckBox = new JCheckBox("NO");
+
     private JLabel lblCurrentScore = new JLabel();
     private JLabel lblGetCurrentScore = new JLabel();
 
@@ -35,11 +36,13 @@ public class InfoDarePanel extends JPanel {
     private JPanel frontPanel = new JPanel();
 
     private DareController dareController;
+    private LoginPanel loginPanel;
 
 
-    public InfoDarePanel (){
+    public InfoDarePanel (LoginPanel loginPanel){
+        this.loginPanel = loginPanel;
 
-        setFrontPanel();
+      //  setFrontPanel();
         setBkgroundPanel2();
         setPanelForGrid();
         setPanelForHeader();
@@ -47,13 +50,11 @@ public class InfoDarePanel extends JPanel {
         setPanelForOpponent();
         setPanelForCurrentScore();
 
-
-
     }
 
 
-    public void setLblHeaderUserName(String lblHeaderUserName) {
-       this.lblHeaderUserName.setText(lblHeaderUserName);
+    public void setLblHeaderDareName(String lblHeaderDareName) {
+       this.lblHeaderDareName.setText(lblHeaderDareName);
     }
 
     public void setLblGetDays(String lblGetDays) {
@@ -69,6 +70,7 @@ public class InfoDarePanel extends JPanel {
     }
 
     public void setBkgroundPanel2(){
+        loginPanel.add(bkgroundPanel2);
         add(bkgroundPanel2);
         bkgroundPanel2.setBackground(Color.GREEN);
         bkgroundPanel2.setPreferredSize(new Dimension(400,500));
@@ -89,7 +91,8 @@ public class InfoDarePanel extends JPanel {
     public void setPanelForHeader(){
         panelForGrid.add(panelForHeader);
         panelForHeader.add(lblForWelcome);
-        panelForHeader.add(lblHeaderUserName);
+        panelForHeader.add(lblHeaderDareName);
+        panelForGrid.setPreferredSize(new Dimension(400,400));
 
 
     }
@@ -130,11 +133,12 @@ public class InfoDarePanel extends JPanel {
     }
 
     public void setPanelForGrid(){
+
         bkgroundPanel2.add(panelForGrid);
         panelForGrid.setBackground(Color.BLUE);
 
     }
-
+/*
     public void setFrontPanel(){
         add(frontPanel);//oklart om detta behövs
         frontPanel.setPreferredSize(new Dimension(400,400));
@@ -159,6 +163,8 @@ public class InfoDarePanel extends JPanel {
 
     }
 
+
+ */
 
 
 

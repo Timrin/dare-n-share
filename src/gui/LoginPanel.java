@@ -138,6 +138,10 @@ public class LoginPanel extends JPanel {
         title.setTitleJustification(TitledBorder.LEFT);
 
     }
+
+    /**
+     * Panel for one part of gridlayout that displays button to view active dares
+     */
     public void setUpDarePanel(){
         JPanel darePanel = new JPanel(new BorderLayout());
         popupPanel.add(darePanel);
@@ -152,10 +156,20 @@ public class LoginPanel extends JPanel {
         darePanel.add(seeDare);
         seeDare.setBackground(Color.GREEN);
 
-        seeDare.addActionListener(e -> popupPanel.add(new InfoDarePanel()));
+        seeDare.addActionListener(e -> {
+            bkgroundPanel.add(new InfoDarePanel(this));
+            darePanel.setVisible(false);
+            frontPanel.setVisible(false);
+            popupPanel.setVisible(false);
+
+        });
+
 
     }
 
+    /**
+     * Panel for one part of gridLayout that displays numer of wins (image of medals)
+     */
     public void setUpWinnersPanel(){
         JPanel winnerPanel = new JPanel(new BorderLayout());
         popupPanel.add(winnerPanel);
