@@ -25,6 +25,13 @@ public class InfoDarePanel extends JPanel {
 
 
     public InfoDarePanel (){
+        JFrame frame = new JFrame("oegfdkgnldfkg");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(Color.PINK);
+        frame.setPreferredSize(new Dimension(400,520));
+        frame.pack();
+        frame.add(this);
+        frame.setVisible(true);
 
     }
 }
