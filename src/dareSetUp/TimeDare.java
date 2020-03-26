@@ -47,14 +47,4 @@ public class TimeDare implements Dare {
     public User getChallenged(){
         return null;
     }
-
-    @Override
-    public User getInstigator() {
-        return null;
-    }
-
-    @Override
-    public User getChallenged() {
-        return null;
-    }
 }

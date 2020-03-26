@@ -35,13 +35,4 @@ public class GoalDare implements Dare {
         return null;
     }
 
-    @Override
-    public User getInstigator() {
-        return null;
-    }
-
-    @Override
-    public User getChallenged() {
-        return null;
-    }
 }
