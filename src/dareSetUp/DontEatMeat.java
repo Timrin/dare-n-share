@@ -1,6 +1,7 @@
 package dareSetUp;
 
 import model.Participant;
+import model.User;
 
 public class DontEatMeat extends TimeYesNoDare{
     private User user;

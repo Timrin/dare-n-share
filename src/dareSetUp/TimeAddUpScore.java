@@ -1,4 +1,7 @@
 package dareSetUp;
+
+import model.User;
+
 /**
  * TimeAnotherType expects another type of score. The score is not a boolean, and the user can achieve more points.
  * It is a time dare
