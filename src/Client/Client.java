@@ -28,7 +28,7 @@ public class Client {
     public void startSend(User user) { //Todo detta kanske ändras beroende på vad det är som ska skickas
         this.user = user;
         connection = new Socket();
-        new ClientOutputStreams(connection).start();
+       // new ClientOutputStreams(connection).start();
     }
 
     /**
@@ -39,6 +39,6 @@ public class Client {
     public void startReceive(User user) { //Todo detta kanske ändras beroende på vad det är som ska skickas
             this.user = user;
             connection = new Socket();
-            new ClientInputStreams(connection).start();
+          //  new ClientInputStreams(connection).start();
     }
 }
