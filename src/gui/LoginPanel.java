@@ -59,6 +59,10 @@ public class LoginPanel extends JPanel {
         return changeToSomethingElse.getText();
     }
 
+    public void setChangeToSomethingElse(String changeToSomethingElse) {
+        this.changeToSomethingElse.setText(changeToSomethingElse);
+    }
+
     public void setNameOfDare (String changeToSomethingElse) {
         this.changeToSomethingElse.setText(changeToSomethingElse);
     }

@@ -59,4 +59,6 @@ public abstract class Dare implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public abstract String toString();
 }

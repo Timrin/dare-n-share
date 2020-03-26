@@ -2,6 +2,7 @@ package dareSetUp;
 
 import Client.ClientController;
 import gui.DarePanel;
+import gui.InfoDarePanel;
 import gui.LoginPanel;
 import model.Participant;
 import model.User;
@@ -14,6 +15,7 @@ import model.User;
 public class DareController {
     private LoginPanel loginPanel;
     private DarePanel darePanel;
+    private InfoDarePanel infoDarePanel;
     private Dare dare;
 
     private TimeYesNoDare timeYesNoDare;
@@ -42,21 +44,22 @@ public class DareController {
     public void setUpDareAfterGUI() {
         User anders = new User();
         anders.setName("Anders Tegnell");
-         // create a new dare  + assign users to dare
-        dontEatMeat = new DontEatMeat(user,anders);
+        // create a new dare  + assign users to dare
+        dontEatMeat = new DontEatMeat(user, anders);
         dontEatMeat.setTimeOfDare(3);
 
         //send dare to server via client
         sendToClient(dontEatMeat);
 
     }
-    // Skal ta imot yes or no enum fra GUI, og legge til score deretter.
-    public void updateScore(YesOrNo yesOrNo){
 
-        if (yesOrNo.equals("Yes")){
+    // Skal ta imot yes or no enum fra GUI, og legge til score deretter.
+    public void updateScore(YesOrNo yesOrNo) {
+
+        if (yesOrNo.equals("Yes")) {
             dontEatMeat.setScore(YesOrNo.Yes);
         }
-        if (yesOrNo.equals("No")){
+        if (yesOrNo.equals("No")) {
             dontEatMeat.setScore(YesOrNo.No);
         }
     }
@@ -69,11 +72,11 @@ public class DareController {
 
         switch (enumChallenges) {
             case DontEatMeat:
-                dare =new DontEatMeat(user, anders);
+                dare = new DontEatMeat(user, anders);
                 dontEatMeat.setTimeOfDare(3);  // prototypen
                 break;
             case TimesAddUp:
-               //dare= new TimeAddUpScore();
+                //dare= new TimeAddUpScore();
                 break;
          /*   case GoalAddup:
                dare = (Dare) new GoalDareAddUpScore();
@@ -81,21 +84,21 @@ public class DareController {
             case GoalYesNo:
                dare = (Dare) new GoalYesNo();
                 break;   */
-            case TimesYesNo:
+           /* case TimesYesNo:
                 dare = new TimeYesNoDare(user,anders);
-                break;
+                break;*/
         }
         return dare;
     }
 
-    public void sendToClient(Dare toSend){
+    public void sendToClient(Dare toSend) {
         clientController.sendDare(toSend);
     }
 
     // gets the Challenger user from gui - prototype
     public void loginUser(String name) {
         this.user = new User(name);
-         //todo legg til i actionlistener for login-button
+        //todo legg til i actionlistener for login-button
         clientController = new ClientController(user);
         // send til clienten
     }
@@ -106,8 +109,15 @@ public class DareController {
         return new Participant(this.user, dare);
     }
 
-    public void getTimeOfDare() {
+    public void getDareFromClient(Dare dare) {
+        // set in gui dare.toString
+        // Sette skriftlig informasjon om current dare i GUI.
+        infoDarePanel.setLblHeaderUserName(dare.toString());
+    }
 
+    public void getOpponent(User user) {
+        // Get opponent user from client
+        // set in gui
     }
 
     /*
@@ -117,3 +127,4 @@ public class DareController {
 
      */
 }
+
