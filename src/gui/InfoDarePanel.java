@@ -1,5 +1,7 @@
 package gui;
 
+import dareSetUp.DareController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,14 +34,20 @@ public class InfoDarePanel extends JPanel {
 
     private JPanel frontPanel = new JPanel();
 
+    private DareController dareController;
+
 
     public InfoDarePanel (){
         setUpFrame();
-        setBkgroundPanel2();
+        setFrontPanel();
+       /* setBkgroundPanel2();
         setPanelForHeader();
         setPanelForYesNo();
         setPanelForOpponent();
         setPanelForCurrentScore();
+
+        */
+
     }
 
 
@@ -136,11 +144,13 @@ public class InfoDarePanel extends JPanel {
         loginBtn.addActionListener(e -> {
 
             frontPanel.setVisible(false);
-            panelForGrid.setVisible(true);
-            bkgroundPanel2.add(panelForGrid);
-            setPanelForGrid();
-            // dareController.loginUser(getNameTxt());
+            panelForGrid.setVisible(false);
+          //  bkgroundPanel2.add(panelForGrid);
 
+          //  loginPanel.showHomeScreen();
+            //setBkgroundPanel();
+            //setPanelForGrid();
+        //    this.dareController.loginUser(nameTxt.getText());
 
         });
         frontPanel.setBackground(Color.PINK);
