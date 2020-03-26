@@ -1,5 +1,7 @@
 package gui;
 
+import dareSetUp.DareController;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -24,6 +26,8 @@ public class LoginPanel extends JPanel {
     private JLabel daresInProgress = new JLabel("Active Dares");
     private JLabel changeToSomethingElse = new JLabel("NO ACTIVE DARES FOR YOU ");
     private JButton newDare = new JButton("NEW DARE");
+
+    private DareController dareController;
 
     public LoginPanel (){
         setBkgroundPanel();
@@ -50,12 +54,16 @@ public class LoginPanel extends JPanel {
             popupPanel.setVisible(true);
             bkgroundPanel.add(popupPanel);
             setPopupPanel();
+           // dareController.loginUser(getNameTxt());
+
 
         });
         frontPanel.setBackground(Color.PINK);
 
 
     }
+
+
 
     public void setPopupPanel(){
         add(popupPanel);
@@ -145,7 +153,7 @@ public class LoginPanel extends JPanel {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("oegfdkgnldfkg");
+        JFrame frame = new JFrame("Challenger");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.PINK);
         frame.setPreferredSize(new Dimension(400,520));

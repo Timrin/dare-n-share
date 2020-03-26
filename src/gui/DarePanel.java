@@ -4,6 +4,7 @@
  */
 package gui;
 
+import dareSetUp.Challenges;
 import dareSetUp.DareController;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class DarePanel extends JPanel implements ActionListener {
 
     private JPanel dareInfoPanel = new JPanel(new FlowLayout());
     private JLabel txtExplainingDare = new JLabel();
-    private JCheckBox yes = new JCheckBox("Yes");
+    private JComboBox dares = new JComboBox();
 
     private JPanel friendsPanel = new JPanel(new FlowLayout());
     private JLabel addingFriend = new JLabel();
@@ -29,6 +30,7 @@ public class DarePanel extends JPanel implements ActionListener {
     private JButton startDareBtn = new JButton("IT´S ON LIKE DONKEY KONG");
     private DareController dareController;
     private LoginPanel loginPanel;
+    private JPanel panelForActiveDare = new JPanel(new GridLayout(4,1));
 
 
 
@@ -38,14 +40,19 @@ public class DarePanel extends JPanel implements ActionListener {
         setDareInfoPanel();
         setFriendsPanel();
         setBtnPanel();
-        yes.addActionListener(this);
+        dares.addActionListener(this);
         friends.addActionListener(this);
-        startDareBtn.addActionListener(this);
+        startDareBtn.addActionListener(e -> {
+            new InfoDarePanel();
+           // new LoginPanel();
+          popUpPanel.setVisible(false);
+
+        });
 
     }
 
-    public JCheckBox getYes() {
-        return yes;
+    public JComboBox getDares() {
+        return dares;
     }
     /**
      * Midlertidig metode, for hardkoding av dontEatMeat challenge.
@@ -53,19 +60,12 @@ public class DarePanel extends JPanel implements ActionListener {
      * */
     @Override
     public void actionPerformed(ActionEvent e) {
-      /*  if (e.getSource()==yes){
-            dareController.setUpDareAfterGUI();
-            dareController.setOpponent(getFriends());
-        }
-
-       */
         if(startDareBtn.isSelected()){
-           // new InfoDarePanel();
-            if (e.getSource()==yes){
+          //  new InfoDarePanel();
+            if (e.getSource()==dares){
                 dareController.setUpDareAfterGUI();
                 dareController.setChallengedParticipant(String.valueOf(friends));
             }
-
         }
 
 
@@ -95,9 +95,10 @@ public class DarePanel extends JPanel implements ActionListener {
         dareInfoPanel.setBackground(Color.ORANGE);
         dareInfoPanel.add(txtExplainingDare);
         txtExplainingDare.setText("No meat for 3 whole days my friend");
-        dareInfoPanel.add(yes);
-        yes.setBorderPainted(true);
-        yes.addActionListener(this);
+        dareInfoPanel.add(dares);
+        dares.addItem(Challenges.DontEatMeat);
+        dares.addItem(Challenges.TimesYesNo);
+        dares.addActionListener(this);
     }
 
     public void setFriendsPanel(){
@@ -115,14 +116,7 @@ public class DarePanel extends JPanel implements ActionListener {
         popUpPanel.add(btnPanel);
         btnPanel.setBackground(Color.ORANGE);
         btnPanel.add(startDareBtn);
-        startDareBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                popUpPanel.setVisible(false);
-                setUpDareInfo();
-                new InfoDarePanel();
-            }
-        });
+
         startDareBtn.setBorderPainted(true);
         startDareBtn.setBackground(Color.GREEN);
     }
@@ -130,6 +124,8 @@ public class DarePanel extends JPanel implements ActionListener {
     public void setUpDareInfo(){
         popUpPanel.setVisible(true);
         popUpPanel.add(headerPanel);
+        headerPanel.add(dareHeader);
+        popUpPanel.setBackground(Color.ORANGE);
 
 
     }
