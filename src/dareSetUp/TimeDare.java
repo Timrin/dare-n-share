@@ -24,6 +24,11 @@ public class TimeDare extends Dare {
 
     }
 
+    @Override
+    public String toString() {
+        return null;
+    }
+
     public int getTimeOfDare() {
         return timeOfDare;
     }

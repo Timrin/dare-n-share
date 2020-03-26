@@ -19,6 +19,10 @@ public class GoalDare extends Dare  {
 
     }
 
+    @Override
+    public String toString() {
+        return null;
+    }
 
 
 }
