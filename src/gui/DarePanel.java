@@ -32,9 +32,11 @@ public class DarePanel extends JPanel implements ActionListener {
     private LoginPanel loginPanel;
     private JPanel panelForActiveDare = new JPanel(new GridLayout(4,1));
 
+    private LoginPanel loginPanelRef;
 
+    public DarePanel (LoginPanel loginPanelRef){
+        this.loginPanelRef = loginPanelRef;
 
-    public DarePanel (){
         setUpDare();
         setHeaderPanel();
         setDareInfoPanel();
@@ -43,9 +45,9 @@ public class DarePanel extends JPanel implements ActionListener {
         dares.addActionListener(this);
         friends.addActionListener(this);
         startDareBtn.addActionListener(e -> {
-            new InfoDarePanel();
-           // new LoginPanel();
-          popUpPanel.setVisible(false);
+            //new InfoDarePanel();
+            loginPanelRef.showHomeScreen();
+            popUpPanel.setVisible(false);
 
         });
 

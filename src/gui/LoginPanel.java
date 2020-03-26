@@ -27,11 +27,16 @@ public class LoginPanel extends JPanel {
     private JLabel changeToSomethingElse = new JLabel("NO ACTIVE DARES FOR YOU ");
     private JButton newDare = new JButton("NEW DARE");
 
+    private DarePanel darePanel;
+
     private DareController dareController;
 
     public LoginPanel (){
         setBkgroundPanel();
         setFrontPanel();
+
+        darePanel = new DarePanel(this);
+        darePanel.setVisible(false);
 
     }
 
@@ -82,7 +87,8 @@ public class LoginPanel extends JPanel {
         newDare.addActionListener(e -> {
             frontPanel.setVisible(false);
             popupPanel.setVisible(false);
-            bkgroundPanel.add(new DarePanel());
+            darePanel.setVisible(true);
+            bkgroundPanel.add(new DarePanel(this));
 
         });
 
@@ -163,4 +169,9 @@ public class LoginPanel extends JPanel {
 
     }
 
+    public void showHomeScreen() {
+        frontPanel.setVisible(false);
+        popupPanel.setVisible(true);
+        darePanel.setVisible(false);
+    }
 }
