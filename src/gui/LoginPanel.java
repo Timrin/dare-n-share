@@ -31,12 +31,13 @@ public class LoginPanel extends JPanel {
 
     private DareController dareController;
 
-    public LoginPanel (){
+    public LoginPanel (DareController dareController){
         setBkgroundPanel();
         setFrontPanel();
 
         darePanel = new DarePanel(this);
         darePanel.setVisible(false);
+        this.dareController = dareController;
 
     }
 
@@ -59,15 +60,13 @@ public class LoginPanel extends JPanel {
             popupPanel.setVisible(true);
             bkgroundPanel.add(popupPanel);
             setPopupPanel();
-           // dareController.loginUser(getNameTxt());
-
+           dareController.loginUser(nameTxt.getText());
 
         });
         frontPanel.setBackground(Color.PINK);
 
 
     }
-
 
 
     public void setPopupPanel(){
@@ -98,9 +97,6 @@ public class LoginPanel extends JPanel {
         return nameTxt.getText();
     }
 
-    public JPanel getBkgroundPanel(){
-        return   this.bkgroundPanel;
-}
 
     /**
      * setUpPanel for Welcome
@@ -115,7 +111,6 @@ public class LoginPanel extends JPanel {
 
         welcomePanel.setBackground(Color.PINK);
         TitledBorder title;
-        //  title = BorderFactory.createTitledBorder("PanelRight");
         title = BorderFactory.createTitledBorder("Welcome Panel");
         welcomePanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
@@ -128,7 +123,7 @@ public class LoginPanel extends JPanel {
         darePanel.add(changeToSomethingElse);
         darePanel.setBackground(Color.GREEN);
         TitledBorder title;
-      //  title = BorderFactory.createTitledBorder("PanelRight");
+
         title = BorderFactory.createTitledBorder("Dare Panel");
         darePanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
@@ -139,13 +134,9 @@ public class LoginPanel extends JPanel {
         popupPanel.add(winnerPanel);
         winnerPanel.setBackground(Color.WHITE);
         TitledBorder title;
-      //  title = BorderFactory.createTitledBorder("PanelRight");
         title = BorderFactory.createTitledBorder("YOUR MEDAL PLAZA");
         winnerPanel.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
-        //winnerPanel.add(numberOfWins);
-       // numberOfWins.setText("");
-      //  winnerPanel.add(getNumberOfWins);
         ImageIcon medalIcon = new ImageIcon("images/iconMedals.jpg");
         Image image = medalIcon.getImage();
         image = image.getScaledInstance(130,130, Image.SCALE_AREA_AVERAGING);
@@ -153,6 +144,17 @@ public class LoginPanel extends JPanel {
         JLabel iconLbl = new JLabel(medalIcon);
         winnerPanel.add(iconLbl);
 
+
+    }
+
+    public void setFrame(){
+        JFrame frame = new JFrame("Challenged");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBackground(Color.PINK);
+        frame.setPreferredSize(new Dimension(400,520));
+        frame.pack();
+        frame.add(new LoginPanel(this.dareController));
+        frame.setVisible(true);
 
     }
 
@@ -164,8 +166,11 @@ public class LoginPanel extends JPanel {
         frame.setBackground(Color.PINK);
         frame.setPreferredSize(new Dimension(400,520));
         frame.pack();
-        frame.add(new LoginPanel());
+        frame.add(new LoginPanel(new DareController()));
         frame.setVisible(true);
+
+
+
 
     }
 
