@@ -1,7 +1,6 @@
 package Client;
 
 import dareSetUp.Dare;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,7 @@ public class BufferOfDares <T> {
     if (dareList == null) {
         dareList = new ArrayList<Dare>();
         dareList.add(myDare);
-        buffer.put(key, (ArrayList<Dare>) dareList);
+        buffer.put(key, (ArrayList <Dare>) dareList);
     } else {
         //If the dare is new to list
         if (!dareList.contains(myDare))

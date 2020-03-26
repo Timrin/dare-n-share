@@ -18,4 +18,14 @@ public class GoalDare implements Dare {
     public void stop() {
 
     }
+
+    @Override
+    public User getInstigator() {
+        return null;
+    }
+
+    @Override
+    public User getChallenged() {
+        return null;
+    }
 }

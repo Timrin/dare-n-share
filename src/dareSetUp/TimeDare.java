@@ -7,7 +7,7 @@ package dareSetUp;
  * Implements Dare, because every dare has a start and a stop.
  * */
 
-public class TimeDare implements Dare{
+public class TimeDare implements Dare {
     private Score score;
 
     @Override
@@ -18,5 +18,15 @@ public class TimeDare implements Dare{
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public User getInstigator() {
+        return null;
+    }
+
+    @Override
+    public User getChallenged() {
+        return null;
     }
 }

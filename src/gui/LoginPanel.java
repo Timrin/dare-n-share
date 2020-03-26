@@ -71,14 +71,11 @@ public class LoginPanel extends JPanel {
         newDare.setBorder(title);
         title.setTitleJustification(TitledBorder.LEFT);
         title.setTitleColor(Color.BLACK);
-        newDare.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frontPanel.setVisible(false);
-                popupPanel.setVisible(false);
-               bkgroundPanel.add(new DarePanel());
+        newDare.addActionListener(e -> {
+            frontPanel.setVisible(false);
+            popupPanel.setVisible(false);
+            bkgroundPanel.add(new DarePanel());
 
-            }
         });
 
 
@@ -133,11 +130,11 @@ public class LoginPanel extends JPanel {
         //winnerPanel.add(numberOfWins);
        // numberOfWins.setText("");
       //  winnerPanel.add(getNumberOfWins);
-        ImageIcon icon2 = new ImageIcon("images/iconMedals.jpg");
-        Image image2 = icon2.getImage();
-        Image newImg2 = image2.getScaledInstance(130,130, Image.SCALE_SMOOTH);
-        icon2 = new ImageIcon(newImg2);
-        JLabel iconLbl = new JLabel(icon2);
+        ImageIcon medalIcon = new ImageIcon("images/iconMedals.jpg");
+        Image image = medalIcon.getImage();
+        image = image.getScaledInstance(130,130, Image.SCALE_AREA_AVERAGING);
+        medalIcon = new ImageIcon(image);
+        JLabel iconLbl = new JLabel(medalIcon);
         winnerPanel.add(iconLbl);
 
 
