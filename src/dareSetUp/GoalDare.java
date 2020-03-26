@@ -35,4 +35,5 @@ public class GoalDare implements Dare, Serializable {
     public User getChallenged() {
         return null;
     }
+
 }
