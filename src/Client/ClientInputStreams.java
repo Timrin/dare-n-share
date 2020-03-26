@@ -35,6 +35,7 @@ public class ClientInputStreams extends Thread {
         while (true) {
             try {
                 Dare dare = (Dare) ois.readObject();
+                System.out.println(dare);
                 controller.setDare(dare);
             } catch (IOException e) {
                 e.printStackTrace();

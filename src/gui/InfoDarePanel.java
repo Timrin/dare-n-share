@@ -38,15 +38,16 @@ public class InfoDarePanel extends JPanel {
 
 
     public InfoDarePanel (){
-        setUpFrame();
+
         setFrontPanel();
-       /* setBkgroundPanel2();
+        setBkgroundPanel2();
+        setPanelForGrid();
         setPanelForHeader();
         setPanelForYesNo();
         setPanelForOpponent();
         setPanelForCurrentScore();
 
-        */
+
 
     }
 
@@ -74,7 +75,7 @@ public class InfoDarePanel extends JPanel {
         bkgroundPanel2.add(panelForGrid);
 
     }
-
+/*
     public void setUpFrame(){
         JFrame frame = new JFrame("Challenged");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,7 +85,7 @@ public class InfoDarePanel extends JPanel {
         frame.add(this);
         frame.setVisible(true);
     }
-
+ */
     public void setPanelForHeader(){
         panelForGrid.add(panelForHeader);
         panelForHeader.add(lblForWelcome);

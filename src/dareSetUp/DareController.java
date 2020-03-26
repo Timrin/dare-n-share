@@ -109,4 +109,11 @@ public class DareController {
     public void getTimeOfDare() {
 
     }
+
+    /*
+     -metod som tar emot en dare från clientontroller, skickar till GUI.
+     - metod som skickar motståndare till GUI
+     - skickar poäng till GUI
+
+     */
 }

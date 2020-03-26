@@ -46,7 +46,7 @@ public class ClientController {
      */
     private void startSend() { //Todo detta kanske ändras beroende på vad det är som ska skickas
        outputStream = new ClientOutputStreams(user, connection);
-       outputStream.start();
+      // outputStream.start();
     }
 
     /**
@@ -55,7 +55,7 @@ public class ClientController {
      */
     private void startReceive() { //Todo detta kanske ändras beroende på vad det är som ska skickas
         inputStream = new ClientInputStreams(user, this, connection);
-        outputStream.start();
+        inputStream.start();
     }
 
     public void setDare(Dare dare) {

@@ -25,6 +25,7 @@ public class ServerController extends Thread {
         userMap = new HashMap<>();
         userDareMap = new UserDareMap();
         start();
+        new DareDispatcher().start();
     }
 
     public void addDare(Dare dare){
