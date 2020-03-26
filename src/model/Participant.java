@@ -26,7 +26,7 @@ public class Participant {
 	//Should a parameter be passed, or does the method determine how score should be adjusted?
 	public void addToScore() {
 		//Add to score, FIXME: how will adding to a score work?
-		score.addToScore();
+		//score.addToScore();
 	}
 
 	public Score getScore() {

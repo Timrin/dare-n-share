@@ -9,16 +9,16 @@ import java.net.Socket;
 
 public class ServerController extends Thread {
 
-    private ServerInputStream inputStream;
-    private ServerOutputStream outputStream;
+    private Server.ServerInputStream inputStream;
+    private Server.ServerOutputStream outputStream;
     private ServerSocket serverSocket;
     private int port;
-    private Buffer<Dare> buffer;
+    private Server.Buffer<Dare> buffer;
 
 
     public ServerController(int port){
         this.port = port;
-        buffer = new Buffer<>();
+        buffer = new Server.Buffer<>();
     }
 
     public void addDare(Dare dare){

@@ -84,7 +84,9 @@ public class LoginPanel extends JPanel {
         return nameTxt.getText();
     }
 
-
+    public JPanel getBkgroundPanel(){
+        return   this.bkgroundPanel;
+}
 
     /**
      * setUpPanel for Welcome
