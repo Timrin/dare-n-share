@@ -27,6 +27,4 @@ public class UserDareMap {
             map.get(user).add(dare);
         }
     }
-
-
 }

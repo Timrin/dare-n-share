@@ -59,12 +59,7 @@ public class DareController {
         if (yesOrNo.equals("No")){
             dontEatMeat.setScore(YesOrNo.No);
         }
-
     }
-
-    
-
-
 
 
     // Bør kalles på i GUI
@@ -99,7 +94,6 @@ public class DareController {
 
     // gets the Challenger user from gui - prototype
     public void loginUser(String name) {
-        name = loginPanel.getNameTxt(); //??
         this.user = new User(name);
          //todo legg til i actionlistener for login-button
         clientController = new ClientController(user);
