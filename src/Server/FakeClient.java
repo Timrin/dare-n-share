@@ -10,6 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * This class serves to test data flow through the server. Will be scrapped.
+ */
 public class FakeClient extends Thread {
     private int port;
     private String ip;

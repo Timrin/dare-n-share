@@ -3,6 +3,9 @@ package Server;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * Objects of this class are used to save streams for later use.
+ */
 public class ClientConnection {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;

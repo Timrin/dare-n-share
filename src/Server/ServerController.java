@@ -10,6 +10,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
+/**
+ * This class acts as the entire server. It holds two inner classes, ClientHandler, which handles
+ * each connected client, and DareDispatch, which continuously tries to send out Dares from a buffer.
+ * When a client connects to the server, a ClientHandler is created. The client sends its user, which
+ * which is saved with its InputStream and OutputsStream in a HashMap. The user is also saved alongside a
+ * list of Dares in the custom HashMap class UserDareMap.
+ */
 public class ServerController extends Thread {
 
     private ServerSocket serverSocket;
@@ -32,6 +39,9 @@ public class ServerController extends Thread {
         dareBuffer.put(dare);
     }
 
+    /**
+     * Starts a new ClientHandler when a new client connects. Sends along its socket.
+     */
     @Override
     public void run() {
         try{
@@ -50,6 +60,9 @@ public class ServerController extends Thread {
         }
     }
 
+    /**
+     * Handles connection with a single client. Establishes InputStreams and OutputStreams.
+     */
     private class ClientHandler extends Thread{
         private Socket socket;
         ObjectInputStream ois;
@@ -66,6 +79,9 @@ public class ServerController extends Thread {
             }
         }
 
+        /**
+         * First reads in a User object and saves it. Then listens for new messages (Users/Dares).
+         */
         @Override
         public void run() {
             try {
@@ -83,7 +99,7 @@ public class ServerController extends Thread {
                         addDare((Dare) obj);
                     }
                     else if(obj instanceof User){
-                        //TODO: Not sure if this is needed in this version
+                        //TODO: Friend request functionality
                     }
                 }
             } catch (Exception e) {
@@ -92,6 +108,10 @@ public class ServerController extends Thread {
         }
     }
 
+    /**
+     * This Thread tries to get a Dare from a Buffer. When that happens, it identifies the
+     * Users connected to that Dare, and sends the Dare to them both.
+     */
     private class DareDispatcher extends Thread{
 
         @Override
@@ -104,6 +124,7 @@ public class ServerController extends Thread {
                         oos.writeObject(dare);
                         oos.flush();
                         System.out.println("Dare sent to challenged user");
+                        //TODO: This will never happen until Users has access to other Users
                     }
                     if(userMap.containsKey(dare.getInstigator().getUser())){
                         ObjectOutputStream oos2 = userMap.get(dare.getInstigator().getUser()).getOos();
