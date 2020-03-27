@@ -1,3 +1,10 @@
+/**
+ * GUI class that view page with information about active dare were the user will add information
+ * if they succseeded with their daily goal and update their score.
+ * This code is ONLY for prototype. will not be used in finished product.
+ *
+ */
+
 package gui;
 
 import dareSetUp.DareController;
@@ -16,39 +23,26 @@ public class InfoDarePanel extends JPanel {
     private JPanel panelForYesNo = new JPanel();
     private JPanel panelForCurrentScore = new JPanel();
     private JPanel panelForOpponent = new JPanel();
-    private JLabel lblForWelcome = new JLabel("Welcome");
-
-
+    private JLabel lblForWelcome = new JLabel("");
     private JLabel lblHeaderDareName = new JLabel();
     private JLabel lblTime = new JLabel("Did you eat meat today?");
     private JLabel lblGetDays = new JLabel();
     private JButton addAnswer = new JButton("Add answer");
-
     private JLabel lblTxtForDareInfo = new JLabel();
     private JLabel lblForQuestion = new JLabel();
-
     private JCheckBox yesCheckBox = new JCheckBox("Yes");
     private JCheckBox noCheckBox = new JCheckBox("NO");
-
-
     private JLabel lblCurrentScore = new JLabel();
     private JLabel lblGetCurrentScore = new JLabel();
-
     private JLabel lblOpponent = new JLabel("Your Competitor: ");
-
     private JLabel lblGetOpponent = new JLabel();
-
     private JPanel frontPanel = new JPanel();
-
-    //private DareController dareController;
     private LoginPanel loginPanel;
 
 
     public InfoDarePanel (LoginPanel loginPanel){
         this.loginPanel = loginPanel;
 
-      //  setFrontPanel();
-       // setBkgroundPanel();
         setBkgroundPanel2();
         setPanelForGrid();
         setPanelForHeader();
@@ -91,17 +85,10 @@ public class InfoDarePanel extends JPanel {
         bkgroundPanel2.add(panelForGrid);
 
     }
-/*
-    public void setUpFrame(){
-        JFrame frame = new JFrame("Challenged");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBackground(Color.PINK);
-        frame.setPreferredSize(new Dimension(400,520));
-        frame.pack();
-        frame.add(this);
-        frame.setVisible(true);
-    }
- */
+
+    /**
+     * panel for active dare information.
+     */
     public void setPanelForHeader(){
         panelForGrid.add(panelForHeader);
         panelForHeader.add(lblForWelcome);
@@ -112,6 +99,9 @@ public class InfoDarePanel extends JPanel {
 
     }
 
+    /**
+     * Panel for Yes/No question. When user add an answer score will be updated.
+     */
     public void setPanelForYesNo(){
         panelForGrid.add(panelForYesNo);
 
@@ -121,14 +111,11 @@ public class InfoDarePanel extends JPanel {
         panelForYesNo.add(yesCheckBox);
         panelForYesNo.add(noCheckBox);
         panelForYesNo.add(addAnswer);
-        addAnswer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (yesCheckBox.isSelected()) {
-                    lblGetCurrentScore.setText("1000");
-                }
-                else lblGetCurrentScore.setText("0 , Better luck next time");
+        addAnswer.addActionListener(e -> {
+            if (yesCheckBox.isSelected()) {
+                lblGetCurrentScore.setText("0 , Better luck next time");
             }
+            else lblGetCurrentScore.setText("1000");
         });
 
 
@@ -163,34 +150,6 @@ public class InfoDarePanel extends JPanel {
         panelForGrid.setBackground(Color.BLUE);
 
     }
-/*
-    public void setFrontPanel(){
-        add(frontPanel);//oklart om detta behövs
-        frontPanel.setPreferredSize(new Dimension(400,400));
-        frontPanel.add(nameLbl);
-        frontPanel.add(nameTxt);
-        nameTxt.setPreferredSize(new Dimension(100,30));
-        frontPanel.add(loginBtn);
-        loginBtn.addActionListener(e -> {
-
-            frontPanel.setVisible(false);
-            panelForGrid.setVisible(false);
-          //  bkgroundPanel2.add(panelForGrid);
-
-          //  loginPanel.showHomeScreen();
-            //setBkgroundPanel();
-            //setPanelForGrid();
-        //    this.dareController.loginUser(nameTxt.getText());
-
-        });
-        frontPanel.setBackground(Color.PINK);
-
-
-    }
-
-
- */
-
 
 
 

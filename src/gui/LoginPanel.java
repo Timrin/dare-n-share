@@ -1,3 +1,9 @@
+/**
+ * GUI class that create frames and controller. Class create panel for login, and add new Dare.
+ * Prototype only.
+ *
+ */
+
 package gui;
 
 import dareSetUp.DareController;
@@ -5,36 +11,24 @@ import dareSetUp.DareController;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel {
 
     private JPanel bkgroundPanel = new JPanel(new BorderLayout());
     private JPanel frontPanel = new JPanel();
-
-
-
     private JTextField nameTxt = new JTextField();
     private JLabel nameLbl = new JLabel("Username");
     private JButton loginBtn = new JButton("Login");
     private JPanel popupPanel = new JPanel(new GridLayout(4,1));
     private JLabel welcomeText = new JLabel("Welcome");
-
-
-
     private JLabel welcomeName = new JLabel();
     private JLabel numberOfWins = new JLabel("Winners");
     private JLabel getNumberOfWins = new JLabel();
     private JLabel daresInProgress = new JLabel("Active Dares");
-
-
     private JButton seeDare = new JButton("See dare info");
-    private JLabel changeToSomethingElse = new JLabel("Your active dares");
+    private JLabel yourActiveDares = new JLabel("Your active dares");
     private JButton newDare = new JButton("NEW DARE");
-
     private DarePanel darePanel;
-
     private DareController dareController;
     private InfoDarePanel infoDarePanel;
 
@@ -58,16 +52,16 @@ public class LoginPanel extends JPanel {
         this.welcomeName.setText(welcomeName);
     }
 
-    public String getChangeToSomethingElse() {
-        return changeToSomethingElse.getText();
+    public String getYourActiveDares() {
+        return yourActiveDares.getText();
     }
 
-    public void setChangeToSomethingElse(String changeToSomethingElse) {
-        this.changeToSomethingElse.setText(changeToSomethingElse);
+    public void setYourActiveDares(String yourActiveDares) {
+        this.yourActiveDares.setText(yourActiveDares);
     }
 
     public void setNameOfDare (String changeToSomethingElse) {
-        this.changeToSomethingElse.setText(changeToSomethingElse);
+        this.yourActiveDares.setText(changeToSomethingElse);
     }
 
     public void setBkgroundPanel (){
@@ -76,6 +70,9 @@ public class LoginPanel extends JPanel {
         bkgroundPanel.add(frontPanel);
     }
 
+    /**
+     * Panel with login GUI, sends username to controller
+     */
     public void setFrontPanel(){
         add(frontPanel);//oklart om detta behövs
         frontPanel.setPreferredSize(new Dimension(400,400));
@@ -97,7 +94,9 @@ public class LoginPanel extends JPanel {
 
     }
 
-
+    /**
+     * New dare button panel
+     */
     public void setPopupPanel(){
         add(popupPanel);
         popupPanel.setBackground(Color.CYAN);
@@ -153,7 +152,7 @@ public class LoginPanel extends JPanel {
         JPanel darePanel = new JPanel(new BorderLayout());
         popupPanel.add(darePanel);
         darePanel.add(daresInProgress);
-        darePanel.add(changeToSomethingElse);
+        darePanel.add(yourActiveDares);
         darePanel.setBackground(Color.GREEN);
         TitledBorder title;
 
@@ -195,6 +194,9 @@ public class LoginPanel extends JPanel {
 
     }
 
+    /**
+     * creates new Frame for next user.
+     */
     public void setFrame(){
         JFrame frame = new JFrame("Challenged");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
