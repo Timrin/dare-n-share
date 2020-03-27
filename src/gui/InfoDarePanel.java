@@ -7,6 +7,7 @@
 
 package gui;
 
+import dareSetUp.Challenges;
 import dareSetUp.DareController;
 import dareSetUp.YesOrNo;
 
@@ -26,6 +27,7 @@ public class InfoDarePanel extends JPanel {
     private JLabel lblForWelcome = new JLabel("");
     private JLabel lblHeaderDareName = new JLabel();
     private JLabel lblTime = new JLabel("Did you eat meat today?");
+    private JLabel lblDucks = new JLabel("Did you feed your local duck today?");
     private JLabel lblGetDays = new JLabel();
     private JButton addAnswer = new JButton("Add answer");
     private JLabel lblTxtForDareInfo = new JLabel();
@@ -106,8 +108,12 @@ public class InfoDarePanel extends JPanel {
         panelForGrid.add(panelForYesNo);
 
         panelForYesNo.add(lblTime);
-
-        panelForYesNo.add(lblForQuestion);
+        if(getLblHeaderDareName().equals(Challenges.DontEatMeat)) {
+            panelForYesNo.add(lblForQuestion);
+        }
+        if(getLblHeaderDareName().equals(Challenges.FeedTheDucks)){
+            panelForYesNo.add(lblDucks);
+        }
         panelForYesNo.add(yesCheckBox);
         panelForYesNo.add(noCheckBox);
         panelForYesNo.add(addAnswer);

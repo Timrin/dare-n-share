@@ -105,10 +105,10 @@ public class DarePanel extends JPanel implements ActionListener {
         popUpPanel.add(dareInfoPanel);
         dareInfoPanel.setBackground(Color.ORANGE);
         dareInfoPanel.add(txtExplainingDare);
-        txtExplainingDare.setText("No meat for 3 whole days my friend");
+        txtExplainingDare.setText("Choose your dare");
         dareInfoPanel.add(dares);
         dares.addItem(Challenges.DontEatMeat);
-        dares.addItem(Challenges.TimesYesNo);
+        dares.addItem(Challenges.FeedTheDucks);
         dares.addActionListener(this);
     }
 

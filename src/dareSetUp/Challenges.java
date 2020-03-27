@@ -6,6 +6,7 @@ public enum Challenges {
     TimesAddUp,
     GoalYesNo,
     GoalAddup,
-    DontEatMeat
+    DontEatMeat,
+    FeedTheDucks
 
 }

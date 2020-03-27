@@ -77,7 +77,7 @@ public class DareController {
                 dare = new DontEatMeat(user, anders);
                 dontEatMeat.setTimeOfDare(3);  // prototypen
                 break;
-            case TimesAddUp:
+            case FeedTheDucks:
                 //dare= new TimeAddUpScore();
                 break;
          /*   case GoalAddup:
