@@ -19,6 +19,7 @@ public class FakeClient extends Thread {
         this.port = port;
         this.ip = ip;
         user = new User("Greger", new ImageIcon(), "Greger@email.com");
+        start();
     }
 
     @Override
@@ -27,12 +28,15 @@ public class FakeClient extends Thread {
             Socket socket = new Socket(ip, port);
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+            System.out.println("Connection established");
 
             oos.writeObject(user);
+            System.out.println("User has been sent");
 
             sleep(3000);
 
             oos.writeObject(new DontEatMeat(user, new User()));
+            System.out.println("Dare has been sent");
 
             while(true){
                 Object obj = ois.readObject();
@@ -45,5 +49,9 @@ public class FakeClient extends Thread {
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        FakeClient faker = new FakeClient(2324, "127.0.0.1");
     }
 }
