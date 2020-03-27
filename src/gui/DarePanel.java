@@ -1,6 +1,6 @@
 /**
- * GUI for prototype
- * @author: Julia Björnberg
+ * GUI for prototype where user can create a new dare.
+ *
  */
 package gui;
 
@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DarePanel extends JPanel implements ActionListener {
-  //  private LoginPanel loginPanel;
+
     private JPanel popUpPanel = new JPanel(new GridLayout(4,1));
     private JPanel headerPanel = new JPanel(new BorderLayout());
     private JLabel dareHeader = new JLabel();
@@ -98,6 +98,9 @@ public class DarePanel extends JPanel implements ActionListener {
         dareHeader.setText(" NEW DARE");
     }
 
+    /**
+     * panel where user can choose type of dare (in this prototype only no meat will be used)
+     */
     public void setDareInfoPanel(){
         popUpPanel.add(dareInfoPanel);
         dareInfoPanel.setBackground(Color.ORANGE);
@@ -109,6 +112,9 @@ public class DarePanel extends JPanel implements ActionListener {
         dares.addActionListener(this);
     }
 
+    /**
+     * panel where user can choose friend from list to dare.
+     */
     public void setFriendsPanel(){
         popUpPanel.add(friendsPanel);
         friendsPanel.setBackground(Color.WHITE);
@@ -133,9 +139,5 @@ public class DarePanel extends JPanel implements ActionListener {
     public JButton getStartDareBtn(){
         return getStartDareBtn();
     }
-
-
-
-
 
 }
