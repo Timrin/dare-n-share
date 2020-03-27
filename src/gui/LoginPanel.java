@@ -220,10 +220,6 @@ public class LoginPanel extends JPanel {
         frame.pack();
         frame.add(new LoginPanel());
         frame.setVisible(true);
-
-
-
-
     }
 
     public void showHomeScreen() {

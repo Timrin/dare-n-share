@@ -45,7 +45,7 @@ public class DarePanel extends JPanel implements ActionListener {
         dares.addActionListener(this);
         friends.addActionListener(this);
         startDareBtn.addActionListener(e -> {
-            loginPanelRef.setFrame();
+            //loginPanelRef.setFrame();
           //  new InfoDarePanel();
             loginPanelRef.showHomeScreen();
             popUpPanel.setVisible(false);
@@ -68,13 +68,13 @@ public class DarePanel extends JPanel implements ActionListener {
      * */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(startDareBtn.isSelected()){
-          //  new InfoDarePanel();
-            if (e.getSource()==dares){
-                dareController.setUpDareAfterGUI();
-                dareController.setChallengedParticipant(String.valueOf(friends));
-            }
-        }
+//        if(startDareBtn.isSelected()){
+//          //  new InfoDarePanel();
+//            if (e.getSource()==dares){
+//                dareController.setUpDareAfterGUI();
+//                dareController.setChallengedParticipant(String.valueOf(friends));
+//            }
+//        }
 
 
     }
