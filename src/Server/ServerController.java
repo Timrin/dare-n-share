@@ -103,13 +103,13 @@ public class ServerController extends Thread {
                         ObjectOutputStream oos = userMap.get(dare.getChallenged().getUser()).getOos();
                         oos.writeObject(dare);
                         oos.flush();
-                        System.out.println("Dare sent to something");
+                        System.out.println("Dare sent to challenged user");
                     }
                     if(userMap.containsKey(dare.getInstigator().getUser())){
                         ObjectOutputStream oos2 = userMap.get(dare.getInstigator().getUser()).getOos();
                         oos2.writeObject(dare);
                         oos2.flush();
-                        System.out.println("Dare sent to someone else idk");
+                        System.out.println("Dare sent to back to challenging user");
                     }
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
