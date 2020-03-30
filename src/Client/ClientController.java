@@ -18,20 +18,15 @@ public class ClientController {
     private ClientInputStreams inputStream;
     private ClientOutputStreams outputStream;
 
-    private BufferOfDares <Dare> dareBuffer;
-    private Dare dare;
     private Score score;
     private DareController dareController;
 
     /**
-     * All methods that is required to able contacts to interact with one another, and to transmit messages
+     * All methods that is required to enable users to interact with one another, and to transmit dares
      */
-
     public ClientController(User user, DareController dareController) {
         this.user = user;
         this.dareController= dareController;
-        //this.ip = ip;
-        //this.port = port;
         try {
             connection = new Socket(ip, port);
             startSend();
@@ -47,33 +42,37 @@ public class ClientController {
      * Creates objects of ClientObjectOutputStreams, connects through socket and initiates its thread. This method will be called in controller to connect to actual user
      * @param
      */
-    private void startSend() { //Todo detta kanske ändras beroende på vad det är som ska skickas
+    private void startSend() {
        outputStream = new ClientOutputStreams(user, connection);
-      // outputStream.start();
     }
 
     /**
      * Is called when "request of challenge is made". Is to be called in controller to connect to actual user.
      * @param
      */
-    private void startReceive() { //Todo detta kanske ändras beroende på vad det är som ska skickas
+    private void startReceive() {
         inputStream = new ClientInputStreams(user, this, connection);
         inputStream.start();
     }
 
+    /**
+     * Set the active dare in the controller
+     * @param dare
+     */
     public void setDare(Dare dare) {
-      //  this.dare = dare; //Todo send dare to other controller
-        dareController.getDareFromClient(dare);
+        dareController.setDarePanelData(dare);
     }
 
-    public void setOpponent(User user){
-        // Sever sends opponent user with dare?
-        // Set user at dareController.setOpponent(User user) ?
-    }
-
-    public void sendDare(Dare dare) {
+    /**
+     * Send a created dare to the server
+     * @param dare
+     */
+    public void sendCreatedDare(Dare dare) {
         outputStream.sendDare(dare);
     }
+
+
+    //TODO: Implement score functionality
 
     public void setScore(Score score) {
         this.score = score;

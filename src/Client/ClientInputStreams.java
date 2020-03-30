@@ -14,15 +14,11 @@ import java.net.Socket;
  */
 public class ClientInputStreams extends Thread {
     private ObjectInputStream ois;
-    private Socket socket;
-    private User user;
     private ClientController controller;
 
 
     public ClientInputStreams(User user, ClientController controller, Socket socket) {
         this.controller = controller;
-        this.socket = socket;
-        this.user = user;
 
         try {
             ois = new ObjectInputStream(socket.getInputStream());

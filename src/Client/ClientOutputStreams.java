@@ -16,44 +16,52 @@ import java.net.Socket;
  */
 
 public class ClientOutputStreams extends Thread {
-    private ObjectOutputStream oos;
-    private Socket socket;
-    private User user;
+	private ObjectOutputStream oos;
+	private User user;
 
-     /**
-     * Will connect objectOutputStream to clients socket when initiated.
-     *
-     * @param socket
-     */
-    public ClientOutputStreams(User user,Socket socket) {
-        this.user = user;
-        this.socket = socket;
-        try {
-            if (oos == null) {
-                oos = new ObjectOutputStream(socket.getOutputStream());
-                oos.writeObject(this.user);
-                System.out.println(user + "OutputClient");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * Will connect objectOutputStream to clients socket when initiated.
+	 *
+	 * @param socket socket of the server connection
+	 */
+	public ClientOutputStreams(User user, Socket socket) {
+		this.user = user;
+		try {
+			if (oos == null) {
+				oos = new ObjectOutputStream(socket.getOutputStream());
+				oos.writeObject(this.user);
+				System.out.println(user + "OutputClient");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void sendDare(Dare dare) {
-        try {
-            oos.writeObject(dare);
-            System.out.println(dare + "Dare");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	/**
+	 * User to pass dares to the server
+	 *
+	 * @param dare dare that will be sent to the server
+	 */
+	public void sendDare(Dare dare) {
+		try {
+			oos.writeObject(dare);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    }
+	}
 
-    public void sendScore(Score score){
-        try {
-            oos.writeObject(score);
-        }catch (IOException e){}
-    }
+	/**
+	 * Used to pass score to the server
+	 *
+	 * @param score score that will be sent to the server
+	 */
+	public void sendScore(Score score) {
+		try {
+			oos.writeObject(score);
+		} catch (IOException e) {
+		}
+	}
 
 
 }

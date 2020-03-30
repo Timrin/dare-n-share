@@ -28,7 +28,7 @@ public class LoginPanel extends JPanel {
     private JButton seeDare = new JButton("See dare info");
     private JLabel yourActiveDares = new JLabel("Your active dares");
     private JButton newDare = new JButton("NEW DARE");
-    private DarePanel darePanel;
+    private CreateDarePanel darePanel;
     private DareController dareController;
     private InfoDarePanel infoDarePanel;
 
@@ -37,7 +37,7 @@ public class LoginPanel extends JPanel {
         setBkgroundPanel();
         setFrontPanel();
 
-        darePanel = new DarePanel(this,dareController);
+        darePanel = new CreateDarePanel(this,dareController);
         darePanel.setVisible(false);
 
         infoDarePanel = new InfoDarePanel(this);
