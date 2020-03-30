@@ -2,6 +2,7 @@ package dareSetUp;
 
 import Client.ClientController;
 import gui.LoginPanel;
+import model.Dare;
 import model.Participant;
 import model.User;
 

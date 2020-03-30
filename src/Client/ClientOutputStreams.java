@@ -1,6 +1,6 @@
 package Client;
 
-import dareSetUp.Dare;
+import model.Dare;
 
 import dareSetUp.Score;
 import model.User;

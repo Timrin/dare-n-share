@@ -1,6 +1,5 @@
 package model;
 
-import dareSetUp.Dare;
 import dareSetUp.Score;
 
 import java.io.Serializable;

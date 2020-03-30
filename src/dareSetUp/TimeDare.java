@@ -1,9 +1,8 @@
 package dareSetUp;
 
 
+import model.Dare;
 import model.User;
-
-import java.io.Serializable;
 
 /**
  * This class should maybe be abstract? todo if so.

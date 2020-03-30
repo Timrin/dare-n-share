@@ -1,6 +1,6 @@
 package Server;
 
-import dareSetUp.Dare;
+import model.Dare;
 import dareSetUp.DontEatMeat;
 import model.User;
 

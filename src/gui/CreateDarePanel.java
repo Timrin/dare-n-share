@@ -19,18 +19,17 @@ public class CreateDarePanel extends JPanel {
 
 	private JPanel dareInfoPanel = new JPanel(new FlowLayout());
 	private JLabel txtExplainingDare = new JLabel();
-	private JComboBox dares = new JComboBox();
+	private JComboBox<Challenges> dares = new JComboBox();
 
 	private JPanel friendsPanel = new JPanel(new FlowLayout());
 	private JLabel addingFriend = new JLabel();
-	private JComboBox friends = new JComboBox();
+	private JComboBox<String> friends = new JComboBox();
 
 	private JPanel btnPanel = new JPanel(new BorderLayout());
 	private JButton startDareBtn = new JButton("IT´S ON LIKE DONKEY KONG");
-	private DareController dareController;
-	private LoginPanel loginPanel;
 	private JPanel panelForActiveDare = new JPanel(new GridLayout(4, 1));
 
+	private DareController dareController;
 	private LoginPanel loginPanelRef;
 
 	public CreateDarePanel(LoginPanel loginPanelRef, DareController dareController) {
@@ -109,6 +108,8 @@ public class CreateDarePanel extends JPanel {
 		addingFriend.setText("Choose a friend to dare");
 		friendsPanel.add(friends);
 		friends.getSelectedIndex();
+
+		//Hardcoded values for the friends list.
 		friends.addItem("The Donald");
 		friends.addItem("Anders Tegnell");
 	}

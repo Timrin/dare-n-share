@@ -1,6 +1,6 @@
 package Server;
 
-import dareSetUp.Dare;
+import model.Dare;
 import model.User;
 
 import java.util.ArrayList;

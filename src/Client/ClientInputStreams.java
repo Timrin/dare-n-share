@@ -1,6 +1,6 @@
 package Client;
 
-import dareSetUp.Dare;
+import model.Dare;
 
 import model.User;
 

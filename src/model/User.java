@@ -1,7 +1,5 @@
 package model;
 
-import dareSetUp.Dare;
-
 import dareSetUp.Score;
 
 import javax.swing.*;

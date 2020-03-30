@@ -1,4 +1,4 @@
-package dareSetUp;
+package model;
 
 import model.Participant;
 import model.User;
