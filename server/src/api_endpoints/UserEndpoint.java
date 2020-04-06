@@ -1,6 +1,11 @@
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+package api_endpoints;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * This class has the endpoint logic for Users
@@ -12,7 +17,7 @@ public class UserEndpoint extends HttpServlet {
 
 	public void init() throws ServletException {
 		// Do required initialization
-		message = "UserEndpoint";
+		message = "api_endpoints.UserEndpoint";
 	}
 
 	/**

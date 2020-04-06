@@ -1,3 +1,7 @@
+package api_endpoints;
+
+import database_sockets.DareSocket;
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,7 +16,7 @@ public class DareEndpoint extends HttpServlet {
 
 	public void init() throws ServletException {
 		// Do required initialization
-		message = "DareEndpoint";
+		message = "api_endpoints.DareEndpoint";
 	}
 
 	/**
@@ -30,13 +34,16 @@ public class DareEndpoint extends HttpServlet {
 		String path = request.getPathInfo();
 
 		// Set response content type
-		response.setContentType("text/html");
+		response.setContentType("application/json");
+
 
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
-		out.println("<h1>" + message + "</h1>");
-		out.println("<h3>" + path + "</h3>");
+		out.println(DareSocket.readDare(0));
+		//out.println("<h3>" + path + "</h3>");
 	}
+
+
 
 	public void destroy() {
 		// do nothing.

@@ -1,3 +1,5 @@
+package api_endpoints;
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,7 +14,7 @@ public class ScoreEndpoint extends HttpServlet {
 
 	public void init() throws ServletException {
 		// Do required initialization
-		message = "ScoreEndpoint";
+		message = "api_endpoints.ScoreEndpoint";
 	}
 
 	/**
@@ -30,6 +32,8 @@ public class ScoreEndpoint extends HttpServlet {
 		String path = request.getPathInfo();
 
 		// Set response content type
+		// json obj
+		// in the teams wiki
 		response.setContentType("text/html");
 
 		// Actual logic goes here.

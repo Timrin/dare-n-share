@@ -22,10 +22,10 @@
   version="4.0"
   metadata-complete="true">
 
-<!--DareEndpoint mappings-->
+<!--api_endpoints.DareEndpoint mappings-->
   <servlet>
     <servlet-name>DareEndpoint</servlet-name>
-    <servlet-class>DareEndpoint</servlet-class>
+    <servlet-class>api_endpoints.DareEndpoint</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -33,10 +33,10 @@
     <url-pattern>/dare/*</url-pattern>
   </servlet-mapping>
 
-<!--UserEndpoint mappings-->
+<!--api_endpoints.UserEndpoint mappings-->
   <servlet>
     <servlet-name>UserEndpoint</servlet-name>
-    <servlet-class>UserEndpoint</servlet-class>
+    <servlet-class>api_endpoints.UserEndpoint</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -44,10 +44,10 @@
     <url-pattern>/user/*</url-pattern>
   </servlet-mapping>
 
-<!--ScoreEndpoint mappings-->
+<!--api_endpoints.ScoreEndpoint mappings-->
   <servlet>
     <servlet-name>ScoreEndpoint</servlet-name>
-    <servlet-class>ScoreEndpoint</servlet-class>
+    <servlet-class>api_endpoints.ScoreEndpoint</servlet-class>
   </servlet>
 
   <servlet-mapping>
