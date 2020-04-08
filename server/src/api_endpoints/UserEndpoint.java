@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -72,12 +73,43 @@ public class UserEndpoint extends HttpServlet {
 		//out.println("<h1>" + message + "</h1>");
 		//out.println("<h3>" + path + "</h3>");
 
-       // out.println(UserDB.getUserByID(1)); //fixme
+        out.println(UserDB.getUserByID(1)); //fixme
 
-		out.println(UserDB.addUser(user));
+
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+		//Parse request
+		String path = request.getPathInfo();
+		StringBuilder stringBuilder = new StringBuilder();
+		BufferedReader br = request.getReader();
+		String line = br.readLine();
+		while (line!= null){
+			stringBuilder.append(line);
+			line = br.readLine();
+		}
+
+		System.out.println(stringBuilder.toString());
+		// Set response content type
+		//response.setContentType("text/html");
+		response.setContentType("application/json");
+
+		// Actual logic goes here.
+		PrintWriter out = response.getWriter();
+		//out.println("<h1>" + message + "</h1>");
+		//out.println("<h3>" + path + "</h3>");
+
+	//	 out.println(UserDB.getUserByID(1)); //fixme
+		//out.println(UserDB.addUser(stringBuilder.toString()));
+		out.println("post recieved");
+
 	}
 
 	public void destroy() {
 		// do nothing.
 	}
+
+
 }
