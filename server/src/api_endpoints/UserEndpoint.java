@@ -13,9 +13,11 @@ import java.io.PrintWriter;
 /**
  * This class has the endpoint logic for Users
  * It handles requests sent to the /user/{id} path
+ *
+ * @author Julia and Kamilla - XP pairprogamming
  */
 public class UserEndpoint extends HttpServlet {
-	private String user = "  \"uid\": 1,\n" +
+	/*private String user = "  \"uid\": 1,\n" +
 			"  \"name\": \"Timothy\",\n" +
 			"  \"profile_img\": \"/profile-picture/1\",\n" +
 			"  \"dares\": [\n" +
@@ -41,13 +43,19 @@ public class UserEndpoint extends HttpServlet {
 			"      \"profile_img\": \"/profile-picture/1\"\n" +
 			"    }\n" +
 			"  ]\n" +
-			"}";
+			"}";*/
 
 	private String message;
+	private UserDB userDB;
+
+	/*public UserEndpoint() {
+		userDB = new UserDB();
+	}*/
 
 	public void init() throws ServletException {
 		// Do required initialization
 		message = "api_endpoints.UserEndpoint";
+		userDB = new UserDB();
 	}
 
 	/**
@@ -65,16 +73,17 @@ public class UserEndpoint extends HttpServlet {
 		String path = request.getPathInfo();
 
 		// Set response content type
-		//response.setContentType("text/html");
+
 		response.setContentType("application/json");
 
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
-		//out.println("<h1>" + message + "</h1>");
-		//out.println("<h3>" + path + "</h3>");
 
-        out.println(UserDB.getUserByID(1)); //fixme
 
+        //out.println(UserDB.getUserByID(1)); //fixme
+		for (int i=0;i<10;i++) {
+			out.println(userDB.getUser(i));
+		}
 
 	}
 
@@ -92,17 +101,13 @@ public class UserEndpoint extends HttpServlet {
 		}
 
 		System.out.println(stringBuilder.toString());
-		// Set response content type
-		//response.setContentType("text/html");
-		response.setContentType("application/json");
 
+		userDB.addUser(stringBuilder.toString());
+		// Set response content type
+		response.setContentType("application/json");
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
-		//out.println("<h1>" + message + "</h1>");
-		//out.println("<h3>" + path + "</h3>");
 
-	//	 out.println(UserDB.getUserByID(1)); //fixme
-		//out.println(UserDB.addUser(stringBuilder.toString()));
 		out.println("post recieved");
 
 	}

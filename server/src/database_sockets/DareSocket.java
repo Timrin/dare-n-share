@@ -49,8 +49,6 @@ public class DareSocket {
         return stringBuilder.toString();
     }
 
-        public static void main (String[]args) throws IOException {
-         readDare(0);
-        }
+
 
     }

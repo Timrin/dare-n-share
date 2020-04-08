@@ -4,52 +4,34 @@ package database_sockets;
  * @author Julia and Kamilla - XP pair programming
  * */
 
-import java.sql.SQLOutput;
+import java.util.ArrayList;
 
 public class DareDB {
 
-    private static String[] DAREID = {"{\n" +
-            "    \"id\": 5150922,\n" +
-            "    \"objective\": {\n" +
-            "        \"type\": \"BOOLEAN\",\n" +
-            "        \"goal\": \"NO_MEAT\"\n" +
-            "    },\n" +
-            "    \"scope\": {\n" +
-            "        \"type\": \"TIMED\",\n" +
-            "        \"length\": 3\n" +
-            "    },\n" +
-            "    \"start\": \"2012-01-23T18:25:43.511Z\",\n" +
-            "    \"end\": \"2012-04-23T18:25:43.511Z\",\n" +
-            "    \"participants\": [\n" +
-            "        {\n" +
-            "            \"uid\": 1,\n" +
-            "            \"name\": \"Timothy\",\n" +
-            "            \"profile_img\": \"/profile-picture/1\",\n" +
-            "            \"score\": [\n" +
-            "                true,\n" +
-            "                false\n" +
-            "            ]\n" +
-            "        },\n" +
-            "        {\n" +
-            "            \"uid\": 2,\n" +
-            "            \"name\": \"Steven\",\n" +
-            "            \"profile_img\": \"/profile-picture/2\",\n" +
-            "            \"score\": [\n" +
-            "                false,\n" +
-            "                false\n" +
-            "            ]\n" +
-            "        }\n" +
-            "    ]\n" +
-            "}"};
+    private ArrayList<String> dares = new ArrayList<String>();
 
-
-
-    public static String getDareByID(int id){
-        return DAREID[id];
+    /**
+     * Expects an ID from the android app.
+     * returns a dare with that ID.
+     * */
+    public String getDare(int id){
+        return dares.get(id);
     }
 
-    public static void main(String[] args) {
-        getDareByID(0);
+
+    /**
+     * Expects an ID from the android app.
+     * returns the a dare with that ID.
+     * */
+    public void recieveDareFromClient(String dare){
+        dares.add(dare);
+
     }
+
+    public String deliverDare(){
+        return dares.toString();
+    }
+
+
 
 }
