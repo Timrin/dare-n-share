@@ -1,5 +1,7 @@
 package api_endpoints;
 
+import database_sockets.ScoreDB;
+
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -34,12 +36,14 @@ public class ScoreEndpoint extends HttpServlet {
 		// Set response content type
 		// json obj
 		// in the teams wiki
-		response.setContentType("text/html");
+		//response.setContentType("text/html");
+		response.setContentType("application/json");
 
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
-		out.println("<h1>" + message + "</h1>");
-		out.println("<h3>" + path + "</h3>");
+		//out.println("<h1>" + message + "</h1>");
+		//out.println("<h3>" + path + "</h3>");
+		out.println(ScoreDB.getScorebyUserID(1));
 	}
 
 	public void destroy() {

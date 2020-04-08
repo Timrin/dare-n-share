@@ -1,5 +1,10 @@
 package database_sockets;
 
+/**
+ * @author Timothy, Julia and Kamilla - XP pair programming
+ *
+ * */
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -15,7 +20,6 @@ public class DareSocket {
      */
 
     public static String readDare(int id) {
-
 
         String path = files[id];
 

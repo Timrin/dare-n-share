@@ -1,5 +1,7 @@
 package api_endpoints;
 
+import database_sockets.UserDB;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,33 @@ import java.io.PrintWriter;
  * It handles requests sent to the /user/{id} path
  */
 public class UserEndpoint extends HttpServlet {
+	private String user = "  \"uid\": 1,\n" +
+			"  \"name\": \"Timothy\",\n" +
+			"  \"profile_img\": \"/profile-picture/1\",\n" +
+			"  \"dares\": [\n" +
+			"    {\n" +
+			"      \"id\": \"d1\"\n" +
+			"    },\n" +
+			"    {\n" +
+			"      \"id\": \"d2\"\n" +
+			"    },\n" +
+			"    {\n" +
+			"      \"id\": \"d3\"\n" +
+			"    }\n" +
+			"  ],\n" +
+			"  \"friends\": [\n" +
+			"    {\n" +
+			"      \"uid\": 2,\n" +
+			"      \"name\": \"Steven\",\n" +
+			"      \"profile_img\": \"/profile-picture/1\"\n" +
+			"    },\n" +
+			"    {\n" +
+			"      \"uid\": 3,\n" +
+			"      \"name\": \"Tor\",\n" +
+			"      \"profile_img\": \"/profile-picture/1\"\n" +
+			"    }\n" +
+			"  ]\n" +
+			"}";
 
 	private String message;
 
@@ -35,12 +64,17 @@ public class UserEndpoint extends HttpServlet {
 		String path = request.getPathInfo();
 
 		// Set response content type
-		response.setContentType("text/html");
+		//response.setContentType("text/html");
+		response.setContentType("application/json");
 
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
-		out.println("<h1>" + message + "</h1>");
-		out.println("<h3>" + path + "</h3>");
+		//out.println("<h1>" + message + "</h1>");
+		//out.println("<h3>" + path + "</h3>");
+
+       // out.println(UserDB.getUserByID(1)); //fixme
+
+		out.println(UserDB.addUser(user));
 	}
 
 	public void destroy() {
