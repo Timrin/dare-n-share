@@ -1,12 +1,8 @@
 package api_endpoints;
 
 import database_sockets.DareDB;
-import database_sockets.DareSocket;
 
 import java.io.*;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -51,20 +47,31 @@ public class DareEndpoint extends HttpServlet {
         //Parse request
 
         String pathInfo = request.getPathInfo();
+        if (pathInfo.length() >= 2) {
+            try {
+                int id = Integer.parseInt(request.getPathInfo().substring(1));
 
 
-        // Set response content type
-        response.setContentType("application/json");
-        response.setContentType("text/html");
+                // Set response content type
+                response.setContentType("application/json");
 
-        // Actual logic goes here.
-        PrintWriter out = response.getWriter();
+                // Actual logic goes here.
+                PrintWriter out = response.getWriter();
+                if (dareDB.getDare(id) == null) {
+                    throw new Exception(" not found");
+                } else {
 
-
-        for(int i = 0; i<10;i++) {
-
-            out.println(dareDB.getDare(i)); //fixme
+                    out.println(dareDB.getDare(id)); //fixme
+                }
+            } catch (NumberFormatException e) {
+                response.setStatus(400);
+            } catch (Exception e) {
+                response.setStatus(404);
+            }
+        } else {
+            response.setStatus(400); //??
         }
+
 
     }
 
@@ -73,32 +80,58 @@ public class DareEndpoint extends HttpServlet {
 
         //Parse request
         String path = request.getPathInfo();
+        if (path.length() >= 2) {
+            try {
+                int id = Integer.parseInt(request.getPathInfo().substring(1));
 
-        StringBuilder stringBuilder = new StringBuilder();
+                // Set response content type
+                //response.setContentType("application/json");
 
-        BufferedReader br = request.getReader();
+                // Actual logic goes here.
+                //PrintWriter out = response.getWriter();
+                String dare = dareDB.getDare(id);
 
-        String line = br.readLine();
+                if (dare != null) {
+                    StringBuilder stringBuilder = new StringBuilder();
 
-        while (line != null) {
-            stringBuilder.append(line);
-            line = br.readLine();
+                    PrintWriter out = response.getWriter();
+                    out.println(dare);
+
+                    BufferedReader br = request.getReader();
+
+                    String line = br.readLine();
+
+                    while (line != null) {
+                        stringBuilder.append(line);
+                        line = br.readLine();
+                    }
+
+                    System.out.println(stringBuilder.toString());
+
+                    dareDB.createDare(id, stringBuilder.toString());
+
+
+                    // Set response content type
+                    response.setContentType("application/json");
+                    // Actual logic goes here.
+                    //PrintWriter out = response.getWriter();
+
+                    out.println("post recieved");
+
+                } else {
+                    throw new Exception(" not found");
+                    //out.println(dareDB.getDare(id)); //fixme
+
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            response.setStatus(400);
         }
-
-        System.out.println(stringBuilder.toString());
-
-        dareDB.recieveDareFromClient(stringBuilder.toString());
-
-
-        // Set response content type
-        response.setContentType("application/json");
-        // Actual logic goes here.
-        PrintWriter out = response.getWriter();
-
-        out.println("post recieved");
-
     }
-
 
     public void destroy() {
         // do nothing.

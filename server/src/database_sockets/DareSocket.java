@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class DareSocket {
 
-    private static String[] files = {"server/resources/dare.txt", "files/dare2.txt"};
+    private static String[] files = {"server/resources/dare.json", "files/dare2.txt"};
 
 
     /**
-     * This methods reads the dares from dare.txt and returns
+     * This methods reads the dares from dare.json and returns
      */
 
     public static String readDare(int id) {
@@ -33,7 +33,7 @@ public class DareSocket {
                 String str = br.readLine();
                 while (str != null) {
                     System.out.println(str);
-                    stringBuilder.append(str); // Reads dare.txt
+                    stringBuilder.append(str); // Reads dare.json
                     str = br.readLine();
                 }
 

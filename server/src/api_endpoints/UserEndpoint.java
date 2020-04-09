@@ -73,22 +73,18 @@ public class UserEndpoint extends HttpServlet {
 		String path = request.getPathInfo();
 
 		// Set response content type
-
 		response.setContentType("application/json");
 
 		// Actual logic goes here.
 		PrintWriter out = response.getWriter();
 
-
         //out.println(UserDB.getUserByID(1)); //fixme
 		for (int i=0;i<10;i++) {
 			out.println(userDB.getUser(i));
 		}
-
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
 		//Parse request
 		String path = request.getPathInfo();
