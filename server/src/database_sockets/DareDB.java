@@ -11,6 +11,7 @@ public class DareDB {
 
    // private ArrayList<String> dares = new ArrayList<String>();
     private HashMap<Integer,String> dares = new HashMap<Integer, String>();
+    private int nextId = 0; //Id of the next dare that is added
 
 
 
@@ -19,7 +20,6 @@ public class DareDB {
      * returns a dare with that ID - from database.
      * */
     public String getDare(int id){
-
         return dares.get(id);
     }
 
@@ -27,12 +27,14 @@ public class DareDB {
      * Expects an ID from the android app.
      * returns the a dare with that ID.
      * */
-    public void createDare(int id, String dare){
-        //dares.add(dare);
+    public int createDare(String dare){
+        //TODO: Add the id to the dare
 
-        if(!dares.containsKey(id)) {
-            dares.put(id, dare);
-        }
+        //TODO: Assign the dare to the users
+
+        dares.put(nextId, dare);
+
+        return nextId++;
     }
 
     //??

@@ -14,8 +14,8 @@ import javax.servlet.http.*;
  */
 public class DareEndpoint extends HttpServlet {
 
-    private String message;
-    private DareDB dareDB;
+	private String message;
+	private DareDB dareDB;
 
 
 	/*
@@ -27,115 +27,99 @@ public class DareEndpoint extends HttpServlet {
 	getServletInfo, which the servlet uses to provide information about itself
 	*/
 
-    public void init() throws ServletException {
-        // Do required initialization
-        message = "api_endpoints.DareEndpoint";
-        dareDB = new DareDB();
-    }
+	public void init() throws ServletException {
+		// Do required initialization
+		message = "api_endpoints.DareEndpoint";
+		dareDB = new DareDB();
+	}
+
+	/**
+	 * This method is invoked when the server receives an http get request.
+	 *
+	 * @param request  the http request
+	 * @param response the response to the request
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String pathInfo = request.getPathInfo();
+		if (pathInfo.length() >= 2) {
+			try {
+				int id = Integer.parseInt(pathInfo.substring(1));
+
+				// Set response content type
+				response.setContentType("application/json");
+
+				//Retrieve dare from the db
+				String dare = dareDB.getDare(id);
+
+				if (dare != null) {
+					//If the dare exists, write the dare to the response
+					PrintWriter out = response.getWriter();
+					out.println(dare);
+
+				} else {
+
+					//If the dare doesn't exist
+					throw new Exception(" not found");
+				}
+
+			} catch (NumberFormatException e) {
+				//If the id in path isn't an int respond with 400
+				response.setStatus(400);
+			} catch (Exception e) {
+				//If the id in path doesn't exist in the db respond with 404
+				response.setStatus(404);
+			}
+		} else {
+			response.setStatus(400); //if there is no id in the path respond with 400
+		}
+
+	}
 
     /**
-     * This method is invoked when the server receives an http get request.
+     * Invoked when a post request is sent to the /dare api endpoint
+     * This method handles the creation of dares
      *
      * @param request  the http request
      * @param response the response to the request
      * @throws ServletException
      * @throws IOException
      */
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Parse request
+		String path = request.getPathInfo();
 
-        //Parse request
+		try {
+			//Read dare from request body
+			BufferedReader br = request.getReader();
 
-        String pathInfo = request.getPathInfo();
-        if (pathInfo.length() >= 2) {
-            try {
-                int id = Integer.parseInt(request.getPathInfo().substring(1));
+			StringBuilder stringBuilder = new StringBuilder();
+			String line = br.readLine();
 
+			while (line != null) {
+				stringBuilder.append(line);
+				line = br.readLine();
+			}
 
-                // Set response content type
-                response.setContentType("application/json");
+			//Create dare
+			int id = dareDB.createDare(stringBuilder.toString());
 
-                // Actual logic goes here.
-                PrintWriter out = response.getWriter();
-                if (dareDB.getDare(id) == null) {
-                    throw new Exception(" not found");
-                } else {
+			//Create response
+			PrintWriter out = response.getWriter();
+			response.setStatus(201);
+			out.println("{dare_id: " + id + "}");
 
-                    out.println(dareDB.getDare(id)); //fixme
-                }
-            } catch (NumberFormatException e) {
-                response.setStatus(400);
-            } catch (Exception e) {
-                response.setStatus(404);
-            }
-        } else {
-            response.setStatus(400); //??
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        //Parse request
-        String path = request.getPathInfo();
-        if (path.length() >= 2) {
-            try {
-                int id = Integer.parseInt(request.getPathInfo().substring(1));
-
-                // Set response content type
-                //response.setContentType("application/json");
-
-                // Actual logic goes here.
-                //PrintWriter out = response.getWriter();
-                String dare = dareDB.getDare(id);
-
-                if (dare != null) {
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    PrintWriter out = response.getWriter();
-                    out.println(dare);
-
-                    BufferedReader br = request.getReader();
-
-                    String line = br.readLine();
-
-                    while (line != null) {
-                        stringBuilder.append(line);
-                        line = br.readLine();
-                    }
-
-                    System.out.println(stringBuilder.toString());
-
-                    dareDB.createDare(id, stringBuilder.toString());
-
-
-                    // Set response content type
-                    response.setContentType("application/json");
-                    // Actual logic goes here.
-                    //PrintWriter out = response.getWriter();
-
-                    out.println("post recieved");
-
-                } else {
-                    throw new Exception(" not found");
-                    //out.println(dareDB.getDare(id)); //fixme
-
-                }
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            response.setStatus(400);
-        }
-    }
-
-    public void destroy() {
-        // do nothing.
-    }
+	public void destroy() {
+		// do nothing.
+	}
 
 
 }
