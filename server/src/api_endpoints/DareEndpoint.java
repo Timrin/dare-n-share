@@ -63,7 +63,7 @@ public class DareEndpoint extends HttpServlet {
 				} else {
 
 					//If the dare doesn't exist
-					throw new Exception(" not found");
+					throw new Exception("Dare not found");
 				}
 
 			} catch (NumberFormatException e) {

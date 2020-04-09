@@ -13,8 +13,6 @@ public class DareDB {
     private HashMap<Integer,String> dares = new HashMap<Integer, String>();
     private int nextId = 0; //Id of the next dare that is added
 
-
-
     /**
      * Expects an ID from the android app.
      * returns a dare with that ID - from database.
@@ -28,7 +26,7 @@ public class DareDB {
      * returns the a dare with that ID.
      * */
     public int createDare(String dare){
-        //TODO: Add the id to the dare
+        //TODO: Add the id to the dare (in the string)
 
         //TODO: Assign the dare to the users
 
@@ -37,8 +35,8 @@ public class DareDB {
         return nextId++;
     }
 
-    //??
+    /* //Jsonconverter project
     public String deliverDare(){
         return dares.toString();
-    }
+    }*/
 }

@@ -1,8 +1,7 @@
-package database_sockets;
+package kamillasTest;
 
 
-import enitity.Objective;
-import enitity.Scope;
+import database_sockets.DareDB;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,8 +21,6 @@ public class JsonConverter{
     private Object object;
     private Objective objective;
     private Scope scope;
-
-
 
     public JsonConverter() {}
 

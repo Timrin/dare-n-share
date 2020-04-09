@@ -1,4 +1,4 @@
-package enitity;
+package kamillasTest;
 /**
  * @author Kamilla
  * Not sure about this class yet - test for parsing json object
