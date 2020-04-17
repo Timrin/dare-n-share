@@ -1,18 +1,15 @@
 package database_sockets;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * @author Julia and Kamilla
+ *
+ * This class is only for testing purposes. It generates an id for every new User
+ * */
 public class UserDB {
-
-
-
-
-
-    // this arraylist is used to test recieving a user from client.
 
     private HashMap<Integer,String> users = new HashMap<>();
     private int nextId = 0;
+
 
     public UserDB(){
 

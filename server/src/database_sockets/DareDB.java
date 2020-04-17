@@ -2,14 +2,15 @@ package database_sockets;
 
 /**
  * @author Julia and Kamilla - XP pair programming
+ *
+ * This class is only for testing purposes. It generates an ID for every new dare
  * */
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class DareDB {
 
-   // private ArrayList<String> dares = new ArrayList<String>();
     private HashMap<Integer,String> dares = new HashMap<Integer, String>();
     private int nextId = 0; //Id of the next dare that is added
 
@@ -20,12 +21,11 @@ public class DareDB {
     public String getDare(int id){
         return dares.get(id);
     }
-
     /**
      * Expects an ID from the android app.
      * returns the a dare with that ID.
      * */
-    public int createDare(String dare){
+    public int createDare(String dare) throws IOException {
         //TODO: Add the id to the dare (in the string)
 
         //TODO: Assign the dare to the users
@@ -35,8 +35,6 @@ public class DareDB {
         return nextId++;
     }
 
-    /* //Jsonconverter project
-    public String deliverDare(){
-        return dares.toString();
-    }*/
+
+
 }

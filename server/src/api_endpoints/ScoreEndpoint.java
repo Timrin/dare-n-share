@@ -1,79 +1,63 @@
 package api_endpoints;
 
-import database_sockets.ScoreDB;
+import Converter.Controller;
 
 import java.io.*;
-import javax.servlet.*;
 import javax.servlet.http.*;
 
 /**
  * This class has the endpoint logic for reporting scores
  * It handles requests sent to the /score path
- * @ author Julia and Kamilla - XP pair programming
+ *
+ * @author Kamilla
+ * @date 09/04-20
+ * @version 1.0
  */
 public class ScoreEndpoint extends HttpServlet {
 
-	private String message;
+    private Controller controller;
 
-	public void init() throws ServletException {
-		// Do required initialization
-		message = "api_endpoints.ScoreEndpoint";
-	}
-
-	/**
-	 * This method is invoked when the server receives an http get request.
-	 *
-	 * @param request the http request
-	 * @param response the response to the request
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		//Parse request
-		String path = request.getPathInfo();
-
-		// Set response content type
-		// json obj
-		// in the teams wiki
-		//response.setContentType("text/html");
-		response.setContentType("application/json");
-
-		// Actual logic goes here.
-		PrintWriter out = response.getWriter();
-		//out.println("<h1>" + message + "</h1>");
-		//out.println("<h3>" + path + "</h3>");
-		out.println(ScoreDB.getScorebyUserID(1));
-	}
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ScoreEndpoint() {
+        controller = new Controller();
+    }
 
 
-		//Parse request
-		String path = request.getPathInfo();
+    /**
+     * Invoked when a post request is sent to the /score api endpoint
+     * This method handles added points to score
+     * @param request  the http request
+     * @param response the response to the request
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-		StringBuilder stringBuilder = new StringBuilder();
+        try {
+            BufferedReader br = request.getReader();
 
-		BufferedReader br = request.getReader();
+            StringBuilder stringBuilder = new StringBuilder();
+            String line = br.readLine();
 
-		String line = br.readLine();
 
-		while (line!= null){
-			stringBuilder.append(line);
-			line = br.readLine();
-		}
+            while (line != null) {
+                stringBuilder.append(line);
+                line = br.readLine();
 
-		System.out.println(stringBuilder.toString());
-		// Set response content type
-		response.setContentType("application/json");
-		// Actual logic goes here.
-		PrintWriter out = response.getWriter();
+            }
+            String newScore = stringBuilder.toString();
+            //scoreDB.setScoreToUser(newScore); // this adds score to a arraylist.
 
-		out.println("post recieved");
+            controller.newScore(stringBuilder.toString());
 
-	}
+            PrintWriter out = response.getWriter();
 
-	public void destroy() {
-		// do nothing.
-	}
+            response.setStatus(201);
+
+            out.println("{Score recieved YAY: " + newScore + " }");
+
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
 }

@@ -1,22 +1,42 @@
 package database_sockets;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
- * @author Julia and Kamilla - XP pair programming
+ * @author Kamilla
+ *
+ * This class is to be deleted. It is only here for testing purposes.
  * */
 
 public class ScoreDB {
+    private ArrayList<String> scoreBoolean = new ArrayList<>();
+    private HashMap<Integer, String> participants = new HashMap<>();
 
-    private static String [] SCOREID = {"lol", "{\n" +
-            "  \"uid\": 1,\n" +
-            "  \"dare_id\": \"d1\",\n" +
-            "  \"score\": {\n" +
-            "    \"type\": \"BOOLEAN\",\n" +
-            "    \"point\": true\n" +
-            "  }\n" +
-            "}"};
+    public ScoreDB() {}
+    /**
+     *  + points
+     * **/
+    public String getNewPoints(String bool){
+        String newPoints;
+        int points = 0;
 
-    public static String getScorebyUserID (int id){
+        if (bool.equals("true")){
+            points+=1;
+        }else if (bool.equals("false")){
+            points-=1;
+        }
+        newPoints = String.valueOf(points);
 
-        return SCOREID[id];
+        return newPoints;
     }
+
+        /**
+         * Adds postet score to the arraylist..
+         * */
+    public boolean setScoreToUser(String post){
+        return scoreBoolean.add(post);
+    }
+
 
 }
