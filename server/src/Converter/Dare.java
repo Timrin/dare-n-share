@@ -2,6 +2,7 @@ package Converter;
 
 import org.json.simple.JSONArray;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -16,6 +17,7 @@ public class Dare {
     private Map objective;
     private Map scope;
     private JSONArray participants;
+    private Date date;
 
 
     public Dare() {
@@ -27,7 +29,8 @@ public class Dare {
     }
 
     public void setParticipants(JSONArray newArray) {
-        participants.add(newArray);
+      //  participants.add(newArray);
+        this.participants=newArray;
         System.out.println("SE HER KAMILLA OG JULIA "+newArray.get(1));
     }
 
@@ -45,5 +48,13 @@ public class Dare {
 
     public void setScope(Map scope) {
         this.scope = scope;
+    }
+
+    // get scope length
+    // set time
+    //
+    public void setTime(){
+        scope.get("length");
+        System.out.println(scope.get("length"));
     }
 }

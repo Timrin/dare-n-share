@@ -1,7 +1,7 @@
 package api_endpoints;
 
 import database_sockets.UserDB;
-import Converter.Controller;
+import Converter.ServerApiCommunication;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +20,11 @@ import java.io.PrintWriter;
 public class UserEndpoint extends HttpServlet {
 
     private UserDB userDB;
-    private Controller controller;
+    private ServerApiCommunication serverApiCommunication;
 
     public UserEndpoint() {
         userDB = new UserDB();
-        controller = new Controller();
+        serverApiCommunication = new ServerApiCommunication();
     }
     /**
      * This method is invoked when the server receives an http get request.
@@ -43,8 +43,8 @@ public class UserEndpoint extends HttpServlet {
 
                 response.setContentType("application/json");
 
-                String user = userDB.getUser(id);
-                //String user = controller.getUser(id); //fixme getUser doesn't return ID
+                //String user = userDB.getUser(id);
+                String user = serverApiCommunication.getUser(); //fixme getUser doesn't return ID
 
                 if (user != null) {
                     PrintWriter out = response.getWriter();
@@ -82,7 +82,7 @@ public class UserEndpoint extends HttpServlet {
             }
 
             int userId = userDB.addUser(stringBuilder.toString());
-            controller.newUser(stringBuilder.toString());
+            serverApiCommunication.newUser(stringBuilder.toString());
 
             PrintWriter out = response.getWriter();
             response.setStatus(201);

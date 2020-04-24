@@ -1,5 +1,6 @@
 package Converter;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,7 +15,7 @@ import org.json.simple.parser.ParseException;
 public class JsonConverterUser {
     private User user;
 
-    public String JsonToJava(String newUser) throws ParseException {
+    public void JsonToJava(String newUser) throws ParseException {
         user = new User();
 
         Object obj = new JSONParser().parse(newUser);
@@ -27,15 +28,21 @@ public class JsonConverterUser {
 
 
         //todo set friends array to user array + it doesn't work.
-       /* JSONArray ja = (JSONArray) jo.get("friends");
-        //Iterator iteratorFriends = ja.iterator();
-        Iterator <Map> friendsArray = ja.iterator();
+       /* JSONArray dares = (JSONArray) jo.get("friends");
+        //Iterator iteratorFriends = dares.iterator();
+        Iterator <Map> friendsArray = dares.iterator();
         while(friendsArray.hasNext()){
             //System.out.println(friendsArray.next());
             Map.Entry pair = (Map.Entry) friendsArray.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }*/
-       return user.toString();
+
+        JSONArray dares = (JSONArray)jo.get("dares");
+        user.setDares(dares);
+
+        JSONArray friends = (JSONArray)jo.get("friends");
+        user.setFriends(friends);
+
     }
 
     public String JavaToJson() {
@@ -43,6 +50,12 @@ public class JsonConverterUser {
         JSONObject jo = new JSONObject();
         jo.put("uid", user.getUid());
         jo.put("name", user.getName());
+
+        JSONArray dares = user.getDares();
+        jo.put("dares",dares);
+
+        JSONArray friends = user.getFriends();
+        jo.put("friends",friends);
 
         // todo put friends array
         return jo.toJSONString();
