@@ -42,6 +42,7 @@ public class ServerApiCommunication {
     public void newUser(String user) throws ParseException {
        // json2javaUser.put(nextID,jsonUser.JsonToJava(user));
         jsonUser.JsonToJava(user);
+
     }
     /**
      * This method returns a string that is parsed to a json body, and is called upon in

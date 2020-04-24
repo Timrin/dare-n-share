@@ -1,9 +1,12 @@
 package Converter;
 
+import database.DBController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.sql.SQLException;
 
 /**
  * @author Kamilla
@@ -13,10 +16,13 @@ import org.json.simple.parser.ParseException;
  * */
 
 public class JsonConverterUser {
+
     private User user;
+    private DBController dbc;
 
     public void JsonToJava(String newUser) throws ParseException {
         user = new User();
+        dbc=new DBController();
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -25,6 +31,19 @@ public class JsonConverterUser {
         user.setName((String) jo.get("name"));
         System.out.println(user.getUid());
         System.out.println(user.getName());
+        try {
+            dbc.sendUSerToDb(user.getName());
+            System.out.println("från JSU till db");
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+
+
+
 
 
         //todo set friends array to user array + it doesn't work.
@@ -60,6 +79,16 @@ public class JsonConverterUser {
         // todo put friends array
         return jo.toJSONString();
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
 
 
 }

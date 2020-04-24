@@ -72,8 +72,9 @@ public class UserEndpoint extends HttpServlet {
 
         try {
             BufferedReader br = request.getReader();
-
+            System.out.println("doPost1, före getReader");
             StringBuilder stringBuilder = new StringBuilder();
+            System.out.println("doPost2, StringBuilder");
             String line = br.readLine();
 
             while (line != null) {
@@ -81,14 +82,18 @@ public class UserEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-            int userId = userDB.addUser(stringBuilder.toString());
+
+
+            //int userId = userDB.addUser(stringBuilder.toString());
             serverApiCommunication.newUser(stringBuilder.toString());
+            System.out.println("server");
 
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{user_id " + userId + "}"); //todo check if user_id is correct
+            out.println("{user_id "  + "}"); //todo check if user_id is correct
 
         } catch (Exception e) {
+
         }
     }
 }

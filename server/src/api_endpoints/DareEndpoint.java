@@ -97,6 +97,7 @@ public class DareEndpoint extends HttpServlet {
 
             serverApiCommunication.newDare(stringBuilder.toString());
 
+
             //Create response
             PrintWriter out = response.getWriter();
             response.setStatus(201);
