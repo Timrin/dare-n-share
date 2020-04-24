@@ -14,8 +14,9 @@ For the mobile app see: https://github.com/Timrin/dare_n_share_app.
 https://www.docker.com/get-started
 
 * Download or clone this project  
-* Import the project in IntelliJ  
-  >_Make sure you mark the src folder as source root_  
+* Import the server folder as a project in IntelliJ  
+  >_Make sure that you import the server folder as a project_  
+  >_Also make sure that the src folder is marked as source root_  
 * Build the project  
 
 #### Optional
