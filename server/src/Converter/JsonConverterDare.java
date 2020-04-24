@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -40,23 +41,10 @@ public class JsonConverterDare {
             Map.Entry pair = iteratorScope.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
-        /*
-         * todo This array is not saved in Dare entity class.
-         * */
+
         JSONArray ja = (JSONArray) jo.get("participants");
-        Iterator iteratorParticipant = ja.iterator();
+        dare.setParticipants(ja);
 
-        while (iteratorParticipant.hasNext()) {
-
-            iteratorObjective = ((Map) iteratorParticipant.next()).entrySet().iterator();
-
-            while (iteratorObjective.hasNext()) {
-                Map.Entry pair = iteratorObjective.next();
-                System.out.println(pair.getKey() + " : " + pair.getValue());
-
-                // dare.setParticipants((ArrayList<String>) pair.getValue());
-            }
-        }
     }
 
     /**
@@ -75,12 +63,10 @@ public class JsonConverterDare {
         m.putAll(dare.getScope());
         jo.put("scope", m);
 
-        // TODO put participant array in.
-        // JSONArray ja = new JSONArray();
-        // m = new LinkedHashMap();
-        // m.putAll((Map) dare.getParticipants()); // ikke sikkert dareparticipants kan være arraylist..
-        // ja.add(m);
-        // jo.put("participants",ja);
+
+        JSONArray ja  = dare.getParticipants();
+        jo.put("participants", ja);
+        System.out.println(ja.toJSONString());
 
 
         return jo.toJSONString();

@@ -32,6 +32,7 @@ public class UserEndpoint extends HttpServlet {
      * @param request  the http request
      * @param response the response to the request
      */
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         //Parse request
@@ -66,7 +67,7 @@ public class UserEndpoint extends HttpServlet {
      * @param request  the http request
      * @param response the response to the request
      */
-
+@Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {

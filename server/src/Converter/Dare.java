@@ -1,6 +1,7 @@
 package Converter;
 
-import java.util.ArrayList;
+import org.json.simple.JSONArray;
+
 import java.util.Map;
 
 /**
@@ -14,9 +15,20 @@ public class Dare {
 
     private Map objective;
     private Map scope;
-    private ArrayList<String> participants; //?? todo Find a way to save array from json object in a java array
+    private JSONArray participants;
+
 
     public Dare() {
+        participants = new JSONArray();
+    }
+
+    public JSONArray getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(JSONArray newArray) {
+        participants.add(newArray);
+        System.out.println("SE HER KAMILLA OG JULIA "+newArray.get(1));
     }
 
     public Map getObjective() {
@@ -33,13 +45,5 @@ public class Dare {
 
     public void setScope(Map scope) {
         this.scope = scope;
-    }
-
-    public ArrayList<String> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(ArrayList<String> participants) {
-        this.participants = participants;
     }
 }

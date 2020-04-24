@@ -43,8 +43,8 @@ public class DareEndpoint extends HttpServlet {
                 response.setContentType("application/json");
 
                 //Retrieve dare from the db
-                String dare = dareDB.getDare(idFromPath);
-                //String dare = controller.getDare(); //fixme doesn't have an ID yet
+                //String dare = dareDB.getDare(idFromPath);
+                String dare = controller.getDare(); //fixme doesn't have an ID yet
 
                 if (dare != null) {
                     //If the dare exists, write the dare to the response
@@ -89,7 +89,6 @@ public class DareEndpoint extends HttpServlet {
             while (line != null) {
                 stringBuilder.append(line);
                 line = br.readLine();
-
             }
 
             //Create dare
