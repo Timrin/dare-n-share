@@ -26,7 +26,7 @@ https://www.docker.com/get-started
 ## Start the server
 You can launch the server from IntelliJ using the docker plugin or you can choose to launch it from the command line. 
 
-#### From within IntelliJ (Requires the docker plugin):
+#### Start from within IntelliJ (Requires the docker plugin):
   * Right click the file Dockerfile in the project root and select "Run 'Dockerfile'"  
   * Open the "Services" tab and select the container, under "Containers".  
   * In the "Services" tab, open up the "Port Bindings" tab and press the [+] button  
@@ -35,7 +35,7 @@ You can launch the server from IntelliJ using the docker plugin or you can choos
     * Host IP: `localhost` 
     * Host port: `8080` 
   
-#### From the command line:  
+#### Start from the command line:  
   * _Navigate to the project root_  
   * run `docker build -t darenshare:1.0 .`  
   * and then `docker run -p 8080:8080 darenshare:1.0`
