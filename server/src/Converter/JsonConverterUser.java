@@ -18,11 +18,10 @@ import java.sql.SQLException;
 public class JsonConverterUser {
 
     private User user;
-    private DBController dbc;
 
     public void JsonToJava(String newUser) throws ParseException {
         user = new User();
-        dbc=new DBController();
+
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -31,30 +30,7 @@ public class JsonConverterUser {
         user.setName((String) jo.get("name"));
         System.out.println(user.getUid());
         System.out.println(user.getName());
-        try {
-            dbc.sendUserToDB(user.getName());
-            System.out.println("från JSU till db");
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
 
-
-
-
-
-
-
-
-
-        //todo set friends array to user array + it doesn't work.
-       /* JSONArray dares = (JSONArray) jo.get("friends");
-        //Iterator iteratorFriends = dares.iterator();
-        Iterator <Map> friendsArray = dares.iterator();
-        while(friendsArray.hasNext()){
-            //System.out.println(friendsArray.next());
-            Map.Entry pair = (Map.Entry) friendsArray.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
-        }*/
 
         JSONArray dares = (JSONArray)jo.get("dares");
         user.setDares(dares);
