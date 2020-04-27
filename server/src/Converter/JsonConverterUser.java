@@ -1,6 +1,6 @@
 package Converter;
 
-import database.DBController;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,11 +18,10 @@ import java.sql.SQLException;
 public class JsonConverterUser {
 
     private User user;
-    private DBController dbc;
+
 
     public void JsonToJava(String newUser) throws ParseException {
         user = new User();
-        dbc=new DBController();
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -31,12 +30,7 @@ public class JsonConverterUser {
         user.setName((String) jo.get("name"));
         System.out.println(user.getUid());
         System.out.println(user.getName());
-        try {
-            dbc.sendUserToDB(user.getName());
-            System.out.println("från JSU till db");
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
+
 
 
 
