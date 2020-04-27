@@ -2,8 +2,22 @@ package database;
 
 import java.sql.*;
 
+/**
+ * Class that handles requests from server about table dare in DB
+ * @author julia
+ */
+
 public class InsertDare {
 
+    private DBController dbController;
+
+    public InsertDare(DBController dbController){
+        this.dbController = dbController;
+    }
+
+    public InsertDare() {
+
+    }
 
     /**
      * MySQL connection to database. (do not touch)
@@ -13,15 +27,15 @@ public class InsertDare {
     private Connection connect() {
 
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/darenshare?serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "julia");
             //System.out.println(con);
            // System.out.println(con.getClientInfo().toString());
             return con;
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         return connect();
     }
 /*
@@ -32,24 +46,32 @@ public class InsertDare {
         // insertToDare(request);
     }
 
+
  */
+    public void insertNewDareToDB(String objectiveType,String objective,String scopeType,
+                                  String scopeLength,String start,String end) throws SQLException {
+        String sql1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
+        String sql2 = ",Start, End) VALUES ('" + objectiveType+"', '"+objective+"', '"+scopeType+"', '";
+        String sql3= scopeLength + "','"+ start+"','"+end+"');";
+        String totalRequestLive = sql1+sql2+sql3;
+        insertToDare(totalRequestLive);
+    }
+
 
     /**
      * insert new dare to table, returns generated primary key and store in variable
      * @throws SQLException
      */
-    public void insertToDare() throws SQLException {
+    public void insertToDare(String sqlRequest) throws SQLException {
 
         Connection conn = this.connect();
-        String sql = "INSERT INTO Dare(ObjectiveType, Objective, ScopeType, ScopeLength, Start, End) VALUES " +
-                "('NOMEAT','YESNO','goal','2days','today','sunday');";
         Statement statement = conn.createStatement();
-        statement.execute(sql,Statement.RETURN_GENERATED_KEYS);
-
-
+        statement.execute(sqlRequest,Statement.RETURN_GENERATED_KEYS);
         ResultSet result = statement.getGeneratedKeys();
         while (result.next()) {
             int dareId = result.getInt(1);
+
+            dbController.getDareIDfromDB(dareId);
 
             System.out.println(dareId);
         }
@@ -65,7 +87,7 @@ public class InsertDare {
      */
     public void insertParticipantsToDare(int partID, int dareID) throws SQLException {
         Connection conn = this.connect();
-        String sql = "UPDATE dare set Participants = 4 WHERE Dareid = 3";
+        String sql = "UPDATE dare set Participants =" + partID+" WHERE Dareid ="+ dareID +";";
         Statement statement = conn.createStatement();
         statement.execute(sql);
     }
@@ -104,7 +126,9 @@ public class InsertDare {
 
     public static void main(String[] args) throws SQLException {
         InsertDare id = new InsertDare();
-        id.insertToDare();
+        //id.insertParticipantsToDare(2,8);
+       // id.insertNewDareToDB("Goal","FeedDucks","Y/N","4days","","");
+        id.getDareFromDB(8);
     }
 
 }

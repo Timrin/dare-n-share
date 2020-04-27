@@ -32,7 +32,7 @@ public class JsonConverterUser {
         System.out.println(user.getUid());
         System.out.println(user.getName());
         try {
-            dbc.sendUSerToDb(user.getName());
+            dbc.sendUserToDB(user.getName());
             System.out.println("från JSU till db");
         }catch (SQLException e){
             System.out.println(e.getMessage());
