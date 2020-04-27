@@ -27,7 +27,7 @@ public class ServerApiCommunication {
     /**
      * This method sends a dare from Server to be parsed from Json to Java
      * */
-    public void newDare(String dare) throws org.json.simple.parser.ParseException {
+    public void newDare(String dare) throws org.json.simple.parser.ParseException, java.text.ParseException {
         jsonDare.JsonToJava(dare);
     }
     /**
@@ -48,7 +48,7 @@ public class ServerApiCommunication {
      * This method returns a string that is parsed to a json body, and is called upon in
      * the dare endpoint.
      * */
-    public String getDare(){
+    public String getDare() throws java.text.ParseException {
         return jsonDare.JavaToJson();
     }
     /**

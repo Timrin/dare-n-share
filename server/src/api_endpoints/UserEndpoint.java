@@ -93,7 +93,6 @@ public class UserEndpoint extends HttpServlet {
             out.println("{user_id "  + "}"); //todo check if user_id is correct
 
         } catch (Exception e) {
-
         }
     }
 }

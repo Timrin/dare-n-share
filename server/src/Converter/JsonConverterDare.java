@@ -5,9 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Kamilla
@@ -17,11 +15,16 @@ import java.util.Map;
  */
 public class JsonConverterDare {
     private Dare dare;
+    private Calendar calendar;
+
+    public JsonConverterDare() {
+        calendar=Calendar.getInstance();
+    }
 
     /**
      * This method parses a String in JSON body, recieved from server, to a Dare Java object.
      */
-    public void JsonToJava(String newdare) throws ParseException {
+    public void JsonToJava(String newdare) throws ParseException, java.text.ParseException {
         this.dare = new Dare();
 
         Object obj = new JSONParser().parse(newdare);
@@ -45,13 +48,17 @@ public class JsonConverterDare {
         JSONArray ja = (JSONArray) jo.get("participants");
         dare.setParticipants(ja);
 
+        dare.setStart(calendar.getTime());
+        dare.setEnd(3);
     }
+
+
 
     /**
      * This method returns a JSONString after converting Java objects into s JSON string.
      * This method is supposed to be called upon in the dareEndpoint through the controller
      */
-    public String JavaToJson() {
+    public String JavaToJson() throws java.text.ParseException {
 
         JSONObject jo = new JSONObject();
 
@@ -63,11 +70,12 @@ public class JsonConverterDare {
         m.putAll(dare.getScope());
         jo.put("scope", m);
 
+        jo.put("start",dare.getStart());
+        jo.put("end", dare.getEnd());
 
         JSONArray ja  = dare.getParticipants();
         jo.put("participants", ja);
         System.out.println(ja.toJSONString());
-
 
         return jo.toJSONString();
     }
