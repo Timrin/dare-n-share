@@ -6,12 +6,13 @@ public class InsertUser {
 
     private Connection connect() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/darenshare?serverTimezone=UTC";
             Connection con = DriverManager.getConnection(url, "root", "julia");
             System.out.println(con);
             System.out.println(con.getClientInfo().toString());
             return con;
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connect();
@@ -20,12 +21,12 @@ public class InsertUser {
     /**
      * insert userinformation to table User
      * @param name username from GUI
-     * @param friend test for now.
+     *
      * @throws SQLException
      */
-    public void addUserToDB(String name, String friend) throws SQLException {
+    public void addUserToDB(String name) throws SQLException {
 
-        String request = "INSERT INTO user(username, friends) VALUES ('Karolina', 'Julia')";
+        String request = "INSERT INTO user(username) VALUES ('" + name+"')";
         Connection conn = this.connect();
         Statement statement = conn.createStatement();
         statement.execute(request,Statement.RETURN_GENERATED_KEYS);
@@ -39,8 +40,4 @@ public class InsertUser {
     }
 
 
-    public static void main(String[] args) throws SQLException {
-        InsertUser iu = new InsertUser();
-        iu.addUserToDB("aa","ss");
-    }
 }
