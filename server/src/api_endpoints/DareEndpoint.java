@@ -80,6 +80,7 @@ public class DareEndpoint extends HttpServlet {
 
         try {
             //Read dare from request body
+
             BufferedReader br = request.getReader();
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -101,6 +102,7 @@ public class DareEndpoint extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setStatus(201);
             out.println("{dare_id:" + id + "}");
+
 
         } catch (Exception e) {
             e.printStackTrace();

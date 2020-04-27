@@ -86,9 +86,10 @@ public class UserEndpoint extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{user_id " + userId + "}"); //todo check if user_id is correct
+            out.println("{user_id "  + "}"); //todo check if user_id is correct
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
