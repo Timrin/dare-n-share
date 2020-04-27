@@ -1,7 +1,7 @@
 package api_endpoints;
 
 import database_sockets.DareDB;
-import Converter.Controller;
+import Converter.ServerApiCommunication;
 
 import java.io.*;
 import javax.servlet.http.*;
@@ -16,11 +16,11 @@ import javax.servlet.http.*;
 public class DareEndpoint extends HttpServlet {
 
     private DareDB dareDB;
-    private Controller controller;
+    private ServerApiCommunication serverApiCommunication;
 
     public DareEndpoint() {
         dareDB = new DareDB();
-        controller = new Controller();
+        serverApiCommunication = new ServerApiCommunication();
     }
 
 
@@ -43,8 +43,8 @@ public class DareEndpoint extends HttpServlet {
                 response.setContentType("application/json");
 
                 //Retrieve dare from the db
-                String dare = dareDB.getDare(idFromPath);
-                //String dare = controller.getDare(); //fixme doesn't have an ID yet
+                //String dare = dareDB.getDare(idFromPath);
+                String dare = serverApiCommunication.getDare(); //fixme doesn't have an ID yet
 
                 if (dare != null) {
                     //If the dare exists, write the dare to the response
@@ -80,6 +80,7 @@ public class DareEndpoint extends HttpServlet {
 
         try {
             //Read dare from request body
+
             BufferedReader br = request.getReader();
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -89,19 +90,20 @@ public class DareEndpoint extends HttpServlet {
             while (line != null) {
                 stringBuilder.append(line);
                 line = br.readLine();
-
             }
 
             //Create dare
 
             int id = dareDB.createDare(stringBuilder.toString());
 
-            controller.newDare(stringBuilder.toString());
+            serverApiCommunication.newDare(stringBuilder.toString());
+
 
             //Create response
             PrintWriter out = response.getWriter();
             response.setStatus(201);
             out.println("{dare_id:" + id + "}");
+
 
         } catch (Exception e) {
             e.printStackTrace();

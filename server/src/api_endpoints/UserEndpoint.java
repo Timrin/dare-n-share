@@ -1,7 +1,7 @@
 package api_endpoints;
 
 import database_sockets.UserDB;
-import Converter.Controller;
+import Converter.ServerApiCommunication;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +20,11 @@ import java.io.PrintWriter;
 public class UserEndpoint extends HttpServlet {
 
     private UserDB userDB;
-    private Controller controller;
+    private ServerApiCommunication serverApiCommunication;
 
     public UserEndpoint() {
         userDB = new UserDB();
-        controller = new Controller();
+        serverApiCommunication = new ServerApiCommunication();
     }
     /**
      * This method is invoked when the server receives an http get request.
@@ -32,6 +32,7 @@ public class UserEndpoint extends HttpServlet {
      * @param request  the http request
      * @param response the response to the request
      */
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         //Parse request
@@ -42,8 +43,8 @@ public class UserEndpoint extends HttpServlet {
 
                 response.setContentType("application/json");
 
-                String user = userDB.getUser(id);
-                //String user = controller.getUser(id); //fixme getUser doesn't return ID
+                //String user = userDB.getUser(id);
+                String user = serverApiCommunication.getUser(); //fixme getUser doesn't return ID
 
                 if (user != null) {
                     PrintWriter out = response.getWriter();
@@ -66,13 +67,14 @@ public class UserEndpoint extends HttpServlet {
      * @param request  the http request
      * @param response the response to the request
      */
-
+@Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             BufferedReader br = request.getReader();
-
+            System.out.println("doPost1, före getReader");
             StringBuilder stringBuilder = new StringBuilder();
+            System.out.println("doPost2, StringBuilder");
             String line = br.readLine();
 
             while (line != null) {
@@ -80,12 +82,15 @@ public class UserEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-            int userId = userDB.addUser(stringBuilder.toString());
-            controller.newUser(stringBuilder.toString());
+
+
+            //int userId = userDB.addUser(stringBuilder.toString());
+            serverApiCommunication.newUser(stringBuilder.toString());
+            System.out.println("server");
 
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{user_id " + userId + "}"); //todo check if user_id is correct
+            out.println("{user_id "  + "}"); //todo check if user_id is correct
 
         } catch (Exception e) {
         }

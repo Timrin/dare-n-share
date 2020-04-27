@@ -22,6 +22,8 @@
   version="4.0"
   metadata-complete="true">
 
+
+
 <!--api_endpoints.DareEndpoint mappings-->
   <servlet>
     <servlet-name>DareEndpoint</servlet-name>
@@ -59,5 +61,6 @@
   <description>
      Welcome to Dare n Share
   </description>
+
 
 </web-app>

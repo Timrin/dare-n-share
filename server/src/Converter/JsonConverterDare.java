@@ -4,9 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * @author Kamilla
@@ -16,11 +15,16 @@ import java.util.Map;
  */
 public class JsonConverterDare {
     private Dare dare;
+    private Calendar calendar;
+
+    public JsonConverterDare() {
+        calendar=Calendar.getInstance();
+    }
 
     /**
      * This method parses a String in JSON body, recieved from server, to a Dare Java object.
      */
-    public void JsonToJava(String newdare) throws ParseException {
+    public void JsonToJava(String newdare) throws ParseException, java.text.ParseException {
         this.dare = new Dare();
 
         Object obj = new JSONParser().parse(newdare);
@@ -40,30 +44,21 @@ public class JsonConverterDare {
             Map.Entry pair = iteratorScope.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
-        /*
-         * todo This array is not saved in Dare entity class.
-         * */
+
         JSONArray ja = (JSONArray) jo.get("participants");
-        Iterator iteratorParticipant = ja.iterator();
+        dare.setParticipants(ja);
 
-        while (iteratorParticipant.hasNext()) {
-
-            iteratorObjective = ((Map) iteratorParticipant.next()).entrySet().iterator();
-
-            while (iteratorObjective.hasNext()) {
-                Map.Entry pair = iteratorObjective.next();
-                System.out.println(pair.getKey() + " : " + pair.getValue());
-
-                // dare.setParticipants((ArrayList<String>) pair.getValue());
-            }
-        }
+        dare.setStart(calendar.getTime());
+        dare.setEnd(3);
     }
+
+
 
     /**
      * This method returns a JSONString after converting Java objects into s JSON string.
      * This method is supposed to be called upon in the dareEndpoint through the controller
      */
-    public String JavaToJson() {
+    public String JavaToJson() throws java.text.ParseException {
 
         JSONObject jo = new JSONObject();
 
@@ -75,13 +70,12 @@ public class JsonConverterDare {
         m.putAll(dare.getScope());
         jo.put("scope", m);
 
-        // TODO put participant array in.
-        // JSONArray ja = new JSONArray();
-        // m = new LinkedHashMap();
-        // m.putAll((Map) dare.getParticipants()); // ikke sikkert dareparticipants kan være arraylist..
-        // ja.add(m);
-        // jo.put("participants",ja);
+        jo.put("start",dare.getStart());
+        jo.put("end", dare.getEnd());
 
+        JSONArray ja  = dare.getParticipants();
+        jo.put("participants", ja);
+        System.out.println(ja.toJSONString());
 
         return jo.toJSONString();
     }

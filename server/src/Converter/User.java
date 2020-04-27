@@ -1,4 +1,7 @@
 package Converter;
+
+import org.json.simple.JSONArray;
+
 /**
  * @author Kamilla
  * @date 14/04-20
@@ -10,7 +13,8 @@ public class User {
 
     private String uid;
     private String name;
-    private String[] friends; //?? todo Find a way to save array from json object in a java array
+    private JSONArray dares;
+    private JSONArray friends;
 
     public User() {
     }
@@ -31,11 +35,23 @@ public class User {
         this.name = name;
     }
 
-    public String[] getFriends() {
+    public JSONArray getDares() {
+        return dares;
+    }
+
+    public void setDares(JSONArray dare) {
+        //dares.add(dare);
+        this.dares = dare;
+    }
+
+    public JSONArray getFriends() {
         return friends;
     }
 
-    public void setFriends(String[] friends) {
-        this.friends = friends;
+    public void setFriends(JSONArray friend) {
+       // friends.add(friend);
+        this.friends = friend;
+        System.out.println("1 friend "+friends.get(0));
+        System.out.println("HIIIIIIIII "+ friends.get(1));
     }
 }

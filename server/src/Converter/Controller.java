@@ -1,62 +1,47 @@
 package Converter;
-import org.json.simple.parser.ParseException;
-import java.io.IOException;
-import java.util.HashMap;
-/**
- * @author Kamilla
- * @date 15/04-20
- * @version 1.0 semantic versioning
- * This class is a controller.
- * Data recieved from the tomcat Server goes through this class to their respected places.
- * */
-public class Controller {
-    private JsonConverterDare jsonDare;
-    private JsonConverterScore jsonScore;
-    private JsonConverterUser jsonUser;
 
-    // These variables are for testing purposes. We need to generate an ID for user and dare
-    private HashMap<Integer,String> json2javaUser = new HashMap<>();
-    private HashMap<Integer,String> java2jsonUser = new HashMap<>();
-    private int nextID =0;
+/**
+ *
+ * This class is a controller.
+ * Purpose: to map out the logic of the dares
+ * before sending the objects to the database. // and after ?
+ * @date 24/04-20
+ * @version 1.0
+ * @author Kamilla, Steven, Julia - XP pair programming
+ * */
+
+public class Controller {
+    private Dare dare;
+    private User user;
+    private Score score;
+
 
     public Controller() {
-        jsonDare= new JsonConverterDare();
-        jsonScore = new JsonConverterScore();
-        jsonUser = new JsonConverterUser();
+
     }
-    /**
-     * This method sends a dare from Server to be parsed from Json to Java
-     * */
-    public void newDare(String dare) throws org.json.simple.parser.ParseException {
-        jsonDare.JsonToJava(dare);
+
+    public Controller(Dare dare, User user, Score score) {
+        this.dare = dare;
+        this.user = user;
+        this.score = score;
     }
-    /**
-     * This method sends the score from Server to be parsed from Json to Java
-     * */
-    public void newScore(String score) throws IOException, ParseException {
-        jsonScore.JsonToJava(score);
+    //todo: fill out this method
+    public void addScoreToUsersDare(){
+
     }
-    /**
-     * This method sends a user from Server to be parsed from Json to Java
-     * */
-    public void newUser(String user) throws ParseException {
-       // json2javaUser.put(nextID,jsonUser.JsonToJava(user));
-        jsonUser.JsonToJava(user);
+
+
+    // todo: or add Dare to User?
+    public void addUserToDare(){
+
     }
-    /**
-     * This method returns a string that is parsed to a json body, and is called upon in
-     * the dare endpoint.
-     * */
-    public String getDare(){
-        return jsonDare.JavaToJson();
+
+
+    //todo: We need to set a timestamp when server recieves dare from client
+    //todo: also, a timer for when the dare is over.
+    public void timeStampToDare(){
+
     }
-    /**
-     * This method returns a string that is parsed to a json body, and is called upon in
-     * the user endpoint
-     * */
-    public String getUser(int id){
-        return jsonUser.JavaToJson();
-        //return json2javaUser.get(id);
-        //return jsonUser.JsonToJava()
-    }
+
+
 }

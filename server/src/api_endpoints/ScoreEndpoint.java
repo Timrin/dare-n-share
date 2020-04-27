@@ -1,6 +1,6 @@
 package api_endpoints;
 
-import Converter.Controller;
+import Converter.ServerApiCommunication;
 
 import java.io.*;
 import javax.servlet.http.*;
@@ -15,10 +15,10 @@ import javax.servlet.http.*;
  */
 public class ScoreEndpoint extends HttpServlet {
 
-    private Controller controller;
+    private ServerApiCommunication serverApiCommunication;
 
     public ScoreEndpoint() {
-        controller = new Controller();
+        serverApiCommunication = new ServerApiCommunication();
     }
 
 
@@ -28,6 +28,7 @@ public class ScoreEndpoint extends HttpServlet {
      * @param request  the http request
      * @param response the response to the request
      */
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
@@ -45,7 +46,7 @@ public class ScoreEndpoint extends HttpServlet {
             String newScore = stringBuilder.toString();
             //scoreDB.setScoreToUser(newScore); // this adds score to a arraylist.
 
-            controller.newScore(stringBuilder.toString());
+            serverApiCommunication.newScore(stringBuilder.toString());
 
             PrintWriter out = response.getWriter();
 
