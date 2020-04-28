@@ -21,7 +21,6 @@ public class JsonConverterUser {
     private User user;
     private DBController dbController;
 
-
     public void JsonToJava(String newUser) throws ParseException {
         user = new User();
 
@@ -39,24 +38,6 @@ public class JsonConverterUser {
         }catch (SQLException e){
             System.out.println("JsonConverconnection to db");
         }
-
-
-
-
-
-
-
-
-
-        //todo set friends array to user array + it doesn't work.
-       /* JSONArray dares = (JSONArray) jo.get("friends");
-        //Iterator iteratorFriends = dares.iterator();
-        Iterator <Map> friendsArray = dares.iterator();
-        while(friendsArray.hasNext()){
-            //System.out.println(friendsArray.next());
-            Map.Entry pair = (Map.Entry) friendsArray.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
-        }*/
 
         JSONArray dares = (JSONArray)jo.get("dares");
         user.setDares(dares);

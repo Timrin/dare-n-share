@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * @author Kamilla, Julia, Steven
@@ -21,43 +22,43 @@ public class Dare {
     private Map scope;
     private JSONArray participants;
     private String start;
-    private Date end;
+    private String end;
     private Calendar calendar;
     private int length;
     private SimpleDateFormat sdf;
 
+    private Date date;
 
 
-    public Dare() {
+    public Dare() throws ParseException {
         participants = new JSONArray();
-        //length = (int) scope.get("length");
-        sdf = new SimpleDateFormat("dd:MM:yy HH:mm:ss");
+
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
         calendar = Calendar.getInstance();
+
     }
 
-   // set date (expects date)
-    public void setStart(Date calendar) {
-      this.start= sdf.format(calendar);
-       // sdf.parse(String.valueOf(start));
-       // length = (int) scope.get("length");
-        setEnd(3);
+    public String setStart() {
+        Date start = new Date();
+        return sdf.format(start);
     }
 
-    // get date - return date
-    public String getStart() throws ParseException {
-        return start;
+    public String setEnd(int scopeLength) {
+        Date now = new Date();
+        Date end = new Date();
+
+        end.setTime(now.getTime() + getDaysAsMilliSeconds(scopeLength));
+        return sdf.format(end);
     }
 
-    // set end date - uses get date
 
-    public void setEnd(int length){
-       calendar.setTime(end);
-       calendar.add(Calendar.DAY_OF_MONTH, length);
+    public long getDaysAsMilliSeconds(int days) {
+        return (days * 24 * 60 * 60 * 1000);
     }
 
-    public Date getEnd(){
-        return end;
-    }
+
+
 
     public JSONArray getParticipants() {
         return participants;
@@ -66,12 +67,12 @@ public class Dare {
     public void setParticipants(JSONArray newArray) {
         //  participants.add(newArray);
         this.participants = newArray;
-        System.out.println("SE HER KAMILLA OG JULIA " + newArray.get(1));
+        //System.out.println("SE HER KAMILLA OG JULIA " + newArray.get(1));
     }
 
     public Map getObjective() {
-        System.out.println(objective.get("goal") + " Dette er goal");// funker
-        System.out.println(objective.get("type") + " Dette er type");// funker
+        //System.out.println(objective.get("goal") + " Dette er goal");// funker
+        //System.out.println(objective.get("type") + " Dette er type");// funker
         return objective;
     }
 

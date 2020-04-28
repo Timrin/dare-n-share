@@ -4,10 +4,10 @@ import org.json.simple.JSONArray;
 
 /**
  * @author Kamilla
- * @date 14/04-20
  * @version 1.0
  * This class is an entity class
- * */
+ * @date 14/04-20
+ */
 
 public class User {
 
@@ -49,9 +49,9 @@ public class User {
     }
 
     public void setFriends(JSONArray friend) {
-       // friends.add(friend);
+        // friends.add(friend);
         this.friends = friend;
-        System.out.println("1 friend "+friends.get(0));
-        System.out.println("HIIIIIIIII "+ friends.get(1));
+        // System.out.println("1 friend "+friends.get(0));
+        // System.out.println("HIIIIIIIII "+ friends.get(1));
     }
 }

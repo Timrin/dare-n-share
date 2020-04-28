@@ -48,8 +48,13 @@ public class JsonConverterDare {
         JSONArray ja = (JSONArray) jo.get("participants");
         dare.setParticipants(ja);
 
-        dare.setStart(calendar.getTime());
-        dare.setEnd(3);
+       // dare.setStart(calendar.getTime());
+
+        //dare.setEnd(3);
+    }
+
+    public void timeFrame(){
+
     }
 
 
@@ -70,12 +75,26 @@ public class JsonConverterDare {
         m.putAll(dare.getScope());
         jo.put("scope", m);
 
-        jo.put("start",dare.getStart());
-        jo.put("end", dare.getEnd());
+        System.out.println(dare.getScope().get("length"));
 
-        JSONArray ja  = dare.getParticipants();
+        try {
+            int length = Integer.parseInt( dare.getScope().get("length").toString());
+            System.out.println("TEST LENGTH " + length);
+            jo.put("start",dare.setStart());
+            System.out.println("HEI HEI HEI");
+            jo.put("end", dare.setEnd(length));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        System.out.println("TEST: "+jo.toJSONString());
+
+        JSONArray ja = dare.getParticipants();
         jo.put("participants", ja);
-        System.out.println(ja.toJSONString());
+        // System.out.println(ja.toJSONString());
+
+
 
         return jo.toJSONString();
     }
