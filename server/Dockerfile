@@ -9,4 +9,6 @@ COPY conf/web.xml /usr/local/tomcat/webapps/ROOT/WEB-INF/
 #Copy libraries from project to tomcat lib folder in the container
 COPY resources/lib/json-simple-1.1.1.jar /usr/local/tomcat/lib/
 
+COPY resources/lib/sqlite-jdbc-3.30.1.jar /usr/local/tomcat/lib/
+
 CMD ["catalina.sh", "run"]
