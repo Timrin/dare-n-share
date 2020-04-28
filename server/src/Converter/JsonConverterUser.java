@@ -1,5 +1,6 @@
 package Converter;
 
+
 import database.DBController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,10 +19,10 @@ import java.sql.SQLException;
 public class JsonConverterUser {
 
     private User user;
+    private DBController dbController;
 
     public void JsonToJava(String newUser) throws ParseException {
         user = new User();
-
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -31,6 +32,12 @@ public class JsonConverterUser {
         System.out.println(user.getUid());
         System.out.println(user.getName());
 
+        dbController = new DBController();
+        try {
+            dbController.sendUserToDB(user.getName());
+        }catch (SQLException e){
+            System.out.println("JsonConverconnection to db");
+        }
 
         JSONArray dares = (JSONArray)jo.get("dares");
         user.setDares(dares);
