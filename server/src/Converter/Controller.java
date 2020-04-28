@@ -26,22 +26,15 @@ public class Controller {
         this.score = score;
     }
     //todo: fill out this method
-    public void addScoreToUsersDare(){
-
-    }
+    //Participants recieves a string, of an array (score array(true true false)). DB recieves a string from participants.
+    public void addScoreToUsersDare(){}
 
 
     // todo: or add Dare to User?
-    public void addUserToDare(){
+    // When a user posts a dare, the participant) dare array(json array in user class) will be updated.
+    public void addUserToDare(){}
 
-    }
 
-
-    //todo: We need to set a timestamp when server recieves dare from client
-    //todo: also, a timer for when the dare is over.
-    public void timeStampToDare(){
-
-    }
 
 
 }

@@ -32,11 +32,8 @@ public class Dare {
 
     public Dare() throws ParseException {
         participants = new JSONArray();
-
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
         calendar = Calendar.getInstance();
-
     }
 
     public String setStart() {
@@ -52,13 +49,9 @@ public class Dare {
         return sdf.format(end);
     }
 
-
     public long getDaysAsMilliSeconds(int days) {
         return (days * 24 * 60 * 60 * 1000);
     }
-
-
-
 
     public JSONArray getParticipants() {
         return participants;
@@ -66,8 +59,10 @@ public class Dare {
 
     public void setParticipants(JSONArray newArray) {
         //  participants.add(newArray);
-        this.participants = newArray;
-        //System.out.println("SE HER KAMILLA OG JULIA " + newArray.get(1));
+        this.participants = newArray; // an index looks like this : {"uid":1}
+       // System.out.println(newArray.get(0));
+       // System.out.println("SE HER KAMILLA OG JULIA " + newArray.get(1));
+
     }
 
     public Map getObjective() {
