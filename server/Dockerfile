@@ -11,4 +11,6 @@ COPY resources/lib/json-simple-1.1.1.jar /usr/local/tomcat/lib/
 
 COPY resources/lib/sqlite-jdbc-3.30.1.jar /usr/local/tomcat/lib/
 
+COPY resources/lib/dare_n_share.db /usr/local/tomcat/lib/
+
 CMD ["catalina.sh", "run"]
