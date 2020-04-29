@@ -20,8 +20,6 @@ public class Dare {
     private JSONArray participants;
     private String startDate;
     private String endDate;
-    private Calendar calendar;
-    private int length;
     private SimpleDateFormat sdf;
     private Map objectiveFromDB;
     private Map scopeFromDB;
@@ -29,7 +27,6 @@ public class Dare {
     public Dare(){
         participants = new JSONArray();
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        calendar = Calendar.getInstance();
     }
 
     public String setStart() {
@@ -61,6 +58,10 @@ public class Dare {
 
     }
 
+    public void addParticipants(String participant){
+        participants.add(participant);
+    }
+
     public Map getObjective() {
         return objective;
     }
@@ -79,7 +80,7 @@ public class Dare {
         return objectiveFromDB;
     }
 
-    public void setScopeFromDB(String scopeType, String scopeLength){
+    public void setScopeFromDB(String scopeType, int scopeLength){
         scopeFromDB = new HashMap();
         scopeFromDB.put("type", scopeType);
         scopeFromDB.put("length", scopeLength);
@@ -103,5 +104,13 @@ public class Dare {
 
     public String getEndDate() {
         return endDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

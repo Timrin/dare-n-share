@@ -54,9 +54,15 @@ public class DBController {
         DareTable.insertParticipantsToDare(userID,dareID);
     }
     public void setDareFromDB(String objectiveType, String objectiveGoal, String scopeType,
-                              int scopeLength, String start, String end, int uid1, int uid2){
+                              int scopeLength, String start, String end, String uid1, String uid2){
         Dare dare = new Dare();
         dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+        dare.setScopeFromDB(scopeType, scopeLength);
+        dare.setStartDate(start);
+        dare.setEndDate(end);
+        dare.addParticipants(uid1);
+        dare.addParticipants(uid2);
+
 
 
     }
