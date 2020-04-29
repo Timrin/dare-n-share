@@ -21,14 +21,11 @@ public class Dare {
     private Map objective;
     private Map scope;
     private JSONArray participants;
-    private String start;
-    private String end;
+    private String startDate;
+    private String endDate;
     private Calendar calendar;
     private int length;
     private SimpleDateFormat sdf;
-
-    private Date date;
-
 
     public Dare() throws ParseException {
         participants = new JSONArray();
@@ -38,6 +35,7 @@ public class Dare {
 
     public String setStart() {
         Date start = new Date();
+        startDate = sdf.format(start);
         return sdf.format(start);
     }
 
@@ -46,6 +44,7 @@ public class Dare {
         Date end = new Date();
 
         end.setTime(now.getTime() + getDaysAsMilliSeconds(scopeLength));
+        endDate = sdf.format(end);
         return sdf.format(end);
     }
 
@@ -83,5 +82,11 @@ public class Dare {
         this.scope = scope;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
 
+    public String getEndDate() {
+        return endDate;
+    }
 }

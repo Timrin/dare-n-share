@@ -48,6 +48,7 @@ public class JsonConverterDare {
         JSONArray ja = (JSONArray) jo.get("participants");
         dare.setParticipants(ja);
 
+        sendDareToDB(dare);
        // dare.setStart(calendar.getTime());
 
         //dare.setEnd(3);
@@ -57,6 +58,9 @@ public class JsonConverterDare {
 
     }
 
+    public void sendDareToDB(Dare dare){
+        new Controller().addNewDare(dare);
+    }
 
 
     /**
@@ -81,7 +85,6 @@ public class JsonConverterDare {
             int length = Integer.parseInt( dare.getScope().get("length").toString());
             System.out.println("TEST LENGTH " + length);
             jo.put("start",dare.setStart());
-            System.out.println("HEI HEI HEI");
             jo.put("end", dare.setEnd(length));
         }catch (Exception e){
             System.out.println(e.getMessage());

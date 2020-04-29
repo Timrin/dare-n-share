@@ -14,7 +14,7 @@ public class DBController {
     }
 
     public void sendNewDareToDB(String objectiveType, String objective,String scopeType,
-                                String scopeLength, String start,String end) throws SQLException {
+                                int scopeLength, String start,String end) throws SQLException {
         DareTable dareDB = new DareTable();
         dareDB.insertNewDareToDB(objectiveType,objective,scopeType,scopeLength,start,end); //This method expects varables for a dare:
         //objectiveType, objective, ScopeType,ScopeLength,Start,End

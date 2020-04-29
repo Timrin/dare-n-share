@@ -1,5 +1,7 @@
 package Converter;
 
+import database.DBController;
+
 /**
  *
  * This class is a controller.
@@ -14,6 +16,7 @@ public class Controller {
     private Dare dare;
     private User user;
     private Score score;
+    private DBController dbController;
 
 
     public Controller() {
@@ -25,6 +28,26 @@ public class Controller {
         this.user = user;
         this.score = score;
     }
+
+    public void addNewDare(Dare dare){
+
+        String objectiveType = (String) dare.getObjective().get("type");
+        String objectiveGoal = (String) dare.getObjective().get("goal");
+        String scopeType = (String) dare.getScope().get("type");
+        String tempScopeLength = (String) dare.getScope().get("length");
+        int scopeLength = Integer.parseInt(tempScopeLength);
+        String start = dare.getStartDate();
+        String end = dare.getEndDate();
+
+        try {
+            dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    //(String objectiveType, String objective,String scopeType,
+    //                                String scopeLength, String start,String end)
+
     //todo: fill out this method
     //Participants recieves a string, of an array (score array(true true false)). DB recieves a string from participants.
     public void addScoreToUsersDare(){}

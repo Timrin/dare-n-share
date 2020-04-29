@@ -19,7 +19,7 @@ public class DareTable {
 
 
     public void insertNewDareToDB(String objectiveType,String objective,String scopeType,
-                                  String scopeLength,String start,String end) throws SQLException {
+                                  int scopeLength,String start,String end) throws SQLException {
         String sql1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
         String sql2 = ",Start, End) VALUES ('" + objectiveType+"', '"+objective+"', '"+scopeType+"', '";
         String sql3= scopeLength + "','"+ start+"','"+end+"');";
