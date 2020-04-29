@@ -6,6 +6,7 @@ import java.sql.*;
 
 public class UserTable {
 
+    /*
     private Connection connect(){
         Connection conn = null;
         try {
@@ -19,6 +20,8 @@ public class UserTable {
         return conn;
     }
 
+     */
+
 
     /**
      * insert userinformation to table User
@@ -26,10 +29,21 @@ public class UserTable {
      *
      * @throws SQLException
      */
-    public void addUserToDB(String name) throws SQLException {
+    public static void addUserToDB(String name) throws SQLException {
+
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url ="jdbc:sqlite:lib/dare_n_share.db";
+            conn= DriverManager.getConnection(url);
+            System.out.println("Connection ok");
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
 
         String request = "INSERT INTO user(username) VALUES ('" + name+ "')";
-        Connection conn = this.connect();
+
+        assert conn != null;
         Statement statement = conn.createStatement();
         statement.execute(request);
 
@@ -45,9 +59,21 @@ public class UserTable {
 
 
     //Get information from all columns for userId
-    public void getUser(int userId) throws SQLException {
+    public static void getUser(int userId) throws SQLException {
+
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url ="jdbc:sqlite:lib/dare_n_share.db";
+            conn= DriverManager.getConnection(url);
+            System.out.println("Connection ok");
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
         String request = "SELECT * FROM User where UserID = " + userId+";";
-        Connection conn = this.connect();
+
+        assert conn != null;
         Statement statement = conn.createStatement();
         statement.execute(request);
 

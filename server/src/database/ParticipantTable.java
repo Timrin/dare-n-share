@@ -5,7 +5,7 @@ import java.sql.*;
 public class ParticipantTable {
 
 
-
+/*
     private Connection connect(){
         Connection conn = null;
         try {
@@ -19,16 +19,29 @@ public class ParticipantTable {
         return conn;
     }
 
+ */
+
 
 
     /**
      * add Participants to table, retrieves the primary key and store in variable
      * @throws SQLException for SQL error that can happen during execute and createstatement
      */
-    public void addParticipant(int userID,int dareID) throws SQLException {
-        Connection connect = this.connect();
+    public static void addParticipant(int userID,int dareID) throws SQLException {
+
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url ="jdbc:sqlite:lib/dare_n_share.db";
+            conn= DriverManager.getConnection(url);
+            System.out.println("Connection ok");
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
         String query =" INSERT INTO participants(UserId, DareId) VALUES ("+userID + ","+dareID+");";
-        Statement statement = connect.createStatement();
+        assert conn != null;
+        Statement statement = conn.createStatement();
 
         String pragma = "PRAGMA FOREIGN_KEYS = on";
         statement.execute(pragma);
