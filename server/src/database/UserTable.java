@@ -33,7 +33,7 @@ public class UserTable {
      *
      * @throws SQLException
      */
-    public static void addUserToDB(String name) throws SQLException {
+    public static void addUserToDB(String userId, String name) throws SQLException {
 
         Connection conn = null;
         try {
@@ -45,7 +45,7 @@ public class UserTable {
             System.out.println(e.getMessage());
         }
 
-        String request = "INSERT INTO user(username) VALUES ('" + name+ "')";
+        String request = "INSERT INTO user(UserID,username) VALUES ('" + userId+ "','"+name+"')";
 
         assert conn != null;
         Statement statement = conn.createStatement();
@@ -64,8 +64,8 @@ public class UserTable {
 
 
     //Get information from all columns for userId
-    public static void getUser(int userId) throws SQLException {
-
+    public String getUser(String userId) throws SQLException {
+        String name = null;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -76,7 +76,7 @@ public class UserTable {
             System.out.println(e.getMessage());
         }
 
-        String request = "SELECT * FROM User where UserID = " + userId+";";
+        String request = "SELECT * FROM User where UserID = '" + userId+"';";
 
         assert conn != null;
         Statement statement = conn.createStatement();
@@ -84,10 +84,11 @@ public class UserTable {
 
         ResultSet result = statement.getResultSet();
         while (result.next()){
-            String name = result.getString(2);
+            name = result.getString(2);
             DBController.getUserFromDB(name);
 
         }
+        return name;
     }
 
 

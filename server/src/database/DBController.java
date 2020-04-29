@@ -24,9 +24,9 @@ public class DBController {
     }
 
 
-    public void sendUserToDB(String name) throws SQLException {
+    public void sendUserToDB(String userID,String name) throws SQLException {
 
-        UserTable.addUserToDB(name);
+        UserTable.addUserToDB(userID,name);
     }
 
     public static void getUserIDfromDB(int userID){

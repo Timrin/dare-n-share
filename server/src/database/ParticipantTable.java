@@ -58,9 +58,9 @@ public class ParticipantTable {
         }
     }
 
-    public static void getParticipant (int participantId) throws SQLException {
+    public static String getParticipant (int participantId) throws SQLException {
          Connection conn = null;
-         int userid =0;
+         String userid =null;
         try {
             Class.forName("org.sqlite.JDBC");
             String url ="jdbc:sqlite:lib/dare_n_share.db";
@@ -75,9 +75,9 @@ public class ParticipantTable {
         Statement statement = conn.createStatement();
         statement.execute(query);
         ResultSet result = statement.getResultSet();
-        userid= result.getInt("UserId");
+        userid= result.getString("UserId");
         System.out.println(userid);
 
-
+        return userid;
     }
 }
