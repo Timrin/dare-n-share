@@ -1,6 +1,7 @@
 package database;
 
 import Converter.Controller;
+import Converter.Dare;
 import Converter.ServerApiCommunication;
 
 import java.sql.SQLException;
@@ -35,11 +36,11 @@ public class DBController {
 
     }
 
-    public void sendNewDareToDB(String objectiveType, String objective,String scopeType,
+    public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
                                 int scopeLength, String start,String end) throws SQLException {
 
         try {
-            dareTable.insertNewDareToDB(objectiveType, objective, scopeType, scopeLength, start, end);
+            dareTable.insertNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
         }catch (ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
@@ -52,7 +53,11 @@ public class DBController {
     public void insertParticipantsToDB(int userID,int dareID) throws SQLException {
         DareTable.insertParticipantsToDare(userID,dareID);
     }
-    public static void getDareFromDB(){
+    public void setDareFromDB(String objectiveType, String objectiveGoal, String scopeType,
+                              int scopeLength, String start, String end, int uid1, int uid2){
+        Dare dare = new Dare();
+        dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+
 
     }
 

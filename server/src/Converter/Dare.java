@@ -4,10 +4,7 @@ import org.json.simple.JSONArray;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * @author Kamilla, Julia, Steven
@@ -26,8 +23,10 @@ public class Dare {
     private Calendar calendar;
     private int length;
     private SimpleDateFormat sdf;
+    private Map objectiveFromDB;
+    private Map scopeFromDB;
 
-    public Dare() throws ParseException {
+    public Dare(){
         participants = new JSONArray();
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         calendar = Calendar.getInstance();
@@ -68,6 +67,26 @@ public class Dare {
 
     public void setObjective(Map objective) {
         this.objective = objective;
+    }
+
+    public void setObjectiveFromDB(String objectiveType ,String objectiveGoal){
+        objectiveFromDB = new HashMap();
+        objectiveFromDB.put("type", objectiveType);
+        objectiveFromDB.put("goal", objectiveGoal);
+    }
+
+    public Map getObjectiveFromDB() {
+        return objectiveFromDB;
+    }
+
+    public void setScopeFromDB(String scopeType, String scopeLength){
+        scopeFromDB = new HashMap();
+        scopeFromDB.put("type", scopeType);
+        scopeFromDB.put("length", scopeLength);
+    }
+
+    public Map getScopeFromDB() {
+        return scopeFromDB;
     }
 
     public Map getScope() {
