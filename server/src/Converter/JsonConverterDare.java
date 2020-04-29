@@ -45,6 +45,15 @@ public class JsonConverterDare {
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 
+        try {
+            int length = Integer.parseInt( dare.getScope().get("length").toString());
+            System.out.println("TEST LENGTH " + length);
+            jo.put("start",dare.setStart());
+            jo.put("end", dare.setEnd(length));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         JSONArray ja = (JSONArray) jo.get("participants");
         dare.setParticipants(ja);
 
@@ -81,14 +90,14 @@ public class JsonConverterDare {
 
         System.out.println(dare.getScope().get("length"));
 
-        try {
-            int length = Integer.parseInt( dare.getScope().get("length").toString());
-            System.out.println("TEST LENGTH " + length);
-            jo.put("start",dare.setStart());
-            jo.put("end", dare.setEnd(length));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            int length = Integer.parseInt( dare.getScope().get("length").toString());
+//            System.out.println("TEST LENGTH " + length);
+//            jo.put("start",dare.setStart());
+//            jo.put("end", dare.setEnd(length));
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
 
 
         System.out.println("TEST: "+jo.toJSONString());
