@@ -1,5 +1,6 @@
 package api_endpoints;
 
+import Converter.Buffer;
 import database_sockets.DareDB;
 import Converter.ServerApiCommunication;
 
@@ -17,10 +18,12 @@ public class DareEndpoint extends HttpServlet {
 
     private DareDB dareDB;
     private ServerApiCommunication serverApiCommunication;
+    private Buffer<Integer> buffer;
 
     public DareEndpoint() {
         dareDB = new DareDB();
-        serverApiCommunication = new ServerApiCommunication();
+        serverApiCommunication = new ServerApiCommunication(this);
+        buffer = new Buffer<>();
     }
 
 
@@ -94,10 +97,11 @@ public class DareEndpoint extends HttpServlet {
 
             //Create dare
 
-            int id = dareDB.createDare(stringBuilder.toString());
+            //int id = dareDB.createDare(stringBuilder.toString());
 
             serverApiCommunication.newDare(stringBuilder.toString());
 
+            int id = buffer.get();
 
             //Create response
             PrintWriter out = response.getWriter();
@@ -108,5 +112,9 @@ public class DareEndpoint extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void addDareIDToPost(int id){
+        buffer.put(id);
     }
 }

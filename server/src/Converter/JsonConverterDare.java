@@ -15,10 +15,15 @@ import java.util.*;
  */
 public class JsonConverterDare {
     private Dare dare;
-    private Calendar calendar;
+    private ServerApiCommunication serverApiCommunication;
+    private Controller controller;
 
     public JsonConverterDare() {
-        calendar=Calendar.getInstance();
+    }
+
+    public JsonConverterDare(ServerApiCommunication serverApiCommunication){
+        this.serverApiCommunication = serverApiCommunication;
+        controller = new Controller(this);
     }
 
     /**
@@ -109,6 +114,10 @@ public class JsonConverterDare {
 
 
         return jo.toJSONString();
+    }
+
+    public void sendDareIDToPost(int id){
+        serverApiCommunication.sendDareIDToPost(id);
     }
 
 }

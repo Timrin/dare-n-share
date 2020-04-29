@@ -17,10 +17,11 @@ public class Controller {
     private User user;
     private Score score;
     private DBController dbController;
+    private JsonConverterDare jsonConverterDare;
 
 
     public Controller() {
-        dbController = new DBController();
+        dbController = new DBController(); //TODO: Needs to send along self to DBController
 
     }
 
@@ -28,6 +29,10 @@ public class Controller {
         this.dare = dare;
         this.user = user;
         this.score = score;
+    }
+
+    public Controller(JsonConverterDare jsonConverterDare){
+        this.jsonConverterDare = jsonConverterDare;
     }
 
 
@@ -46,8 +51,10 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    //(String objectiveType, String objective,String scopeType,
-    //                                String scopeLength, String start,String end)
+
+    public void sendDareID(int id){
+        jsonConverterDare.sendDareIDToPost(id);
+    }
 
     //todo: fill out this method
     //Participants recieves a string, of an array (score array(true true false)). DB recieves a string from participants.

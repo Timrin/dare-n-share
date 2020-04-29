@@ -57,16 +57,12 @@ public class Dare {
     }
 
     public void setParticipants(JSONArray newArray) {
-        //  participants.add(newArray);
         this.participants = newArray; // an index looks like this : {"uid":1}
-       // System.out.println(newArray.get(0));
-       // System.out.println("SE HER KAMILLA OG JULIA " + newArray.get(1));
+
 
     }
 
     public Map getObjective() {
-        //System.out.println(objective.get("goal") + " Dette er goal");// funker
-        //System.out.println(objective.get("type") + " Dette er type");// funker
         return objective;
     }
 
