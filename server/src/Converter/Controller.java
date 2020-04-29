@@ -29,13 +29,13 @@ public class Controller {
         this.score = score;
     }
 
+
     public void addNewDare(Dare dare){
 
-        String objectiveType = (String) dare.getObjective().get("type");
-        String objectiveGoal = (String) dare.getObjective().get("goal");
-        String scopeType = (String) dare.getScope().get("type");
-        String tempScopeLength = (String) dare.getScope().get("length");
-        int scopeLength = Integer.parseInt(tempScopeLength);
+        String objectiveType = dare.getObjective().get("type").toString();
+        String objectiveGoal = dare.getObjective().get("goal").toString();
+        String scopeType = dare.getScope().get("type").toString();
+        int scopeLength = Integer.parseInt(dare.getScope().get("length").toString());
         String start = dare.getStartDate();
         String end = dare.getEndDate();
 

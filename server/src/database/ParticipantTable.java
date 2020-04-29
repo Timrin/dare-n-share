@@ -10,7 +10,7 @@ public class ParticipantTable {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url ="jdbc:sqlite:server/resources/lib/dare_n_share.db";
+            String url ="jdbc:sqlite:lib/dare_n_share.db";
             conn= DriverManager.getConnection(url);
             System.out.println("Connection ok");
         }catch (SQLException | ClassNotFoundException e){
