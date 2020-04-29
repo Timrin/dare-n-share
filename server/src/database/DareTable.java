@@ -101,7 +101,7 @@ public class DareTable {
      * @param id
      * @throws SQLException
      */
-    public static void getDareFromDB(int id) throws SQLException {
+    public  void getDareFromDB(int id) throws SQLException {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -131,10 +131,12 @@ public class DareTable {
             String start = result.getString(6);
             String end = result.getString(7);
             int participants = result.getInt(8);
-            ParticipantTable.getParticipant(participants);
+            String userID =  ParticipantTable.getParticipant(participants);
             System.out.println(participants);
             int opponent = result.getInt(9);
-            ParticipantTable.getParticipant(opponent);
+            String userOpponentId =ParticipantTable.getParticipant(opponent);
+           // dbController.setDareFromDB(objectiveType,objective,scopeType,scopeLength,start,end,userID,userOpponentId);
+
         }
 
     }
