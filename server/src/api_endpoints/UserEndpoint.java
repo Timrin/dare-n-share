@@ -24,7 +24,7 @@ public class UserEndpoint extends HttpServlet {
 
     public UserEndpoint() {
         userDB = new UserDB();
-        serverApiCommunication = new ServerApiCommunication();
+        serverApiCommunication = new ServerApiCommunication(this);
     }
     /**
      * This method is invoked when the server receives an http get request.
@@ -39,12 +39,10 @@ public class UserEndpoint extends HttpServlet {
         String pathInfo = request.getPathInfo();
         if (pathInfo.length() >= 2) {
             try {
-                int id = Integer.parseInt(pathInfo.substring(1));
-
+                String truePath = pathInfo.substring(1);
                 response.setContentType("application/json");
 
-                //String user = userDB.getUser(id);
-                String user = serverApiCommunication.getUser(); //fixme getUser doesn't return ID
+                String user = serverApiCommunication.getUser(truePath); //fixme getUser doesn't return ID
 
                 if (user != null) {
                     PrintWriter out = response.getWriter();

@@ -2,6 +2,8 @@ package Converter;
 
 import database.DBController;
 
+import java.sql.SQLException;
+
 /**
  *
  * This class is a controller.
@@ -18,6 +20,7 @@ public class Controller {
     private Score score;
     private DBController dbController;
     private JsonConverterDare jsonConverterDare;
+    private JsonConverterUser jsonConverterUser;
 
 
     public Controller() {
@@ -37,6 +40,11 @@ public class Controller {
 
     }
 
+    public Controller(JsonConverterUser jsonConverterUser){
+        this.jsonConverterUser = jsonConverterUser;
+        dbController = new DBController(this);
+    }
+
 
     public void addNewDare(Dare dare){
 
@@ -54,8 +62,20 @@ public class Controller {
         }
     }
 
+    public void addNewUser(User user){
+        try {
+            dbController.sendUserToDB(user.getUid(), user.getName());
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void sendDareID(int id){
         jsonConverterDare.sendDareIDToPost(id);
+    }
+
+    public String getUserFromDB(String iud){
+        return dbController.getUserFromDB(iud);
     }
 
     //todo: fill out this method

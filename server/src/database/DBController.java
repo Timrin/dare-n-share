@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class DBController {
     private Controller controller;
     private DareTable dareTable;
+    private UserTable userTable;
 
     public DBController() {
     }
@@ -32,8 +33,14 @@ public class DBController {
     public static void getUserIDfromDB(int userID){
 
     }
-    public static void getUserFromDB(String name){
-
+    public String getUserFromDB(String uid){
+        String userName = "";
+        try {
+            userName = UserTable.getUser(uid);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return userName;
     }
 
     public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,

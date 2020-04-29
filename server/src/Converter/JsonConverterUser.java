@@ -1,6 +1,7 @@
 package Converter;
 
 
+import api_endpoints.UserEndpoint;
 import database.DBController;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,9 +21,20 @@ public class JsonConverterUser {
 
     private User user;
     private DBController dbController;
+    private Controller controller;
+    private ServerApiCommunication serverApiCommunication;
+
+    public JsonConverterUser(){
+
+    }
+
+    public JsonConverterUser(ServerApiCommunication serverApiCommunication){
+        this.serverApiCommunication = serverApiCommunication;
+        controller = new Controller(this);
+    }
 
     public void JsonToJava(String newUser) throws ParseException {
-        user = new User();
+        this.user = new User();
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -32,19 +44,17 @@ public class JsonConverterUser {
         System.out.println(user.getUid());
         System.out.println(user.getName());
 
-        dbController = new DBController();
-        try {
-            dbController.sendUserToDB(user.getName(), user.getUid());
-        }catch (SQLException e){
-            System.out.println("JsonConverconnection to db");
-        }
-
         JSONArray dares = (JSONArray)jo.get("dares");
         user.setDares(dares);
 
         JSONArray friends = (JSONArray)jo.get("friends");
         user.setFriends(friends);
 
+        sendUserToDB(user);
+    }
+
+    public void sendUserToDB(User user){
+        controller.addNewUser(user);
     }
 
     public String JavaToJson() {
@@ -69,6 +79,14 @@ public class JsonConverterUser {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getUserFromDB(String uid){
+        JSONObject jo = new JSONObject();
+        jo.put("name",controller.getUserFromDB(uid));
+        jo.put("uid", uid);
+        System.out.println(jo.toJSONString());
+        return jo.toJSONString();
     }
 
 

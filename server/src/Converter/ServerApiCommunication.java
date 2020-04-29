@@ -1,5 +1,6 @@
 package Converter;
 import api_endpoints.DareEndpoint;
+import api_endpoints.UserEndpoint;
 import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ public class ServerApiCommunication {
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
     private DareEndpoint dareEndpoint;
+    private UserEndpoint userEndpoint;
 
     // These variables are for testing purposes. We need to generate an ID for user and dare
     private HashMap<Integer,String> json2javaUser = new HashMap<>();
@@ -32,6 +34,13 @@ public class ServerApiCommunication {
         jsonDare= new JsonConverterDare(this);
         jsonScore = new JsonConverterScore();
         jsonUser = new JsonConverterUser();
+    }
+
+    public ServerApiCommunication(UserEndpoint userEndpoint){
+        this.userEndpoint = userEndpoint;
+        jsonUser = new JsonConverterUser(this);
+        jsonScore = new JsonConverterScore();
+        jsonDare = new JsonConverterDare();
     }
 
 
@@ -66,10 +75,8 @@ public class ServerApiCommunication {
      * This method returns a string that is parsed to a json body, and is called upon in
      * the user endpoint
      * */
-    public String getUser(){
-        return jsonUser.JavaToJson();
-        //return json2javaUser.get(id);
-        //return jsonUser.JsonToJava()
+    public String getUser(String iud){
+        return jsonUser.getUserFromDB(iud);
     }
 
     public void sendDareIDToPost(int id){

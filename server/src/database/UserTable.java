@@ -52,19 +52,18 @@ public class UserTable {
         statement.execute(request);
 
         //get the generated primary key and store in userID
-        ResultSet userIdKey = statement.getGeneratedKeys();
-        while (userIdKey.next()) {
-            int userID = userIdKey.getInt(1);
-            System.out.println(userID);
-            DBController.getUserIDfromDB(userID);
-            String uname = userIdKey.getString(2);
-            System.out.println(uname);
-        }
+//        ResultSet userIdKey = statement.getGeneratedKeys();
+//        while (userIdKey.next()) {
+//            String userID = userIdKey.getString(1);
+//            System.out.println(userID);
+//            String uname = userIdKey.getString(2);
+//            System.out.println(uname);
+//        }
     }
 
 
     //Get information from all columns for userId
-    public String getUser(String userId) throws SQLException {
+    public static String getUser(String userId) throws SQLException {
         String name = null;
         Connection conn = null;
         try {
@@ -85,7 +84,6 @@ public class UserTable {
         ResultSet result = statement.getResultSet();
         while (result.next()){
             name = result.getString(2);
-            DBController.getUserFromDB(name);
 
         }
         return name;
