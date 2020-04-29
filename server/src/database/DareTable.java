@@ -2,6 +2,11 @@ package database;
 
 import java.sql.*;
 
+/**
+ * Dare communication to Dare table in database
+ * @author julia
+ */
+
 public class DareTable {
 /*
     private Connection connect() {
@@ -22,27 +27,29 @@ public class DareTable {
 
     public static void insertNewDareToDB(String objectiveType, String objective, String scopeType,
                                   int scopeLength, String start, String end) throws SQLException, ClassNotFoundException {
-        String sql1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
-        String sql2 = ",Start, End) VALUES ('" + objectiveType + "', '" + objective + "', '" + scopeType + "', '";
-        String sql3 = scopeLength + "','" + start + "','" + end + "');";
-        String totalRequestLive = sql1 + sql2 + sql3;
+        String request1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
+        String request2 = ",Start, End) VALUES ('" + objectiveType + "', '" + objective + "', '" + scopeType + "', '";
+        String request3 = scopeLength + "','" + start + "','" + end + "');";
+        String totalRequestLive = request1 + request2 + request3;
         insertToDare(totalRequestLive);
     }
 
     public static void insertToDare(String request) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
+       int dareId = 0;
+        Connection connect = null;
 
         Class.forName("org.sqlite.JDBC");
         String url = "jdbc:sqlite:lib/dare_n_share.db";
-        conn = DriverManager.getConnection(url);
+        connect = DriverManager.getConnection(url);
         System.out.println("Connection ok");
 
-        Statement statement = conn.createStatement();
+        Statement statement = connect.createStatement();
         statement.execute(request);
         ResultSet result = statement.getGeneratedKeys();
         while (result.next()) {
-            int dareId = result.getInt(1);
+            dareId = result.getInt(1);
             System.out.println(dareId);
+            DBController.getDareIDfromDB(dareId);
         }
     }
 
@@ -59,6 +66,7 @@ public class DareTable {
 
         String foreignK = "PRAGMA FOREIGN_KEYS = ON; ";
         String sql = " UPDATE dare SET Participants =" + partID + " WHERE Dareid =" + dareID + ";";
+        assert conn != null;
         Statement statement = conn.createStatement();
         statement.execute(foreignK);
         System.out.println("f");
@@ -77,6 +85,7 @@ public class DareTable {
             System.out.println(e.getMessage());
         }
         String sql = " UPDATE Dare set Opponent =" + opponent + " WHERE Dareid =" + dareID + ";";
+        assert conn != null;
         Statement statement = conn.createStatement();
         statement.execute(sql);
     }
@@ -99,6 +108,7 @@ public class DareTable {
         }
 
         String query = "SELECT * FROM Dare where Dareid =" + id + ";";
+        assert conn != null;
         Statement statement = conn.createStatement();
 
         statement.execute(query);
@@ -111,14 +121,16 @@ public class DareTable {
             System.out.println(objective);
             String scopeType = result.getString(4);
             System.out.println(scopeType);
-            String scopeLength = result.getString(5);
+            int scopeLength = result.getInt(5);
             System.out.println(scopeLength);
             String start = result.getString(6);
             String end = result.getString(7);
             int participants = result.getInt(8);
+            ParticipantTable.getParticipant(participants);
             System.out.println(participants);
+            int opponent = result.getInt(9);
+            ParticipantTable.getParticipant(opponent);
         }
-
 
     }
 

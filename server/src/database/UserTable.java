@@ -4,6 +4,10 @@ import Converter.User;
 
 import java.sql.*;
 
+/**
+ * communication class with User table in database
+ * @author julia
+ */
 public class UserTable {
 
     /*
@@ -52,6 +56,7 @@ public class UserTable {
         while (userIdKey.next()) {
             int userID = userIdKey.getInt(1);
             System.out.println(userID);
+            DBController.getUserIDfromDB(userID);
             String uname = userIdKey.getString(2);
             System.out.println(uname);
         }
@@ -80,8 +85,8 @@ public class UserTable {
         ResultSet result = statement.getResultSet();
         while (result.next()){
             String name = result.getString(2);
-            String friends = result.getString(3);
-            System.out.println(name + friends);
+            DBController.getUserFromDB(name);
+
         }
     }
 

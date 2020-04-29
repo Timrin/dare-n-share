@@ -2,6 +2,10 @@ package database;
 
 import java.sql.*;
 
+/**
+ * Participant table communication
+ * @author julia
+ */
 public class ParticipantTable {
 
 
@@ -20,7 +24,6 @@ public class ParticipantTable {
     }
 
  */
-
 
 
     /**
@@ -53,5 +56,28 @@ public class ParticipantTable {
             int participantID = partIdKey.getInt(1);
             System.out.println(participantID);
         }
+    }
+
+    public static void getParticipant (int participantId) throws SQLException {
+         Connection conn = null;
+         int userid =0;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String url ="jdbc:sqlite:lib/dare_n_share.db";
+            conn= DriverManager.getConnection(url);
+            System.out.println("Connection ok");
+        }catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+        String query = "SELECT UserId from Participants where PartID="+ participantId+";";
+        assert conn != null;
+        Statement statement = conn.createStatement();
+        statement.execute(query);
+        ResultSet result = statement.getResultSet();
+        userid= result.getInt("UserId");
+        System.out.println(userid);
+
+
     }
 }
