@@ -34,7 +34,7 @@ public class JsonConverterUser {
 
         dbController = new DBController();
         try {
-            dbController.sendUserToDB(user.getName());
+            dbController.sendUserToDB(user.getName(), user.getUid());
         }catch (SQLException e){
             System.out.println("JsonConverconnection to db");
         }
