@@ -20,6 +20,7 @@ public class Controller {
 
 
     public Controller() {
+        dbController = new DBController();
 
     }
 
