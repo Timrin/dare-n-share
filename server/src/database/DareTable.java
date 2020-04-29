@@ -23,10 +23,14 @@ public class DareTable {
     }
 
  */
+    private DBController dbController;
+    public DareTable(DBController dbController) {
+        this.dbController = dbController;
 
+    }
 
-    public static void insertNewDareToDB(String objectiveType, String objective, String scopeType,
-                                  int scopeLength, String start, String end) throws SQLException, ClassNotFoundException {
+    public void insertNewDareToDB(String objectiveType, String objective, String scopeType,
+                                         int scopeLength, String start, String end) throws SQLException, ClassNotFoundException {
         String request1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
         String request2 = ",Start, End) VALUES ('" + objectiveType + "', '" + objective + "', '" + scopeType + "', '";
         String request3 = scopeLength + "','" + start + "','" + end + "');";
@@ -34,7 +38,7 @@ public class DareTable {
         insertToDare(totalRequestLive);
     }
 
-    public static void insertToDare(String request) throws SQLException, ClassNotFoundException {
+    public void insertToDare(String request) throws SQLException, ClassNotFoundException {
        int dareId = 0;
         Connection connect = null;
 
@@ -49,7 +53,8 @@ public class DareTable {
         while (result.next()) {
             dareId = result.getInt(1);
             System.out.println(dareId);
-            DBController.getDareIDfromDB(dareId);
+            dbController.getDareIDfromDB(dareId);
+            //DBController.getDareIDfromDB(dareId);
         }
     }
 

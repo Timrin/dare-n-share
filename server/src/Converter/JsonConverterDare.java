@@ -73,7 +73,7 @@ public class JsonConverterDare {
     }
 
     public void sendDareToDB(Dare dare){
-        new Controller().addNewDare(dare);
+        controller.addNewDare(dare);
     }
 
 

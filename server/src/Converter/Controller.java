@@ -21,7 +21,7 @@ public class Controller {
 
 
     public Controller() {
-        dbController = new DBController(); //TODO: Needs to send along self to DBController
+
 
     }
 
@@ -33,6 +33,8 @@ public class Controller {
 
     public Controller(JsonConverterDare jsonConverterDare){
         this.jsonConverterDare = jsonConverterDare;
+        dbController = new DBController(this);
+
     }
 
 

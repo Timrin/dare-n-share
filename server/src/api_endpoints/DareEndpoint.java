@@ -106,7 +106,7 @@ public class DareEndpoint extends HttpServlet {
             //Create response
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{dare_id:" + id + "}");
+            out.println("{dare_id:"+id+" }");
 
 
         } catch (Exception e) {

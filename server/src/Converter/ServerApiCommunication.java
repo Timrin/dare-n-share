@@ -29,7 +29,7 @@ public class ServerApiCommunication {
 
     public ServerApiCommunication(DareEndpoint dareEndpoint){
         this.dareEndpoint = dareEndpoint;
-        jsonDare= new JsonConverterDare();
+        jsonDare= new JsonConverterDare(this);
         jsonScore = new JsonConverterScore();
         jsonUser = new JsonConverterUser();
     }
