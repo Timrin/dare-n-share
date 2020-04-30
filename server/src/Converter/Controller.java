@@ -88,6 +88,11 @@ public class Controller {
     public void addUserToDare(){}
 
 
+    public Dare getDare(int dareId){
+       return dbController.getDare(dareId);
+
+    }
+
 
 
 }

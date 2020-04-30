@@ -66,8 +66,9 @@ public class DBController {
         dare.addParticipants(uid1);
         dare.addParticipants(uid2);
 
-
-
+    }
+    public Dare getDare(int dareId){
+       return dareTable.getDareFromDB(dareId);
     }
 
 }

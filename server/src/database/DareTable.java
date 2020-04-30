@@ -1,5 +1,7 @@
 package database;
 
+import Converter.Dare;
+
 import java.sql.*;
 
 /**
@@ -136,10 +138,10 @@ public class DareTable {
     /**
      * retrieves information from specific dare and store in variables
      *
-     * @param id
+     * @param dareId
      */
-    public void getDareFromDB(int id) {
-
+    public Dare getDareFromDB(int dareId) {
+        Dare dare = null;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -148,17 +150,17 @@ public class DareTable {
             System.out.println("Connection ok");
 
 
-            String query = "SELECT * FROM Dare where Dareid =" + id + ";";
+            String query = "SELECT * FROM Dare where Dareid =" + dareId + ";";
             assert conn != null;
             Statement statement = conn.createStatement();
 
             statement.execute(query);
             ResultSet resultFromQuery = statement.getResultSet();
             while (resultFromQuery.next()) {
-                int dareId = resultFromQuery.getInt(1);
+              //  int dareId = resultFromQuery.getInt(1);
 
                 String objectiveType = resultFromQuery.getString(2);
-                String objective = resultFromQuery.getString(3);
+                String objectiveGoal = resultFromQuery.getString(3);
 
                 String scopeType = resultFromQuery.getString(4);
                 int scopeLength = resultFromQuery.getInt(5);
@@ -173,11 +175,20 @@ public class DareTable {
                 String userOpponentId = ParticipantTable.getParticipant(opponent);
                 // dbController.setDareFromDB(objectiveType,objective,scopeType,scopeLength,start,end,userID,userOpponentId);
 
+                dare = new Dare();
+                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+                dare.setScopeFromDB(scopeType, scopeLength);
+                dare.setStartDate(start);
+                dare.setEndDate(end);
+                dare.addParticipants(userID);
+                dare.addParticipants(userOpponentId);
+
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
+        return dare;
     }
 
 

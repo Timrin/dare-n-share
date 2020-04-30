@@ -88,13 +88,7 @@ public class UserTable {
                 name = resultFromQuery.getString(2);
 
             }
-            String queryForDares = "SELECT DareId from Participants where UserId ='"+userId+"'";
 
-            statement.executeUpdate(queryForDares);
-            ResultSet resultFromParticipantTable = statement.getResultSet();
-            while (resultFromParticipantTable.next()){
-                int dareId = resultFromParticipantTable.getInt("DareId");
-            }
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
