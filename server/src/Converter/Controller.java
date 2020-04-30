@@ -55,11 +55,19 @@ public class Controller {
         String start = dare.getStartDate();
         String end = dare.getEndDate();
 
+        String participant =  dare.getParticipants().get(0).toString();
+        String participantId = participant.substring(8, 36);
+        System.out.println("Participant ID : "+participantId);
+
+        String opponent = dare.getParticipants().get(1).toString();
+        String opponentId = opponent.substring(8,36);
+
         try {
             dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
         }catch(Exception e){
             e.printStackTrace();
         }
+        dbController.combineDareIdAndParticipant(participantId,opponentId);
     }
 
     public void addNewUser(User user){
@@ -90,9 +98,11 @@ public class Controller {
 
     public Dare getDare(int dareId){
        return dbController.getDare(dareId);
-
     }
 
+   /* public Dare getAboveDare(int id){
+        return dbController.getAboveDare(id);
+    }*/
 
 
 }

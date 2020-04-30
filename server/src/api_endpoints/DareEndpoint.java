@@ -40,14 +40,14 @@ public class DareEndpoint extends HttpServlet {
         String pathInfo = request.getPathInfo();
         if (pathInfo.length() >= 2) {
             try {
-                int idFromPath = Integer.parseInt(pathInfo.substring(1));
+                int truepath = Integer.parseInt(pathInfo.substring(1));
 
                 // Set response content type
                 response.setContentType("application/json");
 
                 //Retrieve dare from the db
                 //String dare = dareDB.getDare(idFromPath);
-                String dare = serverApiCommunication.getDare(); //fixme doesn't have an ID yet
+                String dare = serverApiCommunication.getDare(truepath); //fixme doesn't have an ID yet
 
                 if (dare != null) {
                     //If the dare exists, write the dare to the response

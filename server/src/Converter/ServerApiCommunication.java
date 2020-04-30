@@ -68,8 +68,8 @@ public class ServerApiCommunication {
      * This method returns a string that is parsed to a json body, and is called upon in
      * the dare endpoint.
      * */
-    public String getDare() throws java.text.ParseException {
-        return jsonDare.JavaToJson();
+    public String getDare(int dareId) throws java.text.ParseException {
+        return jsonDare.getJsonDare(dareId);
     }
     /**
      * This method returns a string that is parsed to a json body, and is called upon in

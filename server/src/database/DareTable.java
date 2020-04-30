@@ -58,7 +58,7 @@ public class DareTable {
      *
      * @param request String containing full SQL request ? kan man skriva så?
      */
-    public void insertToDare(String request) {
+    public int insertToDare(String request) {
         int dareId = 0;
         Connection connect = null;
         try {
@@ -75,11 +75,13 @@ public class DareTable {
                 dareId = result.getInt(1);
                 System.out.println(dareId);
                 dbController.getDareIDfromDB(dareId);
+
                 //DBController.getDareIDfromDB(dareId);
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        return dareId;
     }
 
     /**
@@ -160,6 +162,7 @@ public class DareTable {
               //  int dareId = resultFromQuery.getInt(1);
 
                 String objectiveType = resultFromQuery.getString(2);
+                System.out.println("YOYO "+objectiveType);
                 String objectiveGoal = resultFromQuery.getString(3);
 
                 String scopeType = resultFromQuery.getString(4);
@@ -173,10 +176,11 @@ public class DareTable {
 
                 int opponent = resultFromQuery.getInt(9);
                 String userOpponentId = ParticipantTable.getParticipant(opponent);
-                // dbController.setDareFromDB(objectiveType,objective,scopeType,scopeLength,start,end,userID,userOpponentId);
+                // dbController.setDareFromDB(objectiveType,objectiveGoal,scopeType,scopeLength,start,end,userID,userOpponentId);
 
                 dare = new Dare();
                 dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+                System.out.println("DARETABLE: "+dare.getObjectiveFromDB()+" type:  "+ dare.getObjectiveFromDB().get("type"));
                 dare.setScopeFromDB(scopeType, scopeLength);
                 dare.setStartDate(start);
                 dare.setEndDate(end);

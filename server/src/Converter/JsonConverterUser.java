@@ -85,6 +85,7 @@ public class JsonConverterUser {
         JSONObject jo = new JSONObject();
         jo.put("name",controller.getUserFromDB(uid));
         jo.put("uid", uid);
+
         System.out.println(jo.toJSONString());
         return jo.toJSONString();
     }

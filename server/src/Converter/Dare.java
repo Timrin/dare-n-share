@@ -17,12 +17,17 @@ public class Dare {
 
     private Map objective;
     private Map scope;
-    private JSONArray participants;
-    private String startDate;
-    private String endDate;
-    private SimpleDateFormat sdf;
+
     private Map objectiveFromDB;
     private Map scopeFromDB;
+
+    private JSONArray participants; //userId and dareId
+
+    private String startDate;
+    private String endDate;
+
+    private SimpleDateFormat sdf;
+
 
     public Dare(){
         participants = new JSONArray();
