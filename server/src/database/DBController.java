@@ -14,7 +14,6 @@ import java.sql.SQLException;
 public class DBController {
     private Controller controller;
     private DareTable dareTable;
-    private UserTable userTable;
     private Dare dare;
 
     public DBController() {
@@ -31,10 +30,9 @@ public class DBController {
         UserTable.addUserToDB(userID, name);
     }
 
-    public static void getUserIDfromDB(int userID){
 
-    }
     public String getUserFromDB(String uid){
+
         String userName = "";
         try {
             userName = UserTable.getUser(uid);
@@ -44,14 +42,14 @@ public class DBController {
         return userName;
     }
 
+
     public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
-                                int scopeLength, String start,String end) throws SQLException {
+                                int scopeLength, String start,String end) {
 
         dareTable.insertNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
-
     }
 
-    public void getDareIDfromDB(int dareId){
+    public void getDareIDFromDB(int dareId){
         controller.sendDareID(dareId); // this ID will be used in insertParticipantToDB
     }
 

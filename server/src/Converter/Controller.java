@@ -20,18 +20,11 @@ public class Controller {
     private Score score;
     private DBController dbController;
     private JsonConverterDare jsonConverterDare;
-    private JsonConverterUser jsonConverterUser;
 
 
     public Controller() {
 
 
-    }
-
-    public Controller(Dare dare, User user, Score score) {
-        this.dare = dare;
-        this.user = user;
-        this.score = score;
     }
 
     public Controller(JsonConverterDare jsonConverterDare){
@@ -40,12 +33,11 @@ public class Controller {
 
     }
 
-    public Controller(JsonConverterUser jsonConverterUser){
-        this.jsonConverterUser = jsonConverterUser;
-        dbController = new DBController(this);
-    }
-
-
+    /**
+     * Use this method to add a new dare to the database
+     * Deconstructs a dare and sends along requested values
+     * @param dare Java object Dare
+     */
     public void addNewDare(Dare dare){
 
         String objectiveType = dare.getObjective().get("type").toString();
@@ -70,6 +62,11 @@ public class Controller {
         dbController.combineDareIdAndParticipant(participantId,opponentId);
     }
 
+    /**
+     * Use this method to add a new user to the database
+     * Deconstructs a Java object User and sends along requested values
+     * @param user Java object User
+     */
     public void addNewUser(User user){
         try {
             dbController.sendUserToDB(user.getUid(), user.getName());
@@ -99,10 +96,5 @@ public class Controller {
     public Dare getDare(int dareId){
        return dbController.getDare(dareId);
     }
-
-   /* public Dare getAboveDare(int id){
-        return dbController.getAboveDare(id);
-    }*/
-
 
 }

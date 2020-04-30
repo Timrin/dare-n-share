@@ -16,12 +16,11 @@ import javax.servlet.http.*;
  */
 public class DareEndpoint extends HttpServlet {
 
-    private DareDB dareDB;
     private ServerApiCommunication serverApiCommunication;
     private Buffer<Integer> buffer;
 
     public DareEndpoint() {
-        dareDB = new DareDB();
+
         serverApiCommunication = new ServerApiCommunication(this);
         buffer = new Buffer<>();
     }
@@ -40,14 +39,13 @@ public class DareEndpoint extends HttpServlet {
         String pathInfo = request.getPathInfo();
         if (pathInfo.length() >= 2) {
             try {
-                int truepath = Integer.parseInt(pathInfo.substring(1));
+                int truePath = Integer.parseInt(pathInfo.substring(1));
 
                 // Set response content type
                 response.setContentType("application/json");
 
                 //Retrieve dare from the db
-                //String dare = dareDB.getDare(idFromPath);
-                String dare = serverApiCommunication.getDare(truepath); //fixme doesn't have an ID yet
+                String dare = serverApiCommunication.getDare(truePath);
 
                 if (dare != null) {
                     //If the dare exists, write the dare to the response
@@ -82,25 +80,19 @@ public class DareEndpoint extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            //Read dare from request body
-
+            //Gets reader from request, reads json object line by line and builds one string
             BufferedReader br = request.getReader();
-
             StringBuilder stringBuilder = new StringBuilder();
             String line = br.readLine();
-
 
             while (line != null) {
                 stringBuilder.append(line);
                 line = br.readLine();
             }
-
-            //Create dare
-
-            //int id = dareDB.createDare(stringBuilder.toString());
-
+            //Sends along complete string from request to make new dare
             serverApiCommunication.newDare(stringBuilder.toString());
 
+            //gets the id of newly posted dare to send back as response
             int id = buffer.get();
 
             //Create response
@@ -114,6 +106,10 @@ public class DareEndpoint extends HttpServlet {
         }
     }
 
+    /**
+     * Receives the id of a newly posted dare that shall be sent back as response from a doPost
+     * @param id ID number of dare
+     */
     public void addDareIDToPost(int id){
         buffer.put(id);
     }

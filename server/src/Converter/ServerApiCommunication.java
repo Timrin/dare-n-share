@@ -16,12 +16,6 @@ public class ServerApiCommunication {
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
     private DareEndpoint dareEndpoint;
-    private UserEndpoint userEndpoint;
-
-    // These variables are for testing purposes. We need to generate an ID for user and dare
-    private HashMap<Integer,String> json2javaUser = new HashMap<>();
-    private HashMap<Integer,String> java2jsonUser = new HashMap<>();
-    private int nextID =0;
 
     public ServerApiCommunication() {
         jsonDare= new JsonConverterDare();
@@ -36,31 +30,22 @@ public class ServerApiCommunication {
         jsonUser = new JsonConverterUser();
     }
 
-    public ServerApiCommunication(UserEndpoint userEndpoint){
-        this.userEndpoint = userEndpoint;
-        jsonUser = new JsonConverterUser(this);
-        jsonScore = new JsonConverterScore();
-        jsonDare = new JsonConverterDare();
-    }
-
-
     /**
      * This method sends a dare from Server to be parsed from Json to Java
      * */
-    public void newDare(String dare) throws org.json.simple.parser.ParseException, java.text.ParseException {
+    public void newDare(String dare) throws org.json.simple.parser.ParseException {
         jsonDare.JsonToJava(dare);
     }
     /**
      * This method sends the score from Server to be parsed from Json to Java
      * */
-    public void newScore(String score) throws IOException, ParseException {
+    public void newScore(String score) throws ParseException {
         jsonScore.JsonToJava(score);
     }
     /**
      * This method sends a user from Server to be parsed from Json to Java
      * */
     public void newUser(String user) throws ParseException {
-       // json2javaUser.put(nextID,jsonUser.JsonToJava(user));
         jsonUser.JsonToJava(user);
 
     }

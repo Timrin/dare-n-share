@@ -19,12 +19,10 @@ import java.io.PrintWriter;
  */
 public class UserEndpoint extends HttpServlet {
 
-    private UserDB userDB;
     private ServerApiCommunication serverApiCommunication;
 
     public UserEndpoint() {
-        userDB = new UserDB();
-        serverApiCommunication = new ServerApiCommunication(this);
+        serverApiCommunication = new ServerApiCommunication();
     }
     /**
      * This method is invoked when the server receives an http get request.
@@ -80,9 +78,6 @@ public class UserEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-
-
-            //int userId = userDB.addUser(stringBuilder.toString());
             serverApiCommunication.newUser(stringBuilder.toString());
             System.out.println("server");
 

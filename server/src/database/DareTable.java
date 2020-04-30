@@ -74,9 +74,7 @@ public class DareTable {
             while (result.next()) {
                 dareId = result.getInt(1);
                 System.out.println(dareId);
-                dbController.getDareIDfromDB(dareId);
-
-                //DBController.getDareIDfromDB(dareId);
+                dbController.getDareIDFromDB(dareId);
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

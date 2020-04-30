@@ -14,7 +14,6 @@ import java.util.*;
  * @date 14/04-20
  */
 public class JsonConverterDare {
-    private Dare dare;
     private ServerApiCommunication serverApiCommunication;
     private Controller controller;
 
@@ -28,64 +27,63 @@ public class JsonConverterDare {
 
     /**
      * This method parses a String in JSON body, recieved from server, to a Dare Java object.
+     * It then send it along to the controller.
+     * @param newDare String containing information about a dare, read from DareEndpoint
      */
-    public void JsonToJava(String newdare) throws ParseException, java.text.ParseException {
-        this.dare = new Dare();
-
-        Object obj = new JSONParser().parse(newdare);
+    public void JsonToJava(String newDare) throws ParseException {
+        Dare dare = new Dare();
+        Object obj = new JSONParser().parse(newDare);
         org.json.simple.JSONObject jo = (JSONObject) obj;
 
-        this.dare.setObjective((Map) jo.get("objective"));
-
-        Iterator<Map.Entry> iteratorObjective = this.dare.getObjective().entrySet().iterator(); //fixme Vi endret getObjective. Den er bortkommentert i Dare
+        //Sets the objective of the dare, which contains type and goal
+        dare.setObjective((Map) jo.get("objective"));
+        Iterator<Map.Entry> iteratorObjective = dare.getObjective().entrySet().iterator();
         while (iteratorObjective.hasNext()) {
             Map.Entry pair = iteratorObjective.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 
-        this.dare.setScope((Map) jo.get("scope"));
-        Iterator<Map.Entry> iteratorScope = this.dare.getScope().entrySet().iterator();
+        //Sets the scope of the dare, which contains type and length
+        dare.setScope((Map) jo.get("scope"));
+        Iterator<Map.Entry> iteratorScope = dare.getScope().entrySet().iterator();
         while (iteratorScope.hasNext()) {
             Map.Entry pair = iteratorScope.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 
+        //Parses length to an integer, and sets the startDate of the dare (to now)
+        //and sets endDate to length days later
         try {
             int length = Integer.parseInt( dare.getScope().get("length").toString());
             System.out.println("TEST LENGTH " + length);
-            jo.put("start",dare.setStart());
+            jo.put("start", dare.setStart());
             jo.put("end", dare.setEnd(length));
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        //Sets the participants of the dare
         JSONArray ja = (JSONArray) jo.get("participants");
         dare.setParticipants(ja);
 
         sendDareToDB(dare);
-       // dare.setStart(calendar.getTime());
-
-        //dare.setEnd(3);
-    }
-
-    public void timeFrame(){
-
     }
 
     public void sendDareToDB(Dare dare){
         controller.addNewDare(dare);
     }
 
-
     /**
-     * This method returns a JSONString after converting Java objects into s JSON string.
-     * This method is supposed to be called upon in the dareEndpoint through the controller
+     * This method gets a dare. It uses a dareId to get it from the controller, and then parses
+     * the java object to Json.
+     * @param dareId The Id of the dare one seeks to retrieve
+     * @return Returns dare formatted to Json
+     * @throws java.text.ParseException
      */
-    public String getJsonDare(int dareId) throws java.text.ParseException {
+    public String getJsonDare(int dareId) {
 
         Dare dareFromDB;
         dareFromDB = controller.getDare(dareId);
-       // dareFromDB = controller.getAboveDare(dareId);
         System.out.println("Dare "+ dareFromDB.toString());
         System.out.println("Verdi fra Dare : "+dareFromDB.getStartDate());
 
@@ -106,28 +104,15 @@ public class JsonConverterDare {
 
         System.out.println("Scope "+ dareFromDB.getScopeFromDB());
 
-
-
-      /* try {
-           // int length = Integer.parseInt( dare.getScope().get("length").toString());
-            System.out.println("TEST LENGTH " + length);
-            jo.put("start",dare.setStart());
-            jo.put("end", dare.setEnd(length));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-       }*/
-
-      jo.put("start",dareFromDB.getStartDate());
-      jo.put("end",dareFromDB.getEndDate());
+        jo.put("start",dareFromDB.getStartDate());
+        jo.put("end",dareFromDB.getEndDate());
 
         System.out.println("TEST: "+jo.toJSONString());
 
         JSONArray ja = dareFromDB.getParticipants();
         jo.put("participants", ja);
-        // System.out.println(ja.toJSONString());
 
         System.out.println("Stringen: "+jo.toJSONString());
-
 
         return jo.toJSONString();
     }

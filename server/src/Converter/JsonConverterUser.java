@@ -20,17 +20,10 @@ import java.sql.SQLException;
 public class JsonConverterUser {
 
     private User user;
-    private DBController dbController;
     private Controller controller;
-    private ServerApiCommunication serverApiCommunication;
 
     public JsonConverterUser(){
-
-    }
-
-    public JsonConverterUser(ServerApiCommunication serverApiCommunication){
-        this.serverApiCommunication = serverApiCommunication;
-        controller = new Controller(this);
+        this.controller = new Controller();
     }
 
     public void JsonToJava(String newUser) throws ParseException {
@@ -71,14 +64,6 @@ public class JsonConverterUser {
 
         // todo put friends array
         return jo.toJSONString();
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getUserFromDB(String uid){
