@@ -46,11 +46,7 @@ public class DBController {
     public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
                                 int scopeLength, String start,String end) throws SQLException {
 
-        try {
-            dareTable.insertNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
-        }catch (ClassNotFoundException e){
-            System.out.println(e.getMessage());
-        }
+        dareTable.insertNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
     }
 
     public void getDareIDfromDB(int dareId){

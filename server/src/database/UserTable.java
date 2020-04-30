@@ -6,6 +6,7 @@ import java.sql.*;
 
 /**
  * communication class with User table in database
+ *
  * @author julia
  */
 public class UserTable {
@@ -29,27 +30,28 @@ public class UserTable {
 
     /**
      * insert userinformation to table User
-     * @param name username from GUI
      *
+     * @param name username from GUI
      * @throws SQLException
      */
-    public static void addUserToDB(String userId, String name) throws SQLException {
+    public static void addUserToDB(String userId, String name) {
 
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url ="jdbc:sqlite:lib/dare_n_share.db";
-            conn= DriverManager.getConnection(url);
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
-        }catch (SQLException | ClassNotFoundException e){
+
+
+            String query = "INSERT INTO user(UserID,username) VALUES ('" + userId + "','" + name + "')";
+
+            assert conn != null;
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
-        String request = "INSERT INTO user(UserID,username) VALUES ('" + userId+ "','"+name+"')";
-
-        assert conn != null;
-        Statement statement = conn.createStatement();
-        statement.execute(request);
 
         //get the generated primary key and store in userID
 //        ResultSet userIdKey = statement.getGeneratedKeys();
@@ -68,23 +70,34 @@ public class UserTable {
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            String url ="jdbc:sqlite:lib/dare_n_share.db";
-            conn= DriverManager.getConnection(url);
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
-        }catch (SQLException | ClassNotFoundException e){
+
+
+            String query = "SELECT * FROM User where UserID = '" + userId + "';";
+
+
+            assert conn != null;
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+
+            ResultSet resultFromQuery = statement.getResultSet();
+
+            while (resultFromQuery.next()) {
+                name = resultFromQuery.getString(2);
+
+            }
+            String queryForDares = "SELECT DareId from Participants where UserId ='"+userId+"'";
+
+            statement.executeUpdate(queryForDares);
+            ResultSet resultFromParticipantTable = statement.getResultSet();
+            while (resultFromParticipantTable.next()){
+                int dareId = resultFromParticipantTable.getInt("DareId");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        }
-
-        String request = "SELECT * FROM User where UserID = '" + userId+"';";
-
-        assert conn != null;
-        Statement statement = conn.createStatement();
-        statement.execute(request);
-
-        ResultSet result = statement.getResultSet();
-        while (result.next()){
-            name = result.getString(2);
-
         }
         return name;
     }
