@@ -10,29 +10,13 @@ import java.sql.*;
 public class ParticipantTable {
 
 
-/*
-    private Connection connect(){
-        Connection conn = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url ="jdbc:sqlite:lib/dare_n_share.db";
-            conn= DriverManager.getConnection(url);
-            System.out.println("Connection ok");
-        }catch (SQLException | ClassNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
- */
-
 
     /**
      * add Participants to table, retrieves the primary key and store in variable
      *
-     * @throws SQLException for SQL error that can happen during execute and createstatement
+     * @throws SQLException for SQL error that can happen during execute and create statement
      */
-    public static void addParticipant(String userID, int dareID){
+    public static void addParticipant(String userID, int dareID) {
 
         Connection conn = null;
         try {
@@ -49,39 +33,55 @@ public class ParticipantTable {
             statement.execute(foreignKeyQuery);
             statement.executeUpdate(query);
 
-            //get the generated key for PartID and saves in variable participantID
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            while (generatedKeys.next()) {
-                int participantID = generatedKeys.getInt(1);
-                System.out.println(participantID);
-            }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public static String getParticipant(int participantId) {
+    public static ResultSet getParticipantUserIdFromDare(int dareId) {
         Connection conn = null;
-        String userid = null;
+        ResultSet resultFromQuery = null;
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
 
-            String query = "SELECT UserId from Participants where PartID=" + participantId + ";";
+            String query = "SELECT UserId from Participants where DareId=" + dareId + ";";
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.execute(query);
+            resultFromQuery = statement.getResultSet();
 
-            ResultSet resultFromQuery = statement.getResultSet();
-            userid = resultFromQuery.getString("UserId");
-            System.out.println(userid);
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
-        return userid;
+        return resultFromQuery;
+    }
+
+
+    public static ResultSet getAllDareIdForUser(String userId) {
+        Connection conn = null;
+        ResultSet resultFromQuery = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
+            System.out.println("Connection ok");
+
+            String query = "SELECT DareId from Participants where UserId='" + userId + "';";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+
+            resultFromQuery = statement.getResultSet();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultFromQuery;
     }
 }

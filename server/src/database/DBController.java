@@ -28,11 +28,7 @@ public class DBController {
     public String getUserFromDB(String uid){
 
         String userName = "";
-        try {
-            userName = UserTable.getUser(uid);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        userName = UserTable.getUser(uid);
         return userName;
     }
 
@@ -101,10 +97,10 @@ public class DBController {
                 String end = resultFromQuery.getString(7);
 
                 int participants = resultFromQuery.getInt(8); //Fixme: Should get from different table
-                String userID = ParticipantTable.getParticipant(participants);
+              //  String userID = ParticipantTable.getParticipantUserIdFromDare(participants);
 
                 int opponent = resultFromQuery.getInt(9); //Fixme: Should get from different table
-                String userOpponentId = ParticipantTable.getParticipant(opponent);
+            //    String userOpponentId = ParticipantTable.getParticipantUserIdFromDare(opponent);
 
                 //Sets dare value
                 dare.setObjectiveFromDB(objectiveType, objectiveGoal);
@@ -112,8 +108,8 @@ public class DBController {
                 dare.setScopeFromDB(scopeType, scopeLength);
                 dare.setStartDate(start);
                 dare.setEndDate(end);
-                dare.addParticipants(userID);
-                dare.addParticipants(userOpponentId);
+              //  dare.addParticipants(userID);
+             //   dare.addParticipants(userOpponentId);
             }
         }catch(Exception e){
             e.printStackTrace();

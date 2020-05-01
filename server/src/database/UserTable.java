@@ -1,6 +1,5 @@
 package database;
 
-import Converter.User;
 
 import java.sql.*;
 
@@ -10,22 +9,6 @@ import java.sql.*;
  * @author julia
  */
 public class UserTable {
-
-    /*
-    private Connection connect(){
-        Connection conn = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String url ="jdbc:sqlite:lib/dare_n_share.db";
-            conn= DriverManager.getConnection(url);
-            System.out.println("Connection ok");
-        }catch (SQLException | ClassNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
-     */
 
 
     /**
@@ -52,20 +35,11 @@ public class UserTable {
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
-        //get the generated primary key and store in userID
-//        ResultSet userIdKey = statement.getGeneratedKeys();
-//        while (userIdKey.next()) {
-//            String userID = userIdKey.getString(1);
-//            System.out.println(userID);
-//            String uname = userIdKey.getString(2);
-//            System.out.println(uname);
-//        }
     }
 
 
     //Get information from all columns for userId
-    public static String getUser(String userId) throws SQLException {
+    public static String getUser(String userId) {
         String name = null;
         Connection conn = null;
         try {
