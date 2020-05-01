@@ -59,7 +59,7 @@ public class UserTable {
             ResultSet resultFromQuery = statement.getResultSet();
 
             while (resultFromQuery.next()) {
-                name = resultFromQuery.getString(2);
+                name = resultFromQuery.getString("UserName");
 
             }
 
