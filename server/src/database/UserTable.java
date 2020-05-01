@@ -49,7 +49,7 @@ public class UserTable {
             System.out.println("Connection ok");
 
 
-            String query = "SELECT * FROM User where UserID = '" + userId + "';";
+            String query = "SELECT UserName FROM User where UserID = '" + userId + "';";
 
 
             assert conn != null;
