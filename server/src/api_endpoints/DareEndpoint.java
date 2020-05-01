@@ -93,12 +93,12 @@ public class DareEndpoint extends HttpServlet {
             serverApiCommunication.newDare(stringBuilder.toString());
 
             //gets the id of newly posted dare to send back as response
-            int id = buffer.get();
+            //int id = buffer.get();
 
             //Create response
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{dare_id:"+id+" }");
+            out.println("{dare_id:"+" }");
 
 
         } catch (Exception e) {

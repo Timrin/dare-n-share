@@ -21,7 +21,8 @@ public class Dare {
     private Map objectiveFromDB;
     private Map scopeFromDB;
 
-    private JSONArray participants; //userId and dareId
+    //private JSONArray participants; //userId and dareId
+    private ArrayList<String> participants;
 
     private String startDate;
     private String endDate;
@@ -53,11 +54,11 @@ public class Dare {
         return (days * 24 * 60 * 60 * 1000);
     }
 
-    public JSONArray getParticipants() {
+    public ArrayList<String> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(JSONArray newArray) {
+    public void setParticipants(ArrayList<String> newArray) {
         this.participants = newArray; // an index looks like this : {"uid":1}
 
 

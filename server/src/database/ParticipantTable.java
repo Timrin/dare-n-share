@@ -32,7 +32,7 @@ public class ParticipantTable {
      *
      * @throws SQLException for SQL error that can happen during execute and createstatement
      */
-    public static void addParticipant(String userID, int dareID) throws SQLException {
+    public static void addParticipant(String userID, int dareID){
 
         Connection conn = null;
         try {

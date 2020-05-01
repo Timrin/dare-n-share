@@ -61,8 +61,11 @@ public class ServerApiCommunication {
      * This method returns a string that is parsed to a json body, and is called upon in
      * the user endpoint
      * */
-    public String getUser(String iud){
-        return jsonUser.getUserFromDB(iud);
+    public String getUser(String uid){
+        String user = controller.getUserFromDB(uid);
+        //Fixme: Should receive a java object User from controller, not String
+        //Fixme: Parse java object User using JsonConverterUser
+        return user;
     }
 
     public void sendDareIDToPost(int id){

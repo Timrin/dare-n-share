@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.xml.xpath.XPathEvaluationResult;
 import java.util.*;
 
 /**
@@ -64,7 +65,17 @@ public class JsonConverterDare {
 
         //Sets the participants of the dare
         JSONArray ja = (JSONArray) jo.get("participants");
-        dare.setParticipants(ja);
+
+        Iterator partIterator = ja.iterator();
+
+        ArrayList<String> participantList = new ArrayList<>();
+        while(partIterator.hasNext()){
+            Map p = (Map) partIterator.next();
+            participantList.add(p.get("uid").toString());
+            System.out.println(p.get("uid").toString());
+        }
+
+        dare.setParticipants(participantList);
 
         sendDareToDB(dare);
     }
@@ -109,8 +120,8 @@ public class JsonConverterDare {
 
         System.out.println("TEST: "+jo.toJSONString());
 
-        JSONArray ja = dareFromDB.getParticipants();
-        jo.put("participants", ja);
+        //JSONArray ja = dareFromDB.getParticipants();
+        //jo.put("participants", ja);
 
         System.out.println("Stringen: "+jo.toJSONString());
 

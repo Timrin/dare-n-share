@@ -13,11 +13,9 @@ import java.sql.SQLException;
 
 public class DBController {
     private Controller controller;
-    private DareTable dareTable;
 
     public DBController(Controller controller){
         this.controller=controller;
-        dareTable = new DareTable(this);
     }
 
 
@@ -42,7 +40,8 @@ public class DBController {
     public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
                                 int scopeLength, String start,String end) {
 
-        dareTable.insertNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
+        int id = DareTable.insertNewDareToDB(objectiveType,
+                objectiveGoal, scopeType, scopeLength, start, end);
     }
 
     public void getDareIDFromDB(int dareId){
@@ -55,9 +54,11 @@ public class DBController {
 
 
 
-    public void insertParticipantsToDB(int userID,int dareID) {
-        DareTable.insertParticipantsToDare(userID,dareID);
+    public void insertParticipantsToDB(String userID,int dareID) {
+        ParticipantTable.addParticipant(userID, dareID);
     }
+
+
     public void setDareFromDB(String objectiveType, String objectiveGoal, String scopeType,
                               int scopeLength, String start, String end, String uid1, String uid2){
         Dare dare = new Dare();
