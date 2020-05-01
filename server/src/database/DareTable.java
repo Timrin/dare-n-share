@@ -12,27 +12,8 @@ import java.sql.*;
  */
 
 public class DareTable {
-    /*
-        private Connection connect() {
-            Connection conn = null;
-            try {
-                Class.forName("org.sqlite.JDBC");
-                String url = "jdbc:sqlite:lib/dare_n_share.db";
-                conn = DriverManager.getConnection(url);
-                System.out.println("Connection ok");
-            } catch (SQLException | ClassNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
-            return conn;
-        }
 
-     */
-    private DBController dbController;
 
-    public DareTable(DBController dbController) {
-        this.dbController = dbController;
-
-    }
 
     /**
      * Build String request for database
@@ -44,13 +25,14 @@ public class DareTable {
      * @param start         date when dare start
      * @param end           date when dare will end
      */
-    public void insertNewDareToDB(String objectiveType, String objective, String scopeType,
+    public static int insertNewDareToDB(String objectiveType, String objective, String scopeType,
                                   int scopeLength, String start, String end) {
         String request1 = "INSERT INTO dare(ObjectiveType, Objective, ScopeType, ScopeLength ";
         String request2 = ",Start, End) VALUES ('" + objectiveType + "', '" + objective + "', '" + scopeType + "', '";
         String request3 = scopeLength + "','" + start + "','" + end + "');";
         String fullRequest = request1 + request2 + request3;
-        insertToDare(fullRequest);
+        int dareId = insertToDare(fullRequest);
+        return dareId;
     }
 
     /**
@@ -58,7 +40,7 @@ public class DareTable {
      *
      * @param request String containing full SQL request ? kan man skriva så?
      */
-    public int insertToDare(String request) {
+    public static int insertToDare(String request) {
         int dareId = 0;
         Connection connect = null;
         try {
@@ -74,7 +56,6 @@ public class DareTable {
             while (result.next()) {
                 dareId = result.getInt(1);
                 System.out.println(dareId);
-                dbController.getDareIDFromDB(dareId);
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -82,58 +63,6 @@ public class DareTable {
         return dareId;
     }
 
-    /**
-     * Updare Dare table with participant
-     *
-     * @param dareID
-     * @param partID
-     */
-    public static void insertParticipantsToDare(int dareID, int partID) {
-        Connection conn = null;
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String path = "jdbc:sqlite:lib/dare_n_share.db";
-            conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
-
-            String foreignKquery = "PRAGMA FOREIGN_KEYS = ON; ";
-            String query = " UPDATE dare SET Participants =" + partID + " WHERE Dareid =" + dareID + ";";
-            assert conn != null;
-
-            Statement statement = conn.createStatement();
-            statement.execute(foreignKquery);
-            statement.executeUpdate(query);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * update dare table with opponent
-     *
-     * @param dareID
-     * @param opponent
-     */
-    public static void insertOpponentToDare(int dareID, int opponent) {
-
-        Connection conn = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String path = "jdbc:sqlite:lib/dare_n_share.db";
-            conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
-
-            String query = " UPDATE Dare set Opponent =" + opponent + " WHERE Dareid =" + dareID + ";";
-            assert conn != null;
-            Statement statement = conn.createStatement();
-            statement.execute(query);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     /**
      * retrieves information from specific dare and store in variables
@@ -141,7 +70,7 @@ public class DareTable {
      * @param dareId
      */
     public static ResultSet getDareFromDB(int dareId) {
-        Dare dare = null;
+
         Connection conn = null;
         ResultSet resultFromQuery = null;
         try {
@@ -162,41 +91,7 @@ public class DareTable {
             e.printStackTrace();
         }
             return resultFromQuery;
-            //while (resultFromQuery.next()) {
-              //  int dareId = resultFromQuery.getInt(1);
 
-//                String objectiveType = resultFromQuery.getString(2);
-//                System.out.println("YOYO "+objectiveType);
-//                String objectiveGoal = resultFromQuery.getString(3);
-//
-//                String scopeType = resultFromQuery.getString(4);
-//                int scopeLength = resultFromQuery.getInt(5);
-//
-//                String start = resultFromQuery.getString(6);
-//                String end = resultFromQuery.getString(7);
-//
-//                int participants = resultFromQuery.getInt(8);
-//                String userID = ParticipantTable.getParticipant(participants);
-//
-//                int opponent = resultFromQuery.getInt(9);
-//                String userOpponentId = ParticipantTable.getParticipant(opponent);
-//                // dbController.setDareFromDB(objectiveType,objectiveGoal,scopeType,scopeLength,start,end,userID,userOpponentId);
-//
-//                dare = new Dare();
-//                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
-//                System.out.println("DARETABLE: "+dare.getObjectiveFromDB()+" type:  "+ dare.getObjectiveFromDB().get("type"));
-//                dare.setScopeFromDB(scopeType, scopeLength);
-//                dare.setStartDate(start);
-//                dare.setEndDate(end);
-//                dare.addParticipants(userID);
-//                dare.addParticipants(userOpponentId);
-
-//            }
-//        } catch (SQLException | ClassNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        return dare;
     }
 
 
