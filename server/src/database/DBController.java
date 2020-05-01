@@ -3,8 +3,10 @@ package database;
 import Converter.Controller;
 import Converter.Dare;
 
+import javax.servlet.http.Part;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Database controller,
@@ -33,11 +35,16 @@ public class DBController {
     }
 
 
-    public void sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
-                                int scopeLength, String start,String end) {
+    public int sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
+                                int scopeLength, String start,String end, ArrayList<String> participants) {
 
         int id = DareTable.insertNewDareToDB(objectiveType,
                 objectiveGoal, scopeType, scopeLength, start, end);
+
+        for (String participant : participants) {
+            ParticipantTable.addParticipant(participant, id);
+        }
+        return id;
     }
 
     public void getDareIDFromDB(int dareId){
@@ -80,27 +87,23 @@ public class DBController {
 
         Dare dare = new Dare();
 
+        dare.setParticipants(getAllUserFromDare(dareId));
+
         try {
             while (resultFromQuery.next()) {
 
                 //Gets Objective
-                String objectiveType = resultFromQuery.getString(2);
+                String objectiveType = resultFromQuery.getString("ObjectiveType");
                 System.out.println("YOYO " + objectiveType);
-                String objectiveGoal = resultFromQuery.getString(3);
+                String objectiveGoal = resultFromQuery.getString("Objective");
 
                 //Gets Scope
-                String scopeType = resultFromQuery.getString(4);
-                int scopeLength = resultFromQuery.getInt(5);
+                String scopeType = resultFromQuery.getString("ScopeType");
+                int scopeLength = resultFromQuery.getInt("ScopeLength");
 
                 //Gets start and end date
-                String start = resultFromQuery.getString(6);
-                String end = resultFromQuery.getString(7);
-
-                int participants = resultFromQuery.getInt(8); //Fixme: Should get from different table
-              //  String userID = ParticipantTable.getParticipantUserIdFromDare(participants);
-
-                int opponent = resultFromQuery.getInt(9); //Fixme: Should get from different table
-            //    String userOpponentId = ParticipantTable.getParticipantUserIdFromDare(opponent);
+                String start = resultFromQuery.getString("Start");
+                String end = resultFromQuery.getString("End");
 
                 //Sets dare value
                 dare.setObjectiveFromDB(objectiveType, objectiveGoal);
@@ -108,14 +111,30 @@ public class DBController {
                 dare.setScopeFromDB(scopeType, scopeLength);
                 dare.setStartDate(start);
                 dare.setEndDate(end);
-              //  dare.addParticipants(userID);
-             //   dare.addParticipants(userOpponentId);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
 
        return dare;
+    }
+
+    private ArrayList<String> getAllUserFromDare(int dareId){
+
+        ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
+        ArrayList<String> list = new ArrayList();
+
+        try {
+            while (resultFromQuery.next()){
+                String userId = resultFromQuery.getString("UserId");
+                String userName = UserTable.getUser(userId);
+                System.out.println(userName);
+                list.add(userName);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

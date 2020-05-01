@@ -123,9 +123,15 @@ public class JsonConverterDare {
         ArrayList<String> participantsList = dare.getParticipants();
         JSONArray ja = new JSONArray();
 
+        //DO NOT TOUCH. IS MAGIC
         for (String s : participantsList) {
-            ja.add(new HashMap<String, String>().put("uid", s));
+            System.out.println(s);
+            Map map = new LinkedHashMap();
+            map.put("uid", s);
+            ja.add(map);
         }
+
+        System.out.println(ja.toJSONString());
 
         jo.put("participants", ja);
 

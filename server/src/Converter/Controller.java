@@ -2,6 +2,8 @@ package Converter;
 
 import database.DBController;
 
+import java.util.ArrayList;
+
 /**
  *
  * This class is a controller.
@@ -43,6 +45,8 @@ public class Controller {
         String start = dare.getStartDate();
         String end = dare.getEndDate();
 
+        ArrayList<String> participants = dare.getParticipants();
+
         //Fixme: Make into loop?
         String participantId =  dare.getParticipants().get(0);
         System.out.println("Participant ID : " +participantId);
@@ -50,11 +54,9 @@ public class Controller {
         String opponentId = dare.getParticipants().get(1);
         System.out.println("Opponent ID : " + opponentId);
 
-        //Comment
-        dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
-
-        //Comment
-        dbController.combineDareIdAndParticipant(participantId, opponentId);
+        //dareId might be useful idk
+        int dareId = dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength,
+                start, end, participants);
     }
 
     /**
