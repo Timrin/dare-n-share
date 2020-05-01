@@ -43,19 +43,18 @@ public class Controller {
         String start = dare.getStartDate();
         String end = dare.getEndDate();
 
-        //Fixme: Change this to Not be dependant on string length
-        String participant =  dare.getParticipants().get(0).toString();
-        String participantId = participant.substring(8, 36);
-        System.out.println("Participant ID : "+participantId);
+        //Fixme: Make into loop?
+        String participantId =  dare.getParticipants().get(0);
+        System.out.println("Participant ID : " +participantId);
 
-        String opponent = dare.getParticipants().get(1).toString();
-        String opponentId = opponent.substring(8,36);
+        String opponentId = dare.getParticipants().get(1);
+        System.out.println("Opponent ID : " + opponentId);
 
         //Comment
         dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength, start, end);
 
         //Comment
-        dbController.combineDareIdAndParticipant(participantId,opponentId);
+        dbController.combineDareIdAndParticipant(participantId, opponentId);
     }
 
     /**

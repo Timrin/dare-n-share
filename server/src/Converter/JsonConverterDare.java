@@ -93,35 +93,41 @@ public class JsonConverterDare {
      */
     public String getJsonDare(int dareId) {
 
-        Dare dareFromDB;
-        dareFromDB = controller.getDare(dareId);
-        System.out.println("Dare "+ dareFromDB.toString());
-        System.out.println("Verdi fra Dare : "+dareFromDB.getStartDate());
+        Dare dare;
+        dare = controller.getDare(dareId);
+        System.out.println("Dare "+ dare.toString());
+        System.out.println("Verdi fra Dare : "+dare.getStartDate());
 
         JSONObject jo = new JSONObject();
 
         jo.put("dareID",dareId);
         System.out.println("JO dareId" + dareId);
-        System.out.println("Objective test "+ dareFromDB.getObjectiveFromDB());
+        System.out.println("Objective test "+ dare.getObjectiveFromDB());
         Map m = new LinkedHashMap();
-        m.putAll(dareFromDB.getObjectiveFromDB());
+        m.putAll(dare.getObjectiveFromDB());
         jo.put("objective", m);
 
-        System.out.println("Objective "+dareFromDB.getObjectiveFromDB());
+        System.out.println("Objective "+dare.getObjectiveFromDB());
 
         m = new LinkedHashMap();
-        m.putAll(dareFromDB.getScopeFromDB());
+        m.putAll(dare.getScopeFromDB());
         jo.put("scope", m);
 
-        System.out.println("Scope "+ dareFromDB.getScopeFromDB());
+        System.out.println("Scope "+ dare.getScopeFromDB());
 
-        jo.put("start",dareFromDB.getStartDate());
-        jo.put("end",dareFromDB.getEndDate());
+        jo.put("start",dare.getStartDate());
+        jo.put("end",dare.getEndDate());
 
         System.out.println("TEST: "+jo.toJSONString());
 
-        //JSONArray ja = dareFromDB.getParticipants();
-        //jo.put("participants", ja);
+        ArrayList<String> participantsList = dare.getParticipants();
+        JSONArray ja = new JSONArray();
+
+        for (String s : participantsList) {
+            ja.add(new HashMap<String, String>().put("uid", s));
+        }
+
+        jo.put("participants", ja);
 
         System.out.println("Stringen: "+jo.toJSONString());
 
