@@ -140,9 +140,10 @@ public class DareTable {
      *
      * @param dareId
      */
-    public Dare getDareFromDB(int dareId) {
+    public static ResultSet getDareFromDB(int dareId) {
         Dare dare = null;
         Connection conn = null;
+        ResultSet resultFromQuery = null;
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
@@ -155,42 +156,47 @@ public class DareTable {
             Statement statement = conn.createStatement();
 
             statement.execute(query);
-            ResultSet resultFromQuery = statement.getResultSet();
-            while (resultFromQuery.next()) {
+            resultFromQuery = statement.getResultSet();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+            return resultFromQuery;
+            //while (resultFromQuery.next()) {
               //  int dareId = resultFromQuery.getInt(1);
 
-                String objectiveType = resultFromQuery.getString(2);
-                System.out.println("YOYO "+objectiveType);
-                String objectiveGoal = resultFromQuery.getString(3);
+//                String objectiveType = resultFromQuery.getString(2);
+//                System.out.println("YOYO "+objectiveType);
+//                String objectiveGoal = resultFromQuery.getString(3);
+//
+//                String scopeType = resultFromQuery.getString(4);
+//                int scopeLength = resultFromQuery.getInt(5);
+//
+//                String start = resultFromQuery.getString(6);
+//                String end = resultFromQuery.getString(7);
+//
+//                int participants = resultFromQuery.getInt(8);
+//                String userID = ParticipantTable.getParticipant(participants);
+//
+//                int opponent = resultFromQuery.getInt(9);
+//                String userOpponentId = ParticipantTable.getParticipant(opponent);
+//                // dbController.setDareFromDB(objectiveType,objectiveGoal,scopeType,scopeLength,start,end,userID,userOpponentId);
+//
+//                dare = new Dare();
+//                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+//                System.out.println("DARETABLE: "+dare.getObjectiveFromDB()+" type:  "+ dare.getObjectiveFromDB().get("type"));
+//                dare.setScopeFromDB(scopeType, scopeLength);
+//                dare.setStartDate(start);
+//                dare.setEndDate(end);
+//                dare.addParticipants(userID);
+//                dare.addParticipants(userOpponentId);
 
-                String scopeType = resultFromQuery.getString(4);
-                int scopeLength = resultFromQuery.getInt(5);
-
-                String start = resultFromQuery.getString(6);
-                String end = resultFromQuery.getString(7);
-
-                int participants = resultFromQuery.getInt(8);
-                String userID = ParticipantTable.getParticipant(participants);
-
-                int opponent = resultFromQuery.getInt(9);
-                String userOpponentId = ParticipantTable.getParticipant(opponent);
-                // dbController.setDareFromDB(objectiveType,objectiveGoal,scopeType,scopeLength,start,end,userID,userOpponentId);
-
-                dare = new Dare();
-                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
-                System.out.println("DARETABLE: "+dare.getObjectiveFromDB()+" type:  "+ dare.getObjectiveFromDB().get("type"));
-                dare.setScopeFromDB(scopeType, scopeLength);
-                dare.setStartDate(start);
-                dare.setEndDate(end);
-                dare.addParticipants(userID);
-                dare.addParticipants(userOpponentId);
-
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return dare;
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        return dare;
     }
 
 

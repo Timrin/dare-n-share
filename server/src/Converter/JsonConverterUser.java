@@ -19,15 +19,14 @@ import java.sql.SQLException;
 
 public class JsonConverterUser {
 
-    private User user;
     private Controller controller;
 
     public JsonConverterUser(){
         this.controller = new Controller();
     }
 
-    public void JsonToJava(String newUser) throws ParseException {
-        this.user = new User();
+    public User JsonToJava(String newUser) throws ParseException {
+        User user = new User();
 
         Object obj = new JSONParser().parse(newUser);
         org.json.simple.JSONObject jo = (JSONObject) obj;
@@ -43,14 +42,10 @@ public class JsonConverterUser {
         JSONArray friends = (JSONArray)jo.get("friends");
         user.setFriends(friends);
 
-        sendUserToDB(user);
+        return user;
     }
 
-    public void sendUserToDB(User user){
-        controller.addNewUser(user);
-    }
-
-    public String JavaToJson() {
+    public String JavaToJson(User user) {
 
         JSONObject jo = new JSONObject();
         jo.put("uid", user.getUid());

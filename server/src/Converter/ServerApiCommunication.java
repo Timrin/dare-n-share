@@ -16,11 +16,13 @@ public class ServerApiCommunication {
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
     private DareEndpoint dareEndpoint;
+    private Controller controller;
 
     public ServerApiCommunication() {
         jsonDare= new JsonConverterDare();
         jsonScore = new JsonConverterScore();
         jsonUser = new JsonConverterUser();
+        controller = new Controller();
     }
 
     public ServerApiCommunication(DareEndpoint dareEndpoint){
@@ -46,8 +48,7 @@ public class ServerApiCommunication {
      * This method sends a user from Server to be parsed from Json to Java
      * */
     public void newUser(String user) throws ParseException {
-        jsonUser.JsonToJava(user);
-
+        controller.addNewUser(jsonUser.JsonToJava(user));
     }
     /**
      * This method returns a string that is parsed to a json body, and is called upon in

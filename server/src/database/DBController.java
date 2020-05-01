@@ -2,8 +2,8 @@ package database;
 
 import Converter.Controller;
 import Converter.Dare;
-import Converter.ServerApiCommunication;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -14,10 +14,6 @@ import java.sql.SQLException;
 public class DBController {
     private Controller controller;
     private DareTable dareTable;
-    private Dare dare;
-
-    public DBController() {
-    }
 
     public DBController(Controller controller){
         this.controller=controller;
@@ -25,7 +21,7 @@ public class DBController {
     }
 
 
-    public void sendUserToDB(String userID, String name) throws SQLException {
+    public void sendUserToDB(String userID, String name) {
 
         UserTable.addUserToDB(userID, name);
     }
@@ -53,18 +49,18 @@ public class DBController {
         controller.sendDareID(dareId); // this ID will be used in insertParticipantToDB
     }
 
-    public void combineDareIdAndParticipant(String participantId, String opponentId){
+    public void combineDareIdAndParticipant(String participantId, String opponentId){ //Fixme: Change name?
 
     }
 
 
 
-    public void insertParticipantsToDB(int userID,int dareID) throws SQLException {
+    public void insertParticipantsToDB(int userID,int dareID) {
         DareTable.insertParticipantsToDare(userID,dareID);
     }
     public void setDareFromDB(String objectiveType, String objectiveGoal, String scopeType,
                               int scopeLength, String start, String end, String uid1, String uid2){
-        dare = new Dare();
+        Dare dare = new Dare();
         dare.setObjectiveFromDB(objectiveType, objectiveGoal);
         System.out.println("YIHA "+ objectiveType +" "+ objectiveGoal + " " + dare.getObjectiveFromDB());
         dare.setScopeFromDB(scopeType, scopeLength);
@@ -73,13 +69,56 @@ public class DBController {
         dare.addParticipants(uid1);
         dare.addParticipants(uid2);
     }
-    /*public Dare getAboveDare(int id){
-        return dare;
-    }*/
+
+    /**
+     * Gets dare data from database in the form of a ResultSet. Saves all dare values from query and
+     * sets new java Dare object with said values. Returns Dare object
+     * @param dareId unique ID of Dare
+     * @return returns the requested Dare object
+     */
     public Dare getDare(int dareId){
-        System.out.println();
-       return dareTable.getDareFromDB(dareId);
-        //return ;
+
+        //Gets ResultSet from Database
+        ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
+
+        Dare dare = new Dare();
+
+        try {
+            while (resultFromQuery.next()) {
+
+                //Gets Objective
+                String objectiveType = resultFromQuery.getString(2);
+                System.out.println("YOYO " + objectiveType);
+                String objectiveGoal = resultFromQuery.getString(3);
+
+                //Gets Scope
+                String scopeType = resultFromQuery.getString(4);
+                int scopeLength = resultFromQuery.getInt(5);
+
+                //Gets start and end date
+                String start = resultFromQuery.getString(6);
+                String end = resultFromQuery.getString(7);
+
+                int participants = resultFromQuery.getInt(8); //Fixme: Should get from different table
+                String userID = ParticipantTable.getParticipant(participants);
+
+                int opponent = resultFromQuery.getInt(9); //Fixme: Should get from different table
+                String userOpponentId = ParticipantTable.getParticipant(opponent);
+
+                //Sets dare value
+                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+                System.out.println("DARETABLE: " + dare.getObjectiveFromDB() + " type:  " + dare.getObjectiveFromDB().get("type"));
+                dare.setScopeFromDB(scopeType, scopeLength);
+                dare.setStartDate(start);
+                dare.setEndDate(end);
+                dare.addParticipants(userID);
+                dare.addParticipants(userOpponentId);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+       return dare;
     }
 
 }

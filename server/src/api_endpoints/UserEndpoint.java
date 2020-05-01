@@ -1,6 +1,5 @@
 package api_endpoints;
 
-import database_sockets.UserDB;
 import Converter.ServerApiCommunication;
 
 import javax.servlet.http.HttpServlet;
@@ -26,6 +25,7 @@ public class UserEndpoint extends HttpServlet {
     }
     /**
      * This method is invoked when the server receives an http get request.
+     * It gets a user ID from the url path, and gets a user from the database based on that ID.
      *
      * @param request  the http request
      * @param response the response to the request
@@ -33,20 +33,27 @@ public class UserEndpoint extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
-        //Parse request
+        //Gets the PathInfo which shall include the user ID
         String pathInfo = request.getPathInfo();
+
+        //Checks that path is not only '/'
         if (pathInfo.length() >= 2) {
             try {
-                String truePath = pathInfo.substring(1);
+
+                //PathInfo includes '/' at index 0, which is excluded here
+                String userID = pathInfo.substring(1);
                 response.setContentType("application/json");
 
-                String user = serverApiCommunication.getUser(truePath); //fixme getUser doesn't return ID
+                //Sends request through backend to server and receives String containing user data
+                String user = serverApiCommunication.getUser(userID);
 
+                //Makes sure user != null before sending user as response
                 if (user != null) {
                     PrintWriter out = response.getWriter();
                     out.println(user);
                 } else {
-                    throw new Exception("User not found"); // if the user == null the user doesn't exits
+                    //If user == null, exception is thrown TODO: set response so that client recognizes this error
+                    throw new Exception("User not found");
                 }
             } catch (NumberFormatException e) {
                 response.setStatus(400);
@@ -67,25 +74,36 @@ public class UserEndpoint extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
+            //Gets reader from HttpServletRequest, saves in BufferedReader
             BufferedReader br = request.getReader();
-            System.out.println("doPost1, före getReader");
-            StringBuilder stringBuilder = new StringBuilder();
-            System.out.println("doPost2, StringBuilder");
-            String line = br.readLine();
+            System.out.println("UserEndpoint:doPost, reader accepted");
 
+            StringBuilder stringBuilder = new StringBuilder();
+
+            //Reads first line of the request body
+            String line = br.readLine();
+            System.out.println("UserEndpoint:doPost, first line read:" + line);
+
+            //Reads through body of request line by line, appending stringBuilder until line == null
             while (line != null) {
                 stringBuilder.append(line);
                 line = br.readLine();
             }
 
-            serverApiCommunication.newUser(stringBuilder.toString());
-            System.out.println("server");
+            //Close the door after yourself, thanks
+            br.close();
 
+            //Sends complete string to serverApiCommunication
+            serverApiCommunication.newUser(stringBuilder.toString());
+            System.out.println("UserEndpoint:doPost, string sent to serverApiCommunication");
+
+            //Sets response status to 201 successful
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{user_id "  + "}"); //todo check if user_id is correct
+            out.println("{user_id "  + "}"); //Fixme: This helps the developer team, but has no real function. Remove before launch
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
