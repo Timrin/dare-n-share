@@ -15,16 +15,19 @@ import java.util.Map;
 
 public class JsonConverterScore {
 
-    private Score score;
-
     /**
      * This method parses Json objects from file to Java objects.
      */
 
-    public void JsonToJava(String newScore) throws ParseException {
-        score = new Score();
+    public void JsonToJava(String newScore){
+        Score score = new Score();
+        Object obj = new JSONObject();
 
-        Object obj = new JSONParser().parse(newScore);
+        try {
+            obj = new JSONParser().parse(newScore);
+        }catch (ParseException p){
+            p.printStackTrace();
+        }
         org.json.simple.JSONObject jo = (JSONObject) obj;
 
         score.setUid((String) jo.get("uid"));
@@ -34,7 +37,7 @@ public class JsonConverterScore {
 
         score.setScore(((Map) jo.get("score")));
 
-        Iterator<Map.Entry> itr1 = this.score.getScore().entrySet().iterator();
+        Iterator<Map.Entry> itr1 = score.getScore().entrySet().iterator();
         while (itr1.hasNext()) {
             Map.Entry pair = itr1.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());

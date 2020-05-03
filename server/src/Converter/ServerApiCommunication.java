@@ -1,21 +1,18 @@
 package Converter;
-import api_endpoints.DareEndpoint;
-import api_endpoints.UserEndpoint;
 import org.json.simple.parser.ParseException;
-import java.io.IOException;
-import java.util.HashMap;
+
 /**
  * @author Kamilla
  * @date 15/04-20
  * @version 1.0 semantic versioning
- * This class is a controller.
- * Data recieved from the tomcat Server goes through this class to their respected places.
+ * This class acts as a converting gateway between endpoints and controller. Using three
+ * help classes, it converts incoming Strings to Java objects, and outgoing Java
+ * objects to Strings in JSON format.
  * */
 public class ServerApiCommunication {
     private JsonConverterDare jsonDare;
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
-    private DareEndpoint dareEndpoint;
     private Controller controller;
 
     public ServerApiCommunication() {
@@ -25,18 +22,15 @@ public class ServerApiCommunication {
         controller = new Controller();
     }
 
-    public ServerApiCommunication(DareEndpoint dareEndpoint){
-        this.dareEndpoint = dareEndpoint;
-        jsonDare= new JsonConverterDare(this);
-        jsonScore = new JsonConverterScore();
-        jsonUser = new JsonConverterUser();
-    }
-
     /**
      * This method sends a dare from Server to be parsed from Json to Java
      * */
-    public void newDare(String dare) throws org.json.simple.parser.ParseException {
-        jsonDare.JsonToJava(dare);
+    public int newDare(String dareString) {
+
+        Dare dare = jsonDare.JsonToJava(dareString);
+        int dareId = controller.addNewDare(dare);
+
+        return dareId;
     }
     /**
      * This method sends the score from Server to be parsed from Json to Java
@@ -44,19 +38,26 @@ public class ServerApiCommunication {
     public void newScore(String score) throws ParseException {
         jsonScore.JsonToJava(score);
     }
+
     /**
-     * This method sends a user from Server to be parsed from Json to Java
+     * This method parses an incoming new user from a String in JSON format into
+     * a User Java object. It then sends it to the database to be stored
+     * @param user JSON String of new user
      * */
     public void newUser(String user) throws ParseException {
         controller.addNewUser(jsonUser.JsonToJava(user));
     }
+
     /**
-     * This method returns a string that is parsed to a json body, and is called upon in
-     * the dare endpoint.
-     * */
-    public String getDare(int dareId) throws java.text.ParseException {
-        return jsonDare.getJsonDare(dareId);
+     * This method gets a Java Dare from the controller based on the dare ID
+     * It uses JsonConverterDare to parse that dare into a JSON formatted string
+     * @param dareId ID of the requested dare
+     * @return returns that dare as a string in JSON format
+     */
+    public String getDare(int dareId){
+        return jsonDare.JavaToJson(controller.getDare(dareId));
     }
+
     /**
      * This method returns a string that is parsed to a json body, and is called upon in
      * the user endpoint
@@ -66,9 +67,5 @@ public class ServerApiCommunication {
         //Fixme: Should receive a java object User from controller, not String
         //Fixme: Parse java object User using JsonConverterUser
         return user;
-    }
-
-    public void sendDareIDToPost(int id){
-        dareEndpoint.addDareIDToPost(id);
     }
 }

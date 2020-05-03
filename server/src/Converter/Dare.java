@@ -2,7 +2,6 @@ package Converter;
 
 import org.json.simple.JSONArray;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,8 +59,6 @@ public class Dare {
 
     public void setParticipants(ArrayList<String> newArray) {
         this.participants = newArray; // an index looks like this : {"uid":1}
-
-
     }
 
     public void addParticipants(String participant){

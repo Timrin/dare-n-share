@@ -17,15 +17,9 @@ import java.util.ArrayList;
 public class Controller {
 
     private DBController dbController;
-    private JsonConverterDare jsonConverterDare;
 
-
-    public Controller() {}
-
-    public Controller(JsonConverterDare jsonConverterDare){
-        this.jsonConverterDare = jsonConverterDare;
+    public Controller() {
         dbController = new DBController(this);
-
     }
 
     /**
@@ -33,30 +27,29 @@ public class Controller {
      * Deconstructs a dare and sends along requested values
      * @param dare Java object Dare
      */
-    public void addNewDare(Dare dare){
+    public int addNewDare(Dare dare){
 
-        //Comment
+        //Gets objective values from dare
         String objectiveType = dare.getObjective().get("type").toString();
         String objectiveGoal = dare.getObjective().get("goal").toString();
 
+        //Gets scope values from dare
         String scopeType = dare.getScope().get("type").toString();
         int scopeLength = Integer.parseInt(dare.getScope().get("length").toString());
 
+
+        //Gets start and end date from dare
         String start = dare.getStartDate();
         String end = dare.getEndDate();
 
+        //Gets list of participants from dare
         ArrayList<String> participants = dare.getParticipants();
 
-        //Fixme: Make into loop?
-        String participantId =  dare.getParticipants().get(0);
-        System.out.println("Participant ID : " +participantId);
-
-        String opponentId = dare.getParticipants().get(1);
-        System.out.println("Opponent ID : " + opponentId);
-
-        //dareId might be useful idk
+        //Sends dare info to be stored in database, which in turn returns generated dare ID
         int dareId = dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength,
                 start, end, participants);
+
+        return dareId;
     }
 
     /**
@@ -68,9 +61,6 @@ public class Controller {
             dbController.sendUserToDB(user.getUid(), user.getName());
     }
 
-    public void sendDareID(int id){
-        jsonConverterDare.sendDareIDToPost(id);
-    }
 
     public String getUserFromDB(String uid){
         return dbController.getUserFromDB(uid);

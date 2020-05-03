@@ -17,12 +17,9 @@ import javax.servlet.http.*;
 public class DareEndpoint extends HttpServlet {
 
     private ServerApiCommunication serverApiCommunication;
-    private Buffer<Integer> buffer;
 
     public DareEndpoint() {
-
-        serverApiCommunication = new ServerApiCommunication(this);
-        buffer = new Buffer<>();
+        serverApiCommunication = new ServerApiCommunication();
     }
 
 
@@ -90,27 +87,16 @@ public class DareEndpoint extends HttpServlet {
                 line = br.readLine();
             }
             //Sends along complete string from request to make new dare
-            serverApiCommunication.newDare(stringBuilder.toString());
-
-            //gets the id of newly posted dare to send back as response
-            //int id = buffer.get();
+            int dareId = serverApiCommunication.newDare(stringBuilder.toString());
 
             //Create response
             PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{dare_id:"+" }");
+            out.println("{dare_id:" + dareId +" }");
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Receives the id of a newly posted dare that shall be sent back as response from a doPost
-     * @param id ID number of dare
-     */
-    public void addDareIDToPost(int id){
-        buffer.put(id);
     }
 }

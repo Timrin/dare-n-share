@@ -3,9 +3,7 @@ package database;
 import Converter.Controller;
 import Converter.Dare;
 
-import javax.servlet.http.Part;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -47,32 +45,10 @@ public class DBController {
         return id;
     }
 
-    public void getDareIDFromDB(int dareId){
-        controller.sendDareID(dareId); // this ID will be used in insertParticipantToDB
-    }
-
-    public void combineDareIdAndParticipant(String participantId, String opponentId){ //Fixme: Change name?
-
-    }
-
-
-
     public void insertParticipantsToDB(String userID,int dareID) {
         ParticipantTable.addParticipant(userID, dareID);
     }
 
-
-    public void setDareFromDB(String objectiveType, String objectiveGoal, String scopeType,
-                              int scopeLength, String start, String end, String uid1, String uid2){
-        Dare dare = new Dare();
-        dare.setObjectiveFromDB(objectiveType, objectiveGoal);
-        System.out.println("YIHA "+ objectiveType +" "+ objectiveGoal + " " + dare.getObjectiveFromDB());
-        dare.setScopeFromDB(scopeType, scopeLength);
-        dare.setStartDate(start);
-        dare.setEndDate(end);
-        dare.addParticipants(uid1);
-        dare.addParticipants(uid2);
-    }
 
     /**
      * Gets dare data from database in the form of a ResultSet. Saves all dare values from query and
@@ -119,10 +95,17 @@ public class DBController {
        return dare;
     }
 
+    /**
+     * This methods collects all users' user names in a given dare(by dare ID) and returns them in an ArrayList
+     * @param dareId The ID of the dare
+     * @return ArrayList containing all user names of users in relevant dare
+     */
     private ArrayList<String> getAllUserFromDare(int dareId){
 
+        //Gets full ResultSet of participants in the dare from the database
         ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
         ArrayList<String> list = new ArrayList();
+
 
         try {
             while (resultFromQuery.next()){

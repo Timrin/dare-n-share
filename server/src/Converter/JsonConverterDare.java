@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javax.xml.xpath.XPathEvaluationResult;
 import java.util.*;
 
 /**
@@ -15,25 +14,23 @@ import java.util.*;
  * @date 14/04-20
  */
 public class JsonConverterDare {
-    private ServerApiCommunication serverApiCommunication;
-    private Controller controller;
-
-    public JsonConverterDare() {
-    }
-
-    public JsonConverterDare(ServerApiCommunication serverApiCommunication){
-        this.serverApiCommunication = serverApiCommunication;
-        controller = new Controller(this);
-    }
 
     /**
      * This method parses a String in JSON body, recieved from server, to a Dare Java object.
      * It then send it along to the controller.
      * @param newDare String containing information about a dare, read from DareEndpoint
      */
-    public void JsonToJava(String newDare) throws ParseException {
+    public Dare JsonToJava(String newDare) {
+
         Dare dare = new Dare();
-        Object obj = new JSONParser().parse(newDare);
+
+        //Parses string into JSONObject for easier handling of String
+        Object obj = new JSONObject();
+        try {
+            obj = new JSONParser().parse(newDare);
+        }catch (ParseException p){
+            p.printStackTrace();
+        }
         org.json.simple.JSONObject jo = (JSONObject) obj;
 
         //Sets the objective of the dare, which contains type and goal
@@ -68,6 +65,7 @@ public class JsonConverterDare {
 
         Iterator partIterator = ja.iterator();
 
+        //Creates an ArrayList containing all participants' user IDs
         ArrayList<String> participantList = new ArrayList<>();
         while(partIterator.hasNext()){
             Map p = (Map) partIterator.next();
@@ -77,71 +75,56 @@ public class JsonConverterDare {
 
         dare.setParticipants(participantList);
 
-        sendDareToDB(dare);
-    }
-
-    public void sendDareToDB(Dare dare){
-        controller.addNewDare(dare);
+        return dare;
     }
 
     /**
      * This method gets a dare. It uses a dareId to get it from the controller, and then parses
      * the java object to Json.
-     * @param dareId The Id of the dare one seeks to retrieve
+     * @param dare The Id of the dare one seeks to retrieve
      * @return Returns dare formatted to Json
-     * @throws java.text.ParseException
      */
-    public String getJsonDare(int dareId) {
+    public String JavaToJson(Dare dare) {
 
-        Dare dare;
-        dare = controller.getDare(dareId);
-        System.out.println("Dare "+ dare.toString());
-        System.out.println("Verdi fra Dare : "+dare.getStartDate());
+        System.out.println("JsonConverterDare:JavaToJson, dare received from database: " + dare.toString());
 
         JSONObject jo = new JSONObject();
 
-        jo.put("dareID",dareId);
-        System.out.println("JO dareId" + dareId);
-        System.out.println("Objective test "+ dare.getObjectiveFromDB());
+        //Sets dare ID
+        jo.put("dareID",dare);
+        System.out.println("JO dareId" + dare);
+
+        //Sets the objective of dare
         Map m = new LinkedHashMap();
         m.putAll(dare.getObjectiveFromDB());
         jo.put("objective", m);
+        System.out.println("JsonConverterDare:JavaToJson, Objective: "+dare.getObjectiveFromDB());
 
-        System.out.println("Objective "+dare.getObjectiveFromDB());
-
+        //Sets the scope of dare
         m = new LinkedHashMap();
         m.putAll(dare.getScopeFromDB());
         jo.put("scope", m);
+        System.out.println("JsonConverterDare:JavaToJson, Scope: "+ dare.getScopeFromDB());
 
-        System.out.println("Scope "+ dare.getScopeFromDB());
-
+        //Sets start en end date of dare
         jo.put("start",dare.getStartDate());
         jo.put("end",dare.getEndDate());
 
-        System.out.println("TEST: "+jo.toJSONString());
-
+        //Creates a JSONArray of participants from the ArrayList
         ArrayList<String> participantsList = dare.getParticipants();
         JSONArray ja = new JSONArray();
-
-        //DO NOT TOUCH. IS MAGIC
+        System.out.println("JsonConverterDare:JavaToJson, Participants:");
         for (String s : participantsList) {
             System.out.println(s);
             Map map = new LinkedHashMap();
             map.put("uid", s);
             ja.add(map);
         }
-
-        System.out.println(ja.toJSONString());
-
         jo.put("participants", ja);
 
-        System.out.println("Stringen: "+jo.toJSONString());
+        System.out.println("JsonConverterDare:JavaToJson, full string: "+jo.toJSONString());
 
         return jo.toJSONString();
-    }
-
-    public void sendDareIDToPost(int id){
-        serverApiCommunication.sendDareIDToPost(id);
     }
 
 }
