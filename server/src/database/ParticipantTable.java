@@ -25,7 +25,7 @@ public class ParticipantTable {
             System.out.println("Connection ok");
 
             String foreignKeyQuery = "PRAGMA FOREIGN_KEYS = on";
-            String query = " INSERT INTO participants(UserId, DareId) VALUES ('" + userID + "'," + dareID + ");";
+            String query = " INSERT INTO Participants(UserId, DareId) VALUES ('" + userID + "'," + dareID + ");";
             assert conn != null;
             Statement statement = conn.createStatement();
 
@@ -93,7 +93,8 @@ public class ParticipantTable {
             conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
 
-            String query = "INSERT INTO Participants (Score) values ('" + score+"')where DareId=" + dareId + " and UserId='" + userId + "';";
+            // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
+            String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
@@ -103,7 +104,7 @@ public class ParticipantTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            return true;
+        return true;
     }
 
     public static ResultSet getScoreFromDB(int dareId, String userId) {

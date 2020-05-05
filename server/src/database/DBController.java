@@ -116,10 +116,14 @@ public class DBController {
 
         try {
             while (resultFromQuery.next()) {
+                ArrayList<String>participant = new ArrayList<>();
+
                 String userId = resultFromQuery.getString("UserId");
+                participant.add(userId);
                 String userName = UserTable.getUser(userId);
+                participant.add(userName);
                 System.out.println(userName);
-                list.add(userName);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,6 +167,31 @@ public class DBController {
             e.printStackTrace();
         }
         return friendslist;
+    }
+
+    /***
+     *
+     *
+     */
+    public void addUserScoreToDB(int dareid, String userId, String score) {
+
+        ResultSet resultFromQuery = ParticipantTable.getScoreFromDB(dareid, userId);
+        String newScore = "";
+        try {
+            if (resultFromQuery == null) {
+                ParticipantTable.addToScore(dareid, userId, score);
+            } else {
+                while (resultFromQuery.next()) {
+                    String oldScore = resultFromQuery.getString("Score");
+                    newScore = oldScore + ":" + score;
+                    System.out.println("NEW SCORE " + newScore);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ParticipantTable.addToScore(dareid, userId, newScore);
+
     }
 
 }

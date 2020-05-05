@@ -35,7 +35,7 @@ public class ServerApiCommunication {
      * This method sends the score from Server to be parsed from Json to Java
      * */
     public void newScore(String score) {
-        jsonScore.JsonToJava(score);
+        controller.addScore(jsonScore.JsonToJava(score));
     }
 
     /**
@@ -71,4 +71,6 @@ public class ServerApiCommunication {
 
         return jsonUser.JavaToJson(user);
     }
+
+
 }

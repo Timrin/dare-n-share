@@ -19,7 +19,7 @@ public class JsonConverterScore {
      * This method parses Json objects from file to Java objects.
      */
 
-    public void JsonToJava(String newScore){
+    public Score JsonToJava(String newScore){
         Score score = new Score();
         Object obj = new JSONObject();
 
@@ -35,7 +35,7 @@ public class JsonConverterScore {
         score.setUid((String) jo.get("uid"));
         score.setDid((String) jo.get("dare_id"));
 
-        System.out.println("uid: " + score.getUid() + "\n" + "did: " + score.getDid() + "\n");
+        //System.out.println("uid: " + score.getUid() + "\n" + "did: " + score.getDid() + "\n");
 
         score.setScore(((Map) jo.get("score")));
 
@@ -44,6 +44,7 @@ public class JsonConverterScore {
             Map.Entry pair = itr1.next();
             System.out.println(pair.getKey() + " : " + pair.getValue());
         }
+        return score;
     }
 
 

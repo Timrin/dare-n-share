@@ -23,6 +23,7 @@ public class Score {
 
     public void setScore(Map score) {
         this.score = score;
+        System.out.println("Set score from map "+score);
         setPoint();
     }
 
@@ -46,8 +47,15 @@ public class Score {
         return point;
     }
 
+
+
     public void setPoint() {
-       this.point= score.get("point").toString();
-        //this.point = point;
+        boolean boo = (boolean) score.get("point");
+        if (boo == true) {
+            point = "true";
+        } else {
+            point = "false";
+        }
+        System.out.println("Score "+point);
     }
 }

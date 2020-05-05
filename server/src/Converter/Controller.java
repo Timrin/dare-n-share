@@ -3,6 +3,7 @@ package Converter;
 import database.DBController;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -105,6 +106,11 @@ public class Controller {
  *
  * */
 
-
+public void addScore (Score score){
+    int dare = Integer.parseInt(score.getDid());
+    String userId = score.getUid();
+    String point = score.getPoint();
+    dbController.addUserScoreToDB(dare,userId,point);
+}
 
 }
