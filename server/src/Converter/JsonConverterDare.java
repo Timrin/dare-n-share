@@ -66,14 +66,14 @@ public class JsonConverterDare {
         Iterator partIterator = ja.iterator();
 
         //Creates an ArrayList containing all participants' user IDs
-        ArrayList<String> participantList = new ArrayList<>();
+        ArrayList<Map> participantList = new ArrayList<>();
         while(partIterator.hasNext()){
             Map p = (Map) partIterator.next();
-            participantList.add(p.get("uid").toString());
+            participantList.add(p);
             System.out.println(p.get("uid").toString());
         }
 
-        dare.setParticipants(participantList);
+        dare.setParticipants(ja);
 
         return dare;
     }
@@ -89,10 +89,6 @@ public class JsonConverterDare {
         System.out.println("JsonConverterDare:JavaToJson, dare received from database: " + dare.toString());
 
         JSONObject jo = new JSONObject();
-
-        //Sets dare ID
-        jo.put("dareID",dare);
-        System.out.println("JO dareId" + dare);
 
         //Sets the objective of dare
         Map m = new LinkedHashMap();
@@ -111,15 +107,21 @@ public class JsonConverterDare {
         jo.put("end",dare.getEndDate());
 
         //Creates a JSONArray of participants from the ArrayList
-        ArrayList<String> participantsList = dare.getParticipants();
+        ArrayList<Map> participantsList = dare.getParticipants();
         JSONArray ja = new JSONArray();
-        System.out.println("JsonConverterDare:JavaToJson, Participants:");
-        for (String s : participantsList) {
-            System.out.println(s);
-            Map map = new LinkedHashMap();
-            map.put("uid", s);
-            ja.add(map);
+        System.out.println("JsonConverterDare:JavaToJson, Participants: " + participantsList.toString());
+
+        for(int i = 0; i < participantsList.size(); i++){
+            ja.add(participantsList.get(i));
+            System.out.println(participantsList.get(i).toString());
         }
+
+//        for (String s : participantsList) {
+//            System.out.println(s);
+//            Map map = new LinkedHashMap();
+//            map.put("uid", s);
+//            ja.add(map);
+//        }
         jo.put("participants", ja);
 
         System.out.println("JsonConverterDare:JavaToJson, full string: "+jo.toJSONString());

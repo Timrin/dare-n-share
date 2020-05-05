@@ -21,7 +21,7 @@ public class Dare {
     private Map scopeFromDB;
 
     //private JSONArray participants; //userId and dareId
-    private ArrayList<String> participants;
+    private ArrayList<Map> participants;
 
     private String startDate;
     private String endDate;
@@ -30,7 +30,7 @@ public class Dare {
 
 
     public Dare(){
-        participants = new JSONArray();
+        participants = new ArrayList<Map>();
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     }
 
@@ -53,15 +53,15 @@ public class Dare {
         return (days * 24 * 60 * 60 * 1000);
     }
 
-    public ArrayList<String> getParticipants() {
+    public ArrayList<Map> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(ArrayList<String> newArray) {
+    public void setParticipants(ArrayList<Map> newArray) {
         this.participants = newArray; // an index looks like this : {"uid":1}
     }
 
-    public void addParticipants(String participant){
+    public void addParticipants(Map participant){
         participants.add(participant);
     }
 

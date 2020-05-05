@@ -44,7 +44,7 @@ public class Controller {
         String end = dare.getEndDate();
 
         //Gets list of participants from dare
-        ArrayList<String> participants = dare.getParticipants();
+        ArrayList<Map> participants = dare.getParticipants();
 
         //Sends dare info to be stored in database, which in turn returns generated dare ID
         int dareId = dbController.sendNewDareToDB(objectiveType, objectiveGoal, scopeType, scopeLength,

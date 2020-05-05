@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -39,13 +40,14 @@ public class DBController {
 
 
     public int sendNewDareToDB(String objectiveType, String objectiveGoal, String scopeType,
-                               int scopeLength, String start, String end, ArrayList<String> participants) {
+                               int scopeLength, String start, String end, ArrayList<Map> participants) {
 
         int id = DareTable.insertNewDareToDB(objectiveType,
                 objectiveGoal, scopeType, scopeLength, start, end);
 
-        for (String participant : participants) {
-            ParticipantTable.addParticipant(participant, id);
+        for(int i = 0; i < participants.size(); i++){
+            String userID = participants.get(i).get("uid").toString();
+            ParticipantTable.addParticipant(userID, id);
         }
         return id;
     }
@@ -68,8 +70,6 @@ public class DBController {
         ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
 
         Dare dare = new Dare();
-
-        dare.setParticipants(getAllUserFromDare(dareId));
 
         try {
             while (resultFromQuery.next()) {
@@ -98,6 +98,11 @@ public class DBController {
             e.printStackTrace();
         }
 
+        ArrayList<Map> participantsList = getAllUserFromDare(dareId);
+        System.out.println(participantsList.get(0).get("uid"));
+
+        dare.setParticipants(participantsList);
+
         return dare;
     }
 
@@ -107,28 +112,57 @@ public class DBController {
      * @param dareId The ID of the dare
      * @return ArrayList containing all user names of users in relevant dare
      */
-    private ArrayList<String> getAllUserFromDare(int dareId) {
+    private ArrayList<Map> getAllUserFromDare(int dareId) {
 
         //Gets full ResultSet of participants in the dare from the database
         ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
-        ArrayList<String> list = new ArrayList();
+        ArrayList<Map> list = new ArrayList();
 
 
         try {
             while (resultFromQuery.next()) {
-                ArrayList<String>participant = new ArrayList<>();
+                ArrayList<Map>participant = new ArrayList<>();
 
                 String userId = resultFromQuery.getString("UserId");
-                participant.add(userId);
+                Map m = new LinkedHashMap();
+                m.put("uid", userId);
+                participant.add(m);
+
                 String userName = UserTable.getUser(userId);
-                participant.add(userName);
+                Map p = new LinkedHashMap();
+                p.put("name", userName);
+                participant.add(p);
                 System.out.println(userName);
 
+                String[] scores = getScore(dareId, userId);
+                Map s = new LinkedHashMap();
+                s.put("score", scores);
+                participant.add(s);
+
+                list = participant;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private String[] getScore(int dareId, String userId){
+        ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
+        String[] score = new String[10];
+
+        try {
+            while (resultSetScore.next()) {
+                String fullScoreString = resultSetScore.getString("Score");
+
+                score = fullScoreString.split(":");
+
+
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return score;
     }
 
     /**
