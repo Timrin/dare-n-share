@@ -14,6 +14,8 @@ public class Score {
     private String uid;
     private String did;
     private Map score;
+    private String point;
+
 
     public Map getScore() {
         return score;
@@ -21,6 +23,7 @@ public class Score {
 
     public void setScore(Map score) {
         this.score = score;
+        setPoint();
     }
 
     public String getUid() {
@@ -39,4 +42,12 @@ public class Score {
         this.did = did;
     }
 
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint() {
+       this.point= score.get("point").toString();
+        //this.point = point;
+    }
 }

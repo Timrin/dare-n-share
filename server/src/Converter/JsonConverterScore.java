@@ -24,7 +24,9 @@ public class JsonConverterScore {
         Object obj = new JSONObject();
 
         try {
+
             obj = new JSONParser().parse(newScore);
+
         }catch (ParseException p){
             p.printStackTrace();
         }

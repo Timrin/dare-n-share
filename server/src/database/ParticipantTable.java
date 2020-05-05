@@ -84,9 +84,26 @@ public class ParticipantTable {
         return resultFromQuery;
     }
 
-    public static void addToScore(int dareId, String userId, String score) {
+    public static boolean addToScore(int dareId, String userId, String score) {
         Connection conn = null;
+        ResultSet resultFromQuery = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
+            System.out.println("Connection ok");
 
+            String query = "INSERT Participant() Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+            resultFromQuery = statement.getResultSet();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+return true;
     }
 
     public static ResultSet getScoreFromDB(int dareId, String userId) {
