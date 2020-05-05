@@ -10,7 +10,6 @@ import java.sql.*;
 public class ParticipantTable {
 
 
-
     /**
      * add Participants to table, retrieves the primary key and store in variable
      *
@@ -82,6 +81,32 @@ public class ParticipantTable {
             e.printStackTrace();
         }
 
+        return resultFromQuery;
+    }
+
+    public static void addToScore(int dareId, String userId, String score) {
+        Connection conn = null;
+
+    }
+
+    public static ResultSet getScoreFromDB(int dareId, String userId) {
+        Connection conn = null;
+        ResultSet resultFromQuery = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
+            System.out.println("Connection ok");
+
+            String query = "SELECT Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+            resultFromQuery = statement.getResultSet();
+
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return resultFromQuery;
     }
 }
