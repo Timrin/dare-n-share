@@ -93,7 +93,7 @@ public class ParticipantTable {
             conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
 
-            String query = "INSERT Participant() Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
+            String query = "INSERT INTO Participants (Score) values ('" + score+"')where DareId=" + dareId + " and UserId='" + userId + "';";
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
@@ -103,7 +103,7 @@ public class ParticipantTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-return true;
+            return true;
     }
 
     public static ResultSet getScoreFromDB(int dareId, String userId) {
