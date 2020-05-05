@@ -5,6 +5,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * @author Kamilla
  * @date 14/04-20
@@ -45,8 +50,15 @@ public class JsonConverterUser {
         user.setDares(dares);
 
         //Sets array of friends connected to user
-        JSONArray friends = (JSONArray)jo.get("friends");
-        user.setFriends(friends);
+        JSONArray JArray = (JSONArray)jo.get("friends");
+        ArrayList<String> friendsList = new ArrayList<>();
+        Iterator iterator = JArray.iterator();
+
+        while(iterator.hasNext()){
+            Map map = (Map) iterator.next();
+            friendsList.add(map.get("uid").toString());
+        }
+        user.setFriendsList(JArray);
 
         return user;
     }
@@ -60,7 +72,15 @@ public class JsonConverterUser {
         JSONArray dares = user.getDares();
         jo.put("dares",dares);
 
-        JSONArray friends = user.getFriends();
+        ArrayList<String> friendsList = user.getFriendsList();
+        JSONArray friends = new JSONArray();
+
+        for(int i = 0; i < friendsList.size(); i++){
+            Map map = new LinkedHashMap();
+            map.put("uid", friendsList.get(i));
+            friends.add(map);
+        }
+
         jo.put("friends",friends);
 
         // todo put friends array

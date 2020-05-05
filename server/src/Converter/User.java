@@ -2,6 +2,8 @@ package Converter;
 
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
+
 /**
  * @author Kamilla
  * @version 1.0
@@ -14,7 +16,7 @@ public class User {
     private String uid;
     private String name;
     private JSONArray dares;
-    private JSONArray friends;
+    private ArrayList<String> friendsList;
 
     public User() {
     }
@@ -44,14 +46,24 @@ public class User {
         this.dares = dare;
     }
 
-    public JSONArray getFriends() {
-        return friends;
+    public ArrayList<String> getFriendsList() {
+        return friendsList;
     }
 
-    public void setFriends(JSONArray friend) {
+    public void setFriendsList(ArrayList<String> friend) {
         // friends.add(friend);
-        this.friends = friend;
+        this.friendsList = friend;
         // System.out.println("1 friend "+friends.get(0));
         // System.out.println("HIIIIIIIII "+ friends.get(1));
+    }
+
+    public boolean addFriend(String userID){
+        if (friendsList.contains(userID)){
+            return false;
+        }
+        else{
+            friendsList.add(userID);
+            return true;
+        }
     }
 }

@@ -1,5 +1,4 @@
 package Converter;
-import org.json.simple.parser.ParseException;
 
 /**
  * @author Kamilla
@@ -35,7 +34,7 @@ public class ServerApiCommunication {
     /**
      * This method sends the score from Server to be parsed from Json to Java
      * */
-    public void newScore(String score) throws ParseException {
+    public void newScore(String score) {
         jsonScore.JsonToJava(score);
     }
 
@@ -44,7 +43,7 @@ public class ServerApiCommunication {
      * a User Java object. It then sends it to the database to be stored
      * @param user JSON String of new user
      * */
-    public void newUser(String user) throws ParseException {
+    public void newUser(String user) {
         controller.addNewUser(jsonUser.JsonToJava(user));
     }
 
