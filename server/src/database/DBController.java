@@ -4,18 +4,22 @@ import Converter.Controller;
 import Converter.Dare;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Database controller,
+ *
  * @author julia
  */
 
 public class DBController {
     private Controller controller;
 
-    public DBController(Controller controller){
-        this.controller=controller;
+    public DBController(Controller controller) {
+        this.controller = controller;
     }
 
 
@@ -25,16 +29,17 @@ public class DBController {
     }
 
 
-    public String getUserFromDB(String uid){
+    public String getUserFromDB(String uid) {
 
         String userName = "";
         userName = UserTable.getUser(uid);
+        System.out.println(userName + " DBcontroller get user from db");
         return userName;
     }
 
 
-    public int sendNewDareToDB(String objectiveType, String objectiveGoal,String scopeType,
-                                int scopeLength, String start,String end, ArrayList<String> participants) {
+    public int sendNewDareToDB(String objectiveType, String objectiveGoal, String scopeType,
+                               int scopeLength, String start, String end, ArrayList<String> participants) {
 
         int id = DareTable.insertNewDareToDB(objectiveType,
                 objectiveGoal, scopeType, scopeLength, start, end);
@@ -45,7 +50,7 @@ public class DBController {
         return id;
     }
 
-    public void insertParticipantsToDB(String userID,int dareID) {
+    public void insertParticipantsToDB(String userID, int dareID) {
         ParticipantTable.addParticipant(userID, dareID);
     }
 
@@ -53,10 +58,11 @@ public class DBController {
     /**
      * Gets dare data from database in the form of a ResultSet. Saves all dare values from query and
      * sets new java Dare object with said values. Returns Dare object
+     *
      * @param dareId unique ID of Dare
      * @return returns the requested Dare object
      */
-    public Dare getDare(int dareId){
+    public Dare getDare(int dareId) {
 
         //Gets ResultSet from Database
         ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
@@ -88,19 +94,20 @@ public class DBController {
                 dare.setStartDate(start);
                 dare.setEndDate(end);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-       return dare;
+        return dare;
     }
 
     /**
      * This methods collects all users' user names in a given dare(by dare ID) and returns them in an ArrayList
+     *
      * @param dareId The ID of the dare
      * @return ArrayList containing all user names of users in relevant dare
      */
-    private ArrayList<String> getAllUserFromDare(int dareId){
+    private ArrayList<String> getAllUserFromDare(int dareId) {
 
         //Gets full ResultSet of participants in the dare from the database
         ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
@@ -108,16 +115,54 @@ public class DBController {
 
 
         try {
-            while (resultFromQuery.next()){
+            while (resultFromQuery.next()) {
                 String userId = resultFromQuery.getString("UserId");
                 String userName = UserTable.getUser(userId);
                 System.out.println(userName);
                 list.add(userName);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     *
+     */
+    public ArrayList<String> getAllDareIDForOneUser(String uid) {
+        ResultSet resultFromQuery = ParticipantTable.getAllDareIdForUser(uid);
+        ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
+
+        try {
+            while (resultFromQuery.next()) {
+                int dareId = resultFromQuery.getInt("DareId");
+                list.add(String.valueOf(dareId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Map> getFriendsFromDB(String uid) {
+        ResultSet resultFromQuery = FriendsTable.getFriends(uid);
+
+        ArrayList<Map> friendslist = new ArrayList<>();
+
+        try {
+            while (resultFromQuery.next()) {
+                HashMap<String, String> mapOfFriend = new HashMap<>();
+                String userId = resultFromQuery.getString("user");
+                mapOfFriend.put("user", userId);
+                String username = UserTable.getUser(userId);
+                mapOfFriend.put("name", username);
+                friendslist.add(mapOfFriend);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return friendslist;
     }
 
 }

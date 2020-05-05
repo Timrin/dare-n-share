@@ -52,19 +52,9 @@ public class Controller {
         return dareId;
     }
 
-    /**
-     * Use this method to add a new user to the database
-     * Deconstructs a Java object User and sends along requested values
-     * @param user Java object User
-     */
-    public void addNewUser(User user){
-            dbController.sendUserToDB(user.getUid(), user.getName());
-    }
 
 
-    public String getUserFromDB(String uid){
-        return dbController.getUserFromDB(uid);
-    }
+
 
     //todo: fill out this method
     //Participants recieves a string, of an array (score array(true true false)). DB recieves a string from participants.
@@ -79,5 +69,36 @@ public class Controller {
     public Dare getDare(int dareId){
        return dbController.getDare(dareId);
     }
+
+
+    /***********************************************
+     * Build user
+     * */
+    public User getUserFromDB(String uid){
+        User user = new User();
+       // dbController.getUserFromDB(uid);
+        user.setDares(dbController.getAllDareIDForOneUser(uid));
+        user.setName(dbController.getUserFromDB(uid));
+        user.setUid(uid);
+        user.setFriendsList(dbController.getFriendsFromDB(uid));
+        System.out.println(user.getDares() + " controller get user from db");
+        return user;
+    }
+    public ArrayList<String> getDareIdForUser(String id){
+        return dbController.getAllDareIDForOneUser(id);
+    }
+
+
+
+    /**
+     * Use this method to add a new user to the database
+     * Deconstructs a Java object User and sends along requested values
+     * @param user Java object User
+     */
+    public void addNewUser(User user){
+        dbController.sendUserToDB(user.getUid(), user.getName());
+    }
+
+
 
 }

@@ -69,10 +69,23 @@ public class JsonConverterUser {
         jo.put("uid", user.getUid());
         jo.put("name", user.getName());
 
-        JSONArray dares = user.getDares();
-        jo.put("dares",dares);
+        //JSONArray dares = user.getDares(); //fixme get all dare id
+       // jo.put("dares",dares);
 
-        ArrayList<String> friendsList = user.getFriendsList();
+        // puts dare ID in an array
+        ArrayList<String> dareList = user.getDares();
+        JSONArray dareId = new JSONArray();
+
+        for(int i=0;i<dareList.size();i++){
+            Map map = new LinkedHashMap();
+            map.put("id",dareList.get(i));
+            dareId.add(map);
+        }
+        jo.put("dares", dareId);
+
+
+        // puts friends in an array
+        ArrayList<Map> friendsList = user.getFriendsList();
         JSONArray friends = new JSONArray();
 
         for(int i = 0; i < friendsList.size(); i++){
@@ -83,6 +96,7 @@ public class JsonConverterUser {
 
         jo.put("friends",friends);
 
+        System.out.println(jo.toJSONString() + " JSON CONVERTER");
         // todo put friends array
         return jo.toJSONString();
     }

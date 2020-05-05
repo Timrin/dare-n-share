@@ -62,9 +62,13 @@ public class ServerApiCommunication {
      * the user endpoint
      * */
     public String getUser(String uid){
-        String user = controller.getUserFromDB(uid);
-        //Fixme: Should receive a java object User from controller, not String
-        //Fixme: Parse java object User using JsonConverterUser
-        return user;
+        //String user = controller.getUserFromDB(uid);
+        User user = controller.getUserFromDB(uid);
+        System.out.println(user.getName()+" "+user.getDares() + " SEREVER API COM");
+        System.out.println(jsonUser.JavaToJson(user));
+        System.out.println(user.getDares());
+
+
+        return jsonUser.JavaToJson(user);
     }
 }
