@@ -2,6 +2,7 @@ package database;
 
 import Converter.Controller;
 import Converter.Dare;
+import org.json.simple.JSONArray;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * Database controller,
  *
- * @author julia
+ * @author julia, Steven, Kamilla - xp pair programming
  */
 
 public class DBController {
@@ -23,12 +24,17 @@ public class DBController {
         this.controller = controller;
     }
 
-
+    /**
+     *
+     */
     public void sendUserToDB(String userID, String name) {
 
         UserTable.addUserToDB(userID, name);
     }
 
+    /**
+     *
+     */
 
     public String getUserFromDB(String uid) {
 
@@ -38,14 +44,16 @@ public class DBController {
         return userName;
     }
 
-
+    /**
+     *
+     */
     public int sendNewDareToDB(String objectiveType, String objectiveGoal, String scopeType,
                                int scopeLength, String start, String end, ArrayList<Map> participants) {
 
         int id = DareTable.insertNewDareToDB(objectiveType,
                 objectiveGoal, scopeType, scopeLength, start, end);
 
-        for(int i = 0; i < participants.size(); i++){
+        for (int i = 0; i < participants.size(); i++) {
             String userID = participants.get(i).get("uid").toString();
             ParticipantTable.addParticipant(userID, id);
         }
@@ -124,15 +132,13 @@ public class DBController {
                 String userId = resultFromQuery.getString("UserId");
                 Map m = new LinkedHashMap();
                 m.put("uid", userId);
-                list.add(m);
 
                 String userName = UserTable.getUser(userId);
                 m.put("name", userName);
-                list.add(m);
                 System.out.println(userName);
 
-                String[] scores = getScore(dareId, userId);
-                m.put("score", scores);
+                JSONArray scores = getScore(dareId, userId);
+                m.put("score", scores); //fixme vi jobber her
                 list.add(m);
             }
         } catch (Exception e) {
@@ -141,9 +147,13 @@ public class DBController {
         return list;
     }
 
-    private String[] getScore(int dareId, String userId){
+    /**
+     *
+     */
+    private JSONArray getScore(int dareId, String userId) {
         ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
         String[] score = new String[10];
+        JSONArray jsonScore = new JSONArray();
 
         try {
             while (resultSetScore.next()) {
@@ -151,12 +161,24 @@ public class DBController {
 
                 score = fullScoreString.split(":");
 
+                for (int i = 0; i < score.length; i++) {
+                    if (score[i] != null) {
+
+                        if (score[i].equals("true")) {
+                            jsonScore.add(true);
+                        } else if (score[i].equals("false")) {
+                            jsonScore.add(false);
+                        }
+
+                        //jsonScore.add(score[i]);
+                    }
+                }
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return score;
+        return jsonScore;
     }
 
     /**
@@ -177,6 +199,9 @@ public class DBController {
         return list;
     }
 
+    /**
+     *
+     */
     public ArrayList<Map> getFriendsFromDB(String uid) {
         ResultSet resultFromQuery = FriendsTable.getFriends(uid);
 
