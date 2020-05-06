@@ -45,14 +45,16 @@ public class UserEndpoint extends HttpServlet {
                 response.setContentType("application/json");
 
                 //Sends request through backend to server and receives String containing user data
-                String user = serverApiCommunication.getUser(userID);
 
+                String user = serverApiCommunication.getUser(userID);
                 //Makes sure user != null before sending user as response
                 if (user != null) {
                     PrintWriter out = response.getWriter();
                     out.println(user);
+                    response.setStatus(200);
                 } else {
                     //If user == null, exception is thrown TODO: set response so that client recognizes this error
+                    response.setStatus(404);
                     throw new Exception("User not found");
                 }
             } catch (NumberFormatException e) {

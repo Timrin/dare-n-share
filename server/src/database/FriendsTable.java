@@ -14,7 +14,7 @@ public class FriendsTable {
             System.out.println("Connection ok");
 
 
-            String query = "INSERT INTO Friends(userID, user) VALUES ('"+userId+"','" +friendId+"')";
+            String query = "INSERT INTO Friends (userID, user) VALUES ('"+userId+"','" +friendId+"')";
             Statement statement = conn.createStatement();
             statement.execute(query);
 

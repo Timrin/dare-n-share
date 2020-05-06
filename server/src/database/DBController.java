@@ -158,6 +158,9 @@ public class DBController {
         try {
             while (resultSetScore.next()) {
                 String fullScoreString = resultSetScore.getString("Score");
+                if (fullScoreString==null){
+                    return jsonScore;
+                }
 
                 score = fullScoreString.split(":");
 
@@ -244,6 +247,13 @@ public class DBController {
             e.printStackTrace();
         }
         ParticipantTable.addToScore(dareid, userId, newScore);
+
+    }
+
+    public void addFriendsToDB(String userId,String friendId){
+
+        FriendsTable.addFriends(userId, friendId);
+        FriendsTable.addFriends(friendId,userId);
 
     }
 

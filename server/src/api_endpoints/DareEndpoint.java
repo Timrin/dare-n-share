@@ -46,9 +46,11 @@ public class DareEndpoint extends HttpServlet {
                     //If the dare exists, write the dare to the response
                     PrintWriter out = response.getWriter();
                     out.println(dare);
+                    response.setStatus(200);
 
                 } else {
                     //If the dare doesn't exist
+                    response.setStatus(404);
                     throw new Exception("Dare not found");
                 }
 
