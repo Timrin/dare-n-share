@@ -121,25 +121,19 @@ public class DBController {
 
         try {
             while (resultFromQuery.next()) {
-                ArrayList<Map>participant = new ArrayList<>();
-
                 String userId = resultFromQuery.getString("UserId");
                 Map m = new LinkedHashMap();
                 m.put("uid", userId);
-                participant.add(m);
+                list.add(m);
 
                 String userName = UserTable.getUser(userId);
-                Map p = new LinkedHashMap();
-                p.put("name", userName);
-                participant.add(p);
+                m.put("name", userName);
+                list.add(m);
                 System.out.println(userName);
 
                 String[] scores = getScore(dareId, userId);
-                Map s = new LinkedHashMap();
-                s.put("score", scores);
-                participant.add(s);
-
-                list = participant;
+                m.put("score", scores);
+                list.add(m);
             }
         } catch (Exception e) {
             e.printStackTrace();
