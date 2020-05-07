@@ -206,13 +206,14 @@ public class DBController {
      */
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
       //  ResultSet resultFromQuery = ParticipantTable.getAllDareIdForUser(uid);
-        int dares[]= ParticipantTable.getAllDareIdForUser(uid);
+        //int dares[]
+        ArrayList<Integer> dares= ParticipantTable.getAllDareIdForUser(uid);
         ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
 
         //  while (resultFromQuery.next()) {
         //   int dareId = resultFromQuery.getInt("DareId");
-        for(int i = 0; i<dares.length;i++) {
-            list.add(String.valueOf(dares[i]));
+        for(int i = 0; i<dares.size();i++) {
+            list.add(String.valueOf(dares.get(i)));
         }
 
         return list;

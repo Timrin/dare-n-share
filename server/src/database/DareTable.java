@@ -6,7 +6,7 @@ import java.sql.*;
 
 /**
  * Dare communication to Dare table in database
- * For all in code review : query or request? note to self
+ *
  *
  * @author julia
  */

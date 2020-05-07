@@ -2,6 +2,7 @@ package database;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Participant table communication
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  * @author julia
  */
 public class ParticipantTable {
+
+
 
 
     /**
@@ -72,10 +75,11 @@ public class ParticipantTable {
     }
 
 
-    public static int[] getAllDareIdForUser(String userId) {
+    public static ArrayList<Integer> getAllDareIdForUser(String userId) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
-        int[] dareId = new int[100];
+       //int[] dareId = new int[10];
+        ArrayList<Integer> dareId = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -89,9 +93,8 @@ public class ParticipantTable {
 
             resultFromQuery = statement.getResultSet();
             while (resultFromQuery.next()) {
-                for (int i = 0; i < dareId.length; i++) {
-                    dareId[i] = resultFromQuery.getInt("DareId");
-                }
+                int dare = resultFromQuery.getInt("DareId");
+                dareId.add(dare);
             }
             conn.close();
 
@@ -105,20 +108,17 @@ public class ParticipantTable {
 
     public static void addToScore(int dareId, String userId, String score) {
         Connection conn = null;
-     //   ResultSet resultFromQuery = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
             System.out.println("Connection ok");
 
-        // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
-        String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
-        Statement statement = conn.createStatement();
-        statement.execute(query);
-       //dataBaseTalker(query);
-          //  resultFromQuery = statement.getResultSet();
 
+            String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
+            Statement statement = conn.createStatement();
+            statement.execute(query);
 
             conn.close();
 
