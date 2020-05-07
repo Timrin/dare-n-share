@@ -28,9 +28,10 @@ public class Controller {
     /**
      * Use this method to add a new dare to the database
      * Deconstructs a dare and sends along requested values
+     *
      * @param dare Java object Dare
      */
-    public int addNewDare(Dare dare){
+    public int addNewDare(Dare dare) {
 
         //Gets objective values from dare
         String objectiveType = dare.getObjective().get("type").toString();
@@ -56,30 +57,29 @@ public class Controller {
     }
 
 
-
-
-
     //todo: fill out this method
     //Participants recieves a string, of an array (score array(true true false)). DB recieves a string from participants.
-    public void addScoreToUsersDare(){}
+    public void addScoreToUsersDare() {
+    }
 
 
     /**
      * Gets dare from database using dareId.
+     *
      * @param dareId
      * @return
      */
-    public Dare getDare(int dareId){
-       return dbController.getDare(dareId);
+    public Dare getDare(int dareId) {
+        return dbController.getDare(dareId);
     }
 
 
     /***********************************************
      * Build user
      * */
-    public User getUserFromDB(String uid){
+    public User getUserFromDB(String uid) {
         User user = new User();
-       // dbController.getUserFromDB(uid);
+        // dbController.getUserFromDB(uid);
         user.setDares(dbController.getAllDareIDForOneUser(uid));
         user.setName(dbController.getUserFromDB(uid));
         user.setUid(uid);
@@ -87,39 +87,40 @@ public class Controller {
         System.out.println(user.getDares() + " controller get user from db");
         return user;
     }
-    public ArrayList<String> getDareIdForUser(String id){
+
+    public ArrayList<String> getDareIdForUser(String id) {
         return dbController.getAllDareIDForOneUser(id);
     }
-
 
 
     /**
      * Use this method to add a new user to the database
      * Deconstructs a Java object User and sends along requested values
+     *
      * @param user Java object User
      */
-    public void addNewUser(User user){
+    public void addNewUser(User user) {
         dbController.sendUserToDB(user.getUid(), user.getName());
     }
 
 
-/*********************************************@*******@***********@
- * Score methods
- *
- * */
+    /*********************************************@*******@***********@
+     * Score methods
+     *
+     * */
 
-public boolean addScore (Score score){
-    int dareId = Integer.parseInt(score.getDid());
-    System.out.println("Controller addScore, dareID: "+ dareId);
-    String userId = score.getUid();
-    System.out.println("Controller addScore, userID: "+ userId);
-    String point = score.getPoint();
-    System.out.println("Controller addScore, point: "+ point);
+    public boolean addScore(Score score) {
+        int dareId = Integer.parseInt(score.getDid());
+        System.out.println("Controller addScore, dareID: " + dareId);
+        String userId = score.getUid();
+        System.out.println("Controller addScore, userID: " + userId);
+        String point = score.getPoint();
+        System.out.println("Controller addScore, point: " + point);
 
-    Dare dare = dbController.getDare(dareId);
-    System.out.println("Controller addScore, dare exists: " + dare.getEndDate());
-    int length = Integer.parseInt(dare.getScopeFromDB().get("length").toString());
-    System.out.println("Scope length" + length);
+        Dare dare = dbController.getDare(dareId);
+        System.out.println("Controller addScore, dare exists: " + dare.getEndDate());
+        int length = Integer.parseInt(dare.getScopeFromDB().get("length").toString());
+        System.out.println("Scope length" + length);
 
 //    for(int i = 0; i < participants.size(); i++){
 //        if(participants.get(i).get("uid") == userId) {
@@ -130,15 +131,20 @@ public boolean addScore (Score score){
 //        System.out.println("Score not valid");
 //    return;
 //    }
-    int nbrOfScores = dbController.getScore(dareId, userId).size();
-    System.out.println("Number of scores posted so far: " + nbrOfScores);
+        int nbrOfScores = dbController.getScore(dareId, userId).size();
+        System.out.println("Number of scores posted so far: " + nbrOfScores);
 
-    if(length > nbrOfScores) {
-        dbController.addUserScoreToDB(dareId, userId, point);
-        return true;
-    }else{
-        return false;
+        if (length > nbrOfScores) {
+            dbController.addUserScoreToDB(dareId, userId, point);
+            return true;
+        } else {
+            return false;
+
+
+        }
+
     }
 }
 
-}
+
+//}

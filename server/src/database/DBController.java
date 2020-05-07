@@ -71,36 +71,36 @@ public class DBController {
     public Dare getDare(int dareId) {
 
         //Gets ResultSet from Database
-        ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
+        // ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
 
-        Dare dare = new Dare();
+       Dare dare = DareTable.getDareFromDB(dareId);
 
-        try {
-            while (resultFromQuery.next()) {
-
-                //Gets Objective
-                String objectiveType = resultFromQuery.getString("ObjectiveType");
-                System.out.println("YOYO " + objectiveType);
-                String objectiveGoal = resultFromQuery.getString("Objective");
-
-                //Gets Scope
-                String scopeType = resultFromQuery.getString("ScopeType");
-                int scopeLength = resultFromQuery.getInt("ScopeLength");
-
-                //Gets start and end date
-                String start = resultFromQuery.getString("Start");
-                String end = resultFromQuery.getString("End");
-
-                //Sets dare value
-                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
-                System.out.println("DARETABLE: " + dare.getObjectiveFromDB() + " type:  " + dare.getObjectiveFromDB().get("type"));
-                dare.setScopeFromDB(scopeType, scopeLength);
-                dare.setStartDate(start);
-                dare.setEndDate(end);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            while (resultFromQuery.next()) {
+//
+//                //Gets Objective
+//                String objectiveType = resultFromQuery.getString("ObjectiveType");
+//                System.out.println("YOYO " + objectiveType);
+//                String objectiveGoal = resultFromQuery.getString("Objective");
+//
+//                //Gets Scope
+//                String scopeType = resultFromQuery.getString("ScopeType");
+//                int scopeLength = resultFromQuery.getInt("ScopeLength");
+//
+//                //Gets start and end date
+//                String start = resultFromQuery.getString("Start");
+//                String end = resultFromQuery.getString("End");
+//
+//                //Sets dare value
+//                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+//                System.out.println("DARETABLE: " + dare.getObjectiveFromDB() + " type:  " + dare.getObjectiveFromDB().get("type"));
+//                dare.setScopeFromDB(scopeType, scopeLength);
+//                dare.setStartDate(start);
+//                dare.setEndDate(end);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         ArrayList<Map> participantsList = getAllUserFromDare(dareId);
         System.out.println(participantsList.get(0).get("uid"));
@@ -119,27 +119,45 @@ public class DBController {
     private ArrayList<Map> getAllUserFromDare(int dareId) {
 
         //Gets full ResultSet of participants in the dare from the database
-        ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
+       // ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
+       ArrayList <String> users =ParticipantTable.getParticipantUserIdFromDare(dareId);
         ArrayList<Map> list = new ArrayList();
 
 
-        try {
-            while (resultFromQuery.next()) {
-                String userId = resultFromQuery.getString("UserId");
-                Map m = new LinkedHashMap();
-                m.put("uid", userId);
+        for(int i = 0; i<users.size();i++){
+            String userId = users.get(i);
+            Map m = new LinkedHashMap();
 
-                String userName = UserTable.getUser(userId);
-                m.put("name", userName);
-                System.out.println(userName);
+            m.put("uid", userId);
 
-                JSONArray scores = getScore(dareId, userId);
-                m.put("score", scores); //fixme vi jobber her
-                list.add(m);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            String userName = UserTable.getUser(userId);
+            m.put("name", userName);
+            System.out.println(userName);
+
+            JSONArray scores = getScore(dareId, userId);
+            m.put("score", scores); //fixme vi jobber her
+            list.add(m);
         }
+
+
+
+//        try {
+//            while (resultFromQuery.next()) {
+//                String userId = resultFromQuery.getString("UserId");
+//                Map m = new LinkedHashMap();
+//                m.put("uid", userId);
+//
+//                String userName = UserTable.getUser(userId);
+//                m.put("name", userName);
+//                System.out.println(userName);
+//
+//                JSONArray scores = getScore(dareId, userId);
+//                m.put("score", scores); //fixme vi jobber her
+//                list.add(m);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return list;
     }
 
@@ -147,36 +165,39 @@ public class DBController {
      *
      */
     public JSONArray getScore(int dareId, String userId) {
-        ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
-        String[] score = new String[10];
+       // ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
+        String score = ParticipantTable.getScoreFromDB(dareId,userId);
         JSONArray jsonScore = new JSONArray();
+        String porque [] = score.split(":");
+        for (int i = 0; i < porque.length; i++) {
+            if (porque[i] != null) {
 
-        try {
-            while (resultSetScore.next()) {
-                String fullScoreString = resultSetScore.getString("Score");
-                if (fullScoreString==null){
-                    return jsonScore;
+                if (porque[i].equals("true")) {
+                    jsonScore.add(true);
+                } else if (porque[i].equals("false")) {
+                    jsonScore.add(false);
                 }
-
-                score = fullScoreString.split(":");
-
-                for (int i = 0; i < score.length; i++) {
-                    if (score[i] != null) {
-
-                        if (score[i].equals("true")) {
-                            jsonScore.add(true);
-                        } else if (score[i].equals("false")) {
-                            jsonScore.add(false);
-                        }
+//
+//        try {
+//            while (resultSetScore.next()) {
+//                String fullScoreString = resultSetScore.getString("Score");
+//                if (fullScoreString==null){
+//                    return jsonScore;
+//                }
+//
+//
+//                score = fullScoreString.split(":");
+//
+//
 
                         //jsonScore.add(score[i]);
                     }
                 }
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return jsonScore;
     }
 
@@ -184,17 +205,16 @@ public class DBController {
      *
      */
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
-        ResultSet resultFromQuery = ParticipantTable.getAllDareIdForUser(uid);
+      //  ResultSet resultFromQuery = ParticipantTable.getAllDareIdForUser(uid);
+        int dares[]= ParticipantTable.getAllDareIdForUser(uid);
         ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
 
-        try {
-            while (resultFromQuery.next()) {
-                int dareId = resultFromQuery.getInt("DareId");
-                list.add(String.valueOf(dareId));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        //  while (resultFromQuery.next()) {
+        //   int dareId = resultFromQuery.getInt("DareId");
+        for(int i = 0; i<dares.length;i++) {
+            list.add(String.valueOf(dares[i]));
         }
+
         return list;
     }
 
@@ -227,20 +247,16 @@ public class DBController {
      */
     public void addUserScoreToDB(int dareid, String userId, String score) {
 
-        ResultSet resultFromQuery = ParticipantTable.getScoreFromDB(dareid, userId);
+        String scoreFromDB = ParticipantTable.getScoreFromDB(dareid, userId);
         String newScore = "";
-        try {
-            if (resultFromQuery == null) {
-                ParticipantTable.addToScore(dareid, userId, score);
-            } else {
-                while (resultFromQuery.next()) {
-                    String oldScore = resultFromQuery.getString("Score");
-                    newScore = oldScore + ":" + score;
-                    System.out.println("NEW SCORE " + newScore);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (scoreFromDB == null) {
+            ParticipantTable.addToScore(dareid, userId, score);
+        } else {
+            //while (resultFromQuery.next()) {
+               // String oldScore = resultFromQuery.getString("Score");
+                newScore = scoreFromDB + ":" + score;
+                System.out.println("NEW SCORE " + newScore);
+           // }
         }
         ParticipantTable.addToScore(dareid, userId, newScore);
 

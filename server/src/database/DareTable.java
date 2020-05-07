@@ -1,5 +1,7 @@
 package database;
 
+import Converter.Dare;
+
 import java.sql.*;
 
 /**
@@ -55,9 +57,11 @@ public class DareTable {
                 dareId = result.getInt(1);
                 System.out.println(dareId);
             }
+            connect.close();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+
         return dareId;
     }
 
@@ -67,10 +71,11 @@ public class DareTable {
      *
      * @param dareId
      */
-    public static ResultSet getDareFromDB(int dareId) {
+    public static Dare getDareFromDB(int dareId) {
 
         Connection conn = null;
         ResultSet resultFromQuery = null;
+        Dare dare = new Dare();
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
@@ -84,11 +89,38 @@ public class DareTable {
 
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
+            while (resultFromQuery.next()){
+                String objectiveType = resultFromQuery.getString("ObjectiveType");
+                System.out.println("YOYO " + objectiveType);
+                String objectiveGoal = resultFromQuery.getString("Objective");
 
-        }catch(Exception e){
-            e.printStackTrace();
+                //Gets Scope
+                String scopeType = resultFromQuery.getString("ScopeType");
+                int scopeLength = resultFromQuery.getInt("ScopeLength");
+
+                //Gets start and end date
+                String start = resultFromQuery.getString("Start");
+                String end = resultFromQuery.getString("End");
+
+                //Sets dare value
+
+                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
+                System.out.println("DARETABLE: " + dare.getObjectiveFromDB() + " type:  " + dare.getObjectiveFromDB().get("type"));
+                dare.setScopeFromDB(scopeType, scopeLength);
+                dare.setStartDate(start);
+                dare.setEndDate(end);
+
+
+            }
+            conn.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-            return resultFromQuery;
+
+
+
+        return dare;
 
     }
 

@@ -46,14 +46,16 @@ public class ScoreEndpoint extends HttpServlet {
             String newScore = stringBuilder.toString();
             //scoreDB.setScoreToUser(newScore); // this adds score to a arraylist.
 
-            serverApiCommunication.newScore(stringBuilder.toString());
+            boolean scoreIsSuccessful = serverApiCommunication.newScore(stringBuilder.toString());
 
             PrintWriter out = response.getWriter();
+            if(scoreIsSuccessful) {
 
-            response.setStatus(201);
+                response.setStatus(201);
 
-            out.println("{Score recieved YAY: " + newScore + " }");
-
+                out.println("{Score recieved YAY: " + newScore + " }");
+            }else
+                response.setStatus(400);
 
         } catch (Exception e) {
 

@@ -38,9 +38,10 @@ public class ServerApiCommunication {
     /**
      * This method sends the score from Server to be parsed from Json to Java
      */
-    public void newScore(String score) {
-        controller.addScore(jsonScore.JsonToJava(score));
+    public boolean newScore(String score) {
+        boolean addScoreIsOk = controller.addScore(jsonScore.JsonToJava(score));
 
+        return addScoreIsOk;
 //        Score scoreObj = jsonScore.JsonToJava(score);
 //        int size = scoreObj.getScore().size();
 //        Dare dare = controller.getDare(Integer.parseInt(scoreObj.getDid()));
