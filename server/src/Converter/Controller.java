@@ -1,8 +1,10 @@
 package Converter;
 
 import database.DBController;
+import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -106,11 +108,37 @@ public class Controller {
  *
  * */
 
-public void addScore (Score score){
-    int dare = Integer.parseInt(score.getDid());
+public boolean addScore (Score score){
+    int dareId = Integer.parseInt(score.getDid());
+    System.out.println("Controller addScore, dareID: "+ dareId);
     String userId = score.getUid();
+    System.out.println("Controller addScore, userID: "+ userId);
     String point = score.getPoint();
-    dbController.addUserScoreToDB(dare,userId,point);
+    System.out.println("Controller addScore, point: "+ point);
+
+    Dare dare = dbController.getDare(dareId);
+    System.out.println("Controller addScore, dare exists: " + dare.getEndDate());
+    int length = Integer.parseInt(dare.getScopeFromDB().get("length").toString());
+    System.out.println("Scope length" + length);
+
+//    for(int i = 0; i < participants.size(); i++){
+//        if(participants.get(i).get("uid") == userId) {
+//            ja = (JSONArray) participants.get(i).get("score");
+//        }
+//    }
+//    if(ja.get(0) instanceof Integer || ja.get(0) == null) {
+//        System.out.println("Score not valid");
+//    return;
+//    }
+    int nbrOfScores = dbController.getScore(dareId, userId).size();
+    System.out.println("Number of scores posted so far: " + nbrOfScores);
+
+    if(length > nbrOfScores) {
+        dbController.addUserScoreToDB(dareId, userId, point);
+        return true;
+    }else{
+        return false;
+    }
 }
 
 }

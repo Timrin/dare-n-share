@@ -84,7 +84,32 @@ public class ParticipantTable {
         return resultFromQuery;
     }
 
-    public static boolean addToScore(int dareId, String userId, String score) {
+    public static void addToScore(int dareId, String userId, String score) {
+//        Connection conn = null;
+//        ResultSet resultFromQuery = null;
+//        try {
+//            Class.forName("org.sqlite.JDBC");
+//            String path = "jdbc:sqlite:lib/dare_n_share.db";
+//            conn = DriverManager.getConnection(path);
+//            System.out.println("Connection ok");
+
+            // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
+            String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
+            //Statement statement = conn.createStatement();
+            //statement.execute(query);
+            dataBaseTalker(query);
+//            resultFromQuery = statement.getResultSet();
+//            conn.close();
+//
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return true;
+    }
+
+    public static synchronized ResultSet dataBaseTalker(String query) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
         try {
@@ -94,7 +119,6 @@ public class ParticipantTable {
             System.out.println("Connection ok");
 
             // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
-            String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
@@ -104,27 +128,27 @@ public class ParticipantTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return resultFromQuery;
     }
 
     public static ResultSet getScoreFromDB(int dareId, String userId) {
-        Connection conn = null;
+        //Connection conn = null;
         ResultSet resultFromQuery = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String path = "jdbc:sqlite:lib/dare_n_share.db";
-            conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
+        //try {
+//            Class.forName("org.sqlite.JDBC");
+//            String path = "jdbc:sqlite:lib/dare_n_share.db";
+//            conn = DriverManager.getConnection(path);
+//            System.out.println("Connection ok");
 
             String query = "SELECT Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
-            Statement statement = conn.createStatement();
-            statement.execute(query);
-            resultFromQuery = statement.getResultSet();
-
-
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
+            resultFromQuery = dataBaseTalker(query);
+//            Statement statement = conn.createStatement();
+//            statement.execute(query);
+//            resultFromQuery = statement.getResultSet();
+//
+//        } catch (ClassNotFoundException | SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
         return resultFromQuery;
     }
 }

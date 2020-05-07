@@ -60,10 +60,6 @@ public class DBController {
         return id;
     }
 
-    public void insertParticipantsToDB(String userID, int dareID) {
-        ParticipantTable.addParticipant(userID, dareID);
-    }
-
 
     /**
      * Gets dare data from database in the form of a ResultSet. Saves all dare values from query and
@@ -150,7 +146,7 @@ public class DBController {
     /**
      *
      */
-    private JSONArray getScore(int dareId, String userId) {
+    public JSONArray getScore(int dareId, String userId) {
         ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
         String[] score = new String[10];
         JSONArray jsonScore = new JSONArray();

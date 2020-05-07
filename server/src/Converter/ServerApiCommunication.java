@@ -27,9 +27,12 @@ public class ServerApiCommunication {
     public int newDare(String dareString) {
 
         Dare dare = jsonDare.JsonToJava(dareString);
-        int dareId = controller.addNewDare(dare);
+        if(dare.getParticipants().size() >= 2) {
+            int dareId = controller.addNewDare(dare);
+            return dareId;
+        }
+        return -1;
 
-        return dareId;
     }
 
     /**
@@ -37,6 +40,16 @@ public class ServerApiCommunication {
      */
     public void newScore(String score) {
         controller.addScore(jsonScore.JsonToJava(score));
+
+//        Score scoreObj = jsonScore.JsonToJava(score);
+//        int size = scoreObj.getScore().size();
+//        Dare dare = controller.getDare(Integer.parseInt(scoreObj.getDid()));
+//        int length = Integer.parseInt(dare.getScope().get("length").toString());
+//        if (length < size) {
+//            System.out.println("computer says no");
+//        } else {
+//            controller.addScore(jsonScore.JsonToJava(score));
+//        }
     }
 
     /**

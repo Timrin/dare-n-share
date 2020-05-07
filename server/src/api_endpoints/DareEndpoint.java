@@ -89,10 +89,19 @@ public class DareEndpoint extends HttpServlet {
             //Sends along complete string from request to make new dare
             int dareId = serverApiCommunication.newDare(stringBuilder.toString());
 
+
+
             //Create response
             PrintWriter out = response.getWriter();
-            response.setStatus(201);
-            out.println("{dare_id:" + dareId +" }");
+
+            //Checks if request contained at least 2 participants
+            if(dareId == -1){
+                response.setStatus(400);
+                out.println("{Too few participants}");
+            }else {
+                response.setStatus(201);
+                out.println("{dare_id:" + dareId + " }");
+            }
 
 
         } catch (Exception e) {

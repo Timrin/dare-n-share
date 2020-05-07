@@ -73,7 +73,10 @@ public class JsonConverterDare {
             System.out.println(p.get("uid").toString());
         }
 
-        dare.setParticipants(ja);
+        if(ja.size() >= 2)
+        {
+            dare.setParticipants(ja);
+        }
 
         return dare;
     }
