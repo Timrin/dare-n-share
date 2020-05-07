@@ -29,6 +29,8 @@ public class Dare {
     private SimpleDateFormat sdf;
 
 
+
+
     public Dare(){
         participants = new ArrayList<Map>();
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -36,12 +38,15 @@ public class Dare {
 
     public String setStart() {
         Date start = new Date();
+        start.setTime(start.getTime()+(1000*60*60)*2); // adds summer time
+
         startDate = sdf.format(start);
         return sdf.format(start);
     }
 
     public String setEnd(int scopeLength) {
         Date now = new Date();
+        now.setTime(now.getTime()+(1000*60*60)*2); // adds summer time
         Date end = new Date();
 
         end.setTime(now.getTime() + getDaysAsMilliSeconds(scopeLength));
@@ -116,4 +121,6 @@ public class Dare {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+
 }

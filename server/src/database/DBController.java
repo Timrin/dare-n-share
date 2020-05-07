@@ -214,7 +214,7 @@ public class DBController {
             while (resultFromQuery.next()) {
                 HashMap<String, String> mapOfFriend = new HashMap<>();
                 String userId = resultFromQuery.getString("user");
-                mapOfFriend.put("user", userId);
+                mapOfFriend.put("uid", userId);
                 String username = UserTable.getUser(userId);
                 mapOfFriend.put("name", username);
                 friendslist.add(mapOfFriend);

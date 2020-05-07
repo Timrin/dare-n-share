@@ -18,6 +18,7 @@ public class User {
     private String name;
     private ArrayList<String> dares;
     private ArrayList<Map> friendsList;
+    private String eMail;
 
     public User() {
     }
@@ -56,7 +57,15 @@ public class User {
 
     }
 
-   /* public boolean addFriend(String userID){
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    /* public boolean addFriend(String userID){
         if (friendsList.contains(userID)){
             return false;
         }
