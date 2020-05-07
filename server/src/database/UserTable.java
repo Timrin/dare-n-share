@@ -10,10 +10,9 @@ import java.sql.*;
  */
 public class UserTable {
 
-
     /**
      * insert userinformation to table User
-     *
+     *FIXME: insert email
      * @param name username from GUI
      * @throws SQLException
      */
@@ -24,11 +23,8 @@ public class UserTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
-
 
             String query = "INSERT INTO user(UserID,username) VALUES ('" + userId + "','" + name + "')";
-
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.execute(query);
@@ -38,7 +34,11 @@ public class UserTable {
     }
 
 
-    //Get information from all columns for userId
+    /**
+     * method to retrieve name of user from table. FIXME: email kolumn, ska det hämtas här?
+     * @param userId
+     * @return username
+     */
     public static String getUser(String userId) {
         String name = null;
         Connection conn = null;
@@ -46,7 +46,6 @@ public class UserTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
 
 
             String query = "SELECT UserName FROM User where UserID = '" + userId + "';";
@@ -62,7 +61,6 @@ public class UserTable {
                 name = resultFromQuery.getString("UserName");
 
             }
-
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

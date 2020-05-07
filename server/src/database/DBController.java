@@ -45,7 +45,7 @@ public class DBController {
     }
 
     /**
-     *
+     *FIXME: kontrollera userID om det finns innan insättning till dare tabell.
      */
     public int sendNewDareToDB(String objectiveType, String objectiveGoal, String scopeType,
                                int scopeLength, String start, String end, ArrayList<Map> participants) {
@@ -62,7 +62,7 @@ public class DBController {
 
 
     /**
-     * Gets dare data from database in the form of a ResultSet. Saves all dare values from query and
+     * Gets dare data from database. Saves all dare values from query and
      * sets new java Dare object with said values. Returns Dare object
      *
      * @param dareId unique ID of Dare
@@ -168,13 +168,13 @@ public class DBController {
        // ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
         String score = ParticipantTable.getScoreFromDB(dareId,userId);
         JSONArray jsonScore = new JSONArray();
-        String porque [] = score.split(":");
-        for (int i = 0; i < porque.length; i++) {
-            if (porque[i] != null) {
+        String stringScore [] = score.split(":");
+        for (int i = 0; i < stringScore.length; i++) {
+            if (stringScore[i] != null) {
 
-                if (porque[i].equals("true")) {
+                if (stringScore[i].equals("true")) {
                     jsonScore.add(true);
-                } else if (porque[i].equals("false")) {
+                } else if (stringScore[i].equals("false")) {
                     jsonScore.add(false);
                 }
 //
@@ -202,25 +202,21 @@ public class DBController {
     }
 
     /**
-     *
+     *return array of all dares for one userId
      */
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
-      //  ResultSet resultFromQuery = ParticipantTable.getAllDareIdForUser(uid);
-        //int dares[]
+
         ArrayList<Integer> dares= ParticipantTable.getAllDareIdForUser(uid);
         ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
-
-        //  while (resultFromQuery.next()) {
-        //   int dareId = resultFromQuery.getInt("DareId");
-        for(int i = 0; i<dares.size();i++) {
-            list.add(String.valueOf(dares.get(i)));
+        for (Integer dare : dares) {
+            list.add(String.valueOf(dare));
         }
 
         return list;
     }
 
     /**
-     *
+     *FIXME: resultset, kan behöva ändras.
      */
     public ArrayList<Map> getFriendsFromDB(String uid) {
         ResultSet resultFromQuery = FriendsTable.getFriends(uid);
@@ -243,7 +239,7 @@ public class DBController {
     }
 
     /***
-     *
+     * retrieves previous score (String) for user, add ":" + new score to String and add to database.
      *
      */
     public void addUserScoreToDB(int dareid, String userId, String score) {
@@ -253,11 +249,10 @@ public class DBController {
         if (scoreFromDB == null) {
             ParticipantTable.addToScore(dareid, userId, score);
         } else {
-            //while (resultFromQuery.next()) {
-               // String oldScore = resultFromQuery.getString("Score");
+
                 newScore = scoreFromDB + ":" + score;
                 System.out.println("NEW SCORE " + newScore);
-           // }
+
         }
         ParticipantTable.addToScore(dareid, userId, newScore);
 

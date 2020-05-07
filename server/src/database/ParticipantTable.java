@@ -15,7 +15,7 @@ public class ParticipantTable {
 
 
     /**
-     * add Participants to table, retrieves the primary key and store in variable
+     * add Participants to table
      *
      * @throws SQLException for SQL error that can happen during execute and create statement
      */
@@ -26,7 +26,7 @@ public class ParticipantTable {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(url);
-            System.out.println("Connection ok add participant");
+
 
             String foreignKeyQuery = "PRAGMA FOREIGN_KEYS = on";
             String query = " INSERT INTO Participants(UserId, DareId) VALUES ('" + userID + "'," + dareID + ");";
@@ -42,6 +42,11 @@ public class ParticipantTable {
         }
     }
 
+    /**
+     * retrieves participants of dare
+     * @param dareId
+     * @return Arraylist with userId
+     */
     public static ArrayList<String> getParticipantUserIdFromDare(int dareId) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
@@ -50,18 +55,18 @@ public class ParticipantTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok get participants");
+
 
             String query = "SELECT UserId from Participants where DareId=" + dareId + ";";
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
+
             while (resultFromQuery.next()) {
                 String user = resultFromQuery.getString("UserId");
                 users.add(user);
             }
-
 
             conn.close();
 
@@ -70,22 +75,25 @@ public class ParticipantTable {
 
         }
 
-
         return users;
     }
 
-
+    /**
+     * get all dares for a user and returns values in array
+     * @param userId
+     * @return array of all dare for one user
+     */
     public static ArrayList<Integer> getAllDareIdForUser(String userId) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
-       //int[] dareId = new int[10];
+
         ArrayList<Integer> dareId = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok get alldareId");
+
 
             String query = "SELECT DareId from Participants where UserId='" + userId + "';";
             Statement statement = conn.createStatement();
@@ -106,6 +114,12 @@ public class ParticipantTable {
         return dareId;
     }
 
+    /**
+     * send score to table participant
+     * @param dareId
+     * @param userId
+     * @param score
+     */
     public static void addToScore(int dareId, String userId, String score) {
         Connection conn = null;
 
@@ -113,7 +127,6 @@ public class ParticipantTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
 
 
             String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
@@ -122,14 +135,17 @@ public class ParticipantTable {
 
             conn.close();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * utveckla denna metod. se hur den går att använda för fler delar av db
+     * @param query
+     * @return
+     */
     public static synchronized ResultSet dataBaseTalker(String query) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
@@ -137,21 +153,25 @@ public class ParticipantTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok");
+
 
             // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return resultFromQuery;
     }
 
+    /**
+     * return string of score
+     * @param dareId
+     * @param userId
+     * @return
+     */
     public static String getScoreFromDB(int dareId, String userId) {
         Connection conn = null;
         ResultSet resultFromQuery = null;
@@ -160,19 +180,17 @@ public class ParticipantTable {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
-            System.out.println("Connection ok get scorefromDB");
-
             String query = "SELECT Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
-            // resultFromQuery = dataBaseTalker(query);
 
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
             score = resultFromQuery.getString("Score");
+           //vad gör detta? behövs det?
             if (score == null) {
                 score = "";
             }
-            System.out.println(score);
+
             conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {

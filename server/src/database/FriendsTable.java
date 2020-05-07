@@ -13,17 +13,17 @@ public class FriendsTable {
             conn = DriverManager.getConnection(url);
             System.out.println("Connection ok");
 
-
             String query = "INSERT INTO Friends (userID, user) VALUES ('"+userId+"','" +friendId+"')";
             Statement statement = conn.createStatement();
             statement.execute(query);
+            //conn.close();
 
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
-
+//FIXME: returnera något annat än resultset,
     public static ResultSet getFriends(String userId){
         Connection conn = null;
         ResultSet resultFromQuery = null;
@@ -37,6 +37,7 @@ public class FriendsTable {
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
+            //conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
