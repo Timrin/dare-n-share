@@ -29,7 +29,9 @@ public class UserTable {
             Statement statement = conn.createStatement();
             statement.execute(query);
 
+            statement.close();
             conn.close();
+
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -64,6 +66,7 @@ public class UserTable {
 
             }
             resultFromQuery.close();
+            statement.close();
             conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {

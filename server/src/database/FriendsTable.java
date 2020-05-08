@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class FriendsTable {
 
@@ -24,9 +25,10 @@ public class FriendsTable {
         }
     }
 //FIXME: returnera något annat än resultset,
-    public static ResultSet getFriends(String userId){
+    public static ArrayList<String> getFriends(String userId){
         Connection conn = null;
         ResultSet resultFromQuery = null;
+        ArrayList<String>userIdForFriends = new ArrayList<>();
         try {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:lib/dare_n_share.db";
@@ -37,11 +39,20 @@ public class FriendsTable {
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
-            //conn.close();
+            while (resultFromQuery.next()){
+                String friendId = resultFromQuery.getString("user");
+                userIdForFriends.add(friendId);
+
+
+            }
+            resultFromQuery.close();
+            statement.close();
+            conn.close();
+
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return resultFromQuery;
+        return userIdForFriends;
     }
 }

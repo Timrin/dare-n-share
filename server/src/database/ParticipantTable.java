@@ -133,6 +133,7 @@ public class ParticipantTable {
             Statement statement = conn.createStatement();
             statement.execute(query);
 
+            statement.close();
             conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -194,6 +195,7 @@ public class ParticipantTable {
             }
 
             resultFromQuery.close();
+            statement.close();
             conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {

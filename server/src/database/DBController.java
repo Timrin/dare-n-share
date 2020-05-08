@@ -219,23 +219,32 @@ public class DBController {
      *FIXME: resultset, kan behöva ändras.
      */
     public ArrayList<Map> getFriendsFromDB(String uid) {
-        ResultSet resultFromQuery = FriendsTable.getFriends(uid);
+      //  ResultSet resultFromQuery = FriendsTable.getFriends(uid);
+        ArrayList<String> friendsUserIdList = FriendsTable.getFriends(uid);
 
         ArrayList<Map> friendslist = new ArrayList<>();
 
-        try {
-            while (resultFromQuery.next()) {
-                HashMap<String, String> mapOfFriend = new HashMap<>();
-                String userId = resultFromQuery.getString("user");
-                mapOfFriend.put("uid", userId);
-                String username = UserTable.getUser(userId);
-                mapOfFriend.put("name", username);
-                friendslist.add(mapOfFriend);
-                resultFromQuery.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (String friends: friendsUserIdList){
+            HashMap<String,String> mapOfFriend = new HashMap<>();
+            mapOfFriend.put("uid", friends);
+            String username = UserTable.getUser(friends);
+            mapOfFriend.put("name",username);
+            friendslist.add(mapOfFriend);
         }
+
+//        try {
+//            while (resultFromQuery.next()) {
+//                HashMap<String, String> mapOfFriend = new HashMap<>();
+//                String userId = resultFromQuery.getString("user");
+//                mapOfFriend.put("uid", userId);
+//                String username = UserTable.getUser(userId);
+//                mapOfFriend.put("name", username);
+//                friendslist.add(mapOfFriend);
+//                resultFromQuery.close();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return friendslist;
     }
 
