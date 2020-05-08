@@ -16,7 +16,7 @@ public class FriendsTable {
             String query = "INSERT INTO Friends (userID, user) VALUES ('"+userId+"','" +friendId+"')";
             Statement statement = conn.createStatement();
             statement.execute(query);
-            //conn.close();
+            conn.close();
 
 
         } catch (ClassNotFoundException | SQLException e) {

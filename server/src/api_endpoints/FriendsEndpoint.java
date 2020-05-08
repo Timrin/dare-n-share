@@ -62,6 +62,7 @@ public class FriendsEndpoint extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setStatus(201);
             out.println("{" + " }");
+            out.close();
 
 
         } catch (Exception e) {

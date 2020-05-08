@@ -1,10 +1,8 @@
 package Converter;
 
 import database.DBController;
-import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -77,6 +75,13 @@ public class Controller {
     /***********************************************
      * Build user
      * */
+
+    /**
+     * Gets a user from database by its user ID.
+     * This method gets
+     * @param uid
+     * @return
+     */
     public User getUserFromDB(String uid) {
         User user = new User();
         // dbController.getUserFromDB(uid);

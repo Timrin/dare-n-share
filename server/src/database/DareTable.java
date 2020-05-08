@@ -55,11 +55,11 @@ public class DareTable {
                 dareId = result.getInt(1);
                 System.out.println(dareId);
             }
+            result.close();
             connect.close();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
         return dareId;
     }
 
@@ -108,6 +108,7 @@ public class DareTable {
                 dare.setEndDate(end);
 
             }
+            resultFromQuery.close();
             conn.close();
 
         } catch (Exception e) {

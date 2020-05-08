@@ -28,6 +28,8 @@ public class UserTable {
             assert conn != null;
             Statement statement = conn.createStatement();
             statement.execute(query);
+
+            conn.close();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -61,6 +63,8 @@ public class UserTable {
                 name = resultFromQuery.getString("UserName");
 
             }
+            resultFromQuery.close();
+            conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

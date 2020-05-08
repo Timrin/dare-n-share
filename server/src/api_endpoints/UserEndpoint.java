@@ -21,7 +21,8 @@ public class UserEndpoint extends HttpServlet {
     private ServerApiCommunication serverApiCommunication;
 
     public UserEndpoint() {
-        serverApiCommunication = new ServerApiCommunication();
+        serverApiCommunication = ServerApiCommunication.getInstance();
+        System.out.println("New UserEndpoint created");
     }
     /**
      * This method is invoked when the server receives an http get request.
@@ -52,6 +53,7 @@ public class UserEndpoint extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.println(user);
                     response.setStatus(200);
+                    out.close();
                 } else {
                     //If user == null, exception is thrown TODO: set response so that client recognizes this error
                     response.setStatus(404);
@@ -103,7 +105,7 @@ public class UserEndpoint extends HttpServlet {
             PrintWriter out = response.getWriter();
             response.setStatus(201);
             out.println("{user_id "  + "}"); //Fixme: This helps the developer team, but has no real function. Remove before launch
-
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

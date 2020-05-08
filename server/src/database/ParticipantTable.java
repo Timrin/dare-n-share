@@ -2,7 +2,6 @@ package database;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
  * Participant table communication
@@ -67,7 +66,7 @@ public class ParticipantTable {
                 String user = resultFromQuery.getString("UserId");
                 users.add(user);
             }
-
+            resultFromQuery.close();
             conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -104,6 +103,7 @@ public class ParticipantTable {
                 int dare = resultFromQuery.getInt("DareId");
                 dareId.add(dare);
             }
+            resultFromQuery.close();
             conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -159,6 +159,8 @@ public class ParticipantTable {
             Statement statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
+
+            //resultFromQuery.close();
             conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -191,6 +193,7 @@ public class ParticipantTable {
                 score = "";
             }
 
+            resultFromQuery.close();
             conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {

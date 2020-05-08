@@ -231,6 +231,7 @@ public class DBController {
                 String username = UserTable.getUser(userId);
                 mapOfFriend.put("name", username);
                 friendslist.add(mapOfFriend);
+                resultFromQuery.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -18,7 +18,8 @@ public class ScoreEndpoint extends HttpServlet {
     private ServerApiCommunication serverApiCommunication;
 
     public ScoreEndpoint() {
-        serverApiCommunication = new ServerApiCommunication();
+        serverApiCommunication = ServerApiCommunication.getInstance();
+        System.out.println("New ScoreEndpoint created");
     }
 
 
@@ -43,6 +44,7 @@ public class ScoreEndpoint extends HttpServlet {
                 line = br.readLine();
 
             }
+            br.close();
             String newScore = stringBuilder.toString();
             //scoreDB.setScoreToUser(newScore); // this adds score to a arraylist.
 
@@ -56,6 +58,7 @@ public class ScoreEndpoint extends HttpServlet {
                 out.println("{Score recieved YAY: " + newScore + " }");
             }else
                 response.setStatus(400);
+            out.close();
 
         } catch (Exception e) {
 

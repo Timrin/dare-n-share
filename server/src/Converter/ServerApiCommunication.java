@@ -9,16 +9,24 @@ package Converter;
  * @date 15/04-20
  */
 public class ServerApiCommunication {
+    private static ServerApiCommunication instance = null;
     private JsonConverterDare jsonDare;
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
     private Controller controller;
 
-    public ServerApiCommunication() {
+    private ServerApiCommunication() {
         jsonDare = new JsonConverterDare();
         jsonScore = new JsonConverterScore();
         jsonUser = new JsonConverterUser();
         controller = new Controller();
+    }
+
+    public static ServerApiCommunication getInstance (){
+        if (instance == null)
+            instance = new ServerApiCommunication();
+
+        return instance;
     }
 
     /**

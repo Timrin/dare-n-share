@@ -17,7 +17,8 @@ public class DareEndpoint extends HttpServlet {
     private ServerApiCommunication serverApiCommunication;
 
     public DareEndpoint() {
-        serverApiCommunication = new ServerApiCommunication();
+        serverApiCommunication = ServerApiCommunication.getInstance();
+        System.out.println("New DareEndpoint created");
     }
 
 
@@ -47,6 +48,7 @@ public class DareEndpoint extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.println(dare);
                     response.setStatus(200);
+                    out.close();
 
                 } else {
                     //If the dare doesn't exist
@@ -64,6 +66,7 @@ public class DareEndpoint extends HttpServlet {
         } else {
             response.setStatus(400); //if there is no id in the path respond with 400
         }
+
 
     }
 
@@ -86,6 +89,7 @@ public class DareEndpoint extends HttpServlet {
                 stringBuilder.append(line);
                 line = br.readLine();
             }
+            br.close();
             //Sends along complete string from request to make new dare
             int dareId = serverApiCommunication.newDare(stringBuilder.toString());
 
@@ -102,6 +106,7 @@ public class DareEndpoint extends HttpServlet {
                 response.setStatus(201);
                 out.println("{dare_id:" + dareId + " }");
             }
+            out.close();
 
 
         } catch (Exception e) {
