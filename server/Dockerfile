@@ -6,6 +6,9 @@ COPY out/production/server /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/
 #Copy the web.xml file to the container
 COPY conf/web.xml /usr/local/tomcat/webapps/ROOT/WEB-INF/
 
+#
+COPY resources/setenv.sh /usr/local/tomcat/bin/
+
 #Copy libraries from project to tomcat lib folder in the container
 COPY resources/lib/json-simple-1.1.1.jar /usr/local/tomcat/lib/
 
