@@ -19,6 +19,8 @@ public class UserTable {
     public static void addUserToDB(String userId, String name) {
 
         Connection conn = null;
+        Statement statement = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
@@ -26,14 +28,14 @@ public class UserTable {
 
             String query = "INSERT INTO user(UserID,username) VALUES ('" + userId + "','" + name + "')";
             assert conn != null;
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
-
-            statement.close();
-            conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
@@ -44,8 +46,13 @@ public class UserTable {
      * @return username
      */
     public static String getUser(String userId) {
+
         String name = null;
+
         Connection conn = null;
+        Statement statement = null;
+        ResultSet resultFromQuery = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
@@ -56,21 +63,22 @@ public class UserTable {
 
 
             assert conn != null;
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
 
-            ResultSet resultFromQuery = statement.getResultSet();
+            resultFromQuery = statement.getResultSet();
 
             while (resultFromQuery.next()) {
                 name = resultFromQuery.getString("UserName");
 
             }
-            resultFromQuery.close();
-            statement.close();
-            conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return name;
     }

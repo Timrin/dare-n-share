@@ -10,9 +10,6 @@ import java.util.ArrayList;
  */
 public class ParticipantTable {
 
-
-
-
     /**
      * add Participants to table
      *
@@ -21,6 +18,8 @@ public class ParticipantTable {
     public static void addParticipant(String userID, int dareID) {
 
         Connection conn = null;
+        Statement statement = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String url = "jdbc:sqlite:lib/dare_n_share.db";
@@ -30,14 +29,16 @@ public class ParticipantTable {
             String foreignKeyQuery = "PRAGMA FOREIGN_KEYS = on";
             String query = " INSERT INTO Participants(UserId, DareId) VALUES ('" + userID + "'," + dareID + ");";
             assert conn != null;
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
 
             statement.execute(foreignKeyQuery);
             statement.executeUpdate(query);
-            conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
 
@@ -47,9 +48,13 @@ public class ParticipantTable {
      * @return Arraylist with userId
      */
     public static ArrayList<String> getParticipantUserIdFromDare(int dareId) {
+
         Connection conn = null;
+        Statement statement = null;
         ResultSet resultFromQuery = null;
+
         ArrayList<String> users = new ArrayList<>();
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
@@ -58,7 +63,7 @@ public class ParticipantTable {
 
             String query = "SELECT UserId from Participants where DareId=" + dareId + ";";
             assert conn != null;
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
 
@@ -66,12 +71,13 @@ public class ParticipantTable {
                 String user = resultFromQuery.getString("UserId");
                 users.add(user);
             }
-            resultFromQuery.close();
-            conn.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
 
         return users;
@@ -83,7 +89,9 @@ public class ParticipantTable {
      * @return array of all dare for one user
      */
     public static ArrayList<Integer> getAllDareIdForUser(String userId) {
+
         Connection conn = null;
+        Statement statement = null;
         ResultSet resultFromQuery = null;
 
         ArrayList<Integer> dareId = new ArrayList<>();
@@ -95,7 +103,7 @@ public class ParticipantTable {
 
 
             String query = "SELECT DareId from Participants where UserId='" + userId + "';";
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
 
             resultFromQuery = statement.getResultSet();
@@ -103,13 +111,14 @@ public class ParticipantTable {
                 int dare = resultFromQuery.getInt("DareId");
                 dareId.add(dare);
             }
-            resultFromQuery.close();
-            conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
-
 
         return dareId;
     }
@@ -121,23 +130,24 @@ public class ParticipantTable {
      * @param score
      */
     public static void addToScore(int dareId, String userId, String score) {
+
         Connection conn = null;
+        Statement statement = null;
 
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-
             String query = "update Participants set Score ='" + score + "' Where DareId=" + dareId + " and UserId='" + userId + "';";
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
-
-            statement.close();
-            conn.close();
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
 
     }
@@ -148,24 +158,29 @@ public class ParticipantTable {
      * @return
      */
     public static synchronized ResultSet dataBaseTalker(String query) {
+
         Connection conn = null;
+        Statement statement = null;
         ResultSet resultFromQuery = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-
             // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
 
-            //resultFromQuery.close();
-            conn.close();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            /*try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}*/ //FIXME cannot close resultset since it is returned.
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
+
         return resultFromQuery;
     }
 
@@ -176,8 +191,11 @@ public class ParticipantTable {
      * @return
      */
     public static String getScoreFromDB(int dareId, String userId) {
+
         Connection conn = null;
+        Statement statement = null;
         ResultSet resultFromQuery = null;
+
         String score = "";
         try {
             Class.forName("org.sqlite.JDBC");
@@ -185,22 +203,24 @@ public class ParticipantTable {
             conn = DriverManager.getConnection(path);
             String query = "SELECT Score from Participants where DareId=" + dareId + " and UserId='" + userId + "';";
 
-            Statement statement = conn.createStatement();
+            statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
             score = resultFromQuery.getString("Score");
+
            //vad gör detta? behövs det?
             if (score == null) {
                 score = "";
             }
 
-            resultFromQuery.close();
-            statement.close();
-            conn.close();
-
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
+
         return score;
     }
 }

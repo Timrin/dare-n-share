@@ -28,14 +28,12 @@ public class DBController {
      *
      */
     public void sendUserToDB(String userID, String name) {
-
         UserTable.addUserToDB(userID, name);
     }
 
     /**
      *
      */
-
     public String getUserFromDB(String uid) {
 
         String userName = "";
@@ -57,6 +55,7 @@ public class DBController {
             String userID = participants.get(i).get("uid").toString();
             ParticipantTable.addParticipant(userID, id);
         }
+
         return id;
     }
 

@@ -9,9 +9,7 @@ import java.sql.*;
  *
  * @author julia
  */
-
 public class DareTable {
-
 
     /**
      * Build String request for database
@@ -40,27 +38,33 @@ public class DareTable {
      */
     public static int insertToDare(String request) {
         int dareId = 0;
-        Connection connect = null;
+
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet resultFromQuery = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
-            connect = DriverManager.getConnection(path);
+            conn = DriverManager.getConnection(path);
 
-
-            Statement statement = connect.createStatement();
+            statement = conn.createStatement();
             statement.execute(request);
-            ResultSet result = statement.getGeneratedKeys();
+            resultFromQuery = statement.getGeneratedKeys();
 
-            while (result.next()) {
-                dareId = result.getInt(1);
+            while (resultFromQuery.next()) {
+                dareId = resultFromQuery.getInt(1);
                 System.out.println(dareId);
             }
-            result.close();
-            statement.close();
-            connect.close();
+
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
+
         return dareId;
     }
 
@@ -75,20 +79,23 @@ public class DareTable {
     public static Dare getDareFromDB(int dareId) {
 
         Connection conn = null;
+        Statement statement = null;
         ResultSet resultFromQuery = null;
+
         Dare dare = new Dare();
+
         try {
             Class.forName("org.sqlite.JDBC");
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-
             String query = "SELECT * FROM Dare where Dareid =" + dareId + ";";
             assert conn != null;
-            Statement statement = conn.createStatement();
 
+            statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
+
             while (resultFromQuery.next()) {
                 String objectiveType = resultFromQuery.getString("ObjectiveType");
 
@@ -107,19 +114,17 @@ public class DareTable {
                 dare.setScopeFromDB(scopeType, scopeLength);
                 dare.setStartDate(start);
                 dare.setEndDate(end);
-
             }
-            resultFromQuery.close();
-            statement.close();
-            conn.close();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}
+            try { if (statement != null) statement.close(); } catch (Exception e) {}
+            try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
 
-
         return dare;
-
     }
 
 
