@@ -32,33 +32,28 @@ public class ScoreEndpoint extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            BufferedReader br = request.getReader();
+        try (BufferedReader br = request.getReader();
+             PrintWriter out = response.getWriter()) {
 
             StringBuilder stringBuilder = new StringBuilder();
             String line = br.readLine();
 
-
             while (line != null) {
                 stringBuilder.append(line);
                 line = br.readLine();
-
             }
-            br.close();
+
             String newScore = stringBuilder.toString();
             //scoreDB.setScoreToUser(newScore); // this adds score to a arraylist.
 
             boolean scoreIsSuccessful = serverApiCommunication.newScore(stringBuilder.toString());
 
-            PrintWriter out = response.getWriter();
             if(scoreIsSuccessful) {
-
                 response.setStatus(201);
-
                 out.println("{Score recieved YAY: " + newScore + " }");
-            }else
+            }else {
                 response.setStatus(400);
-            out.close();
+            }
 
         } catch (Exception e) {
 

@@ -46,14 +46,16 @@ public class UserEndpoint extends HttpServlet {
                 response.setContentType("application/json");
 
                 //Sends request through backend to server and receives String containing user data
-
                 String user = serverApiCommunication.getUser(userID);
+
                 //Makes sure user != null before sending user as response
                 if (user != null) {
-                    PrintWriter out = response.getWriter();
-                    out.println(user);
-                    response.setStatus(200);
-                    out.close();
+                    try(PrintWriter out = response.getWriter();) {
+                        out.println(user);
+                        response.setStatus(200);
+                    } catch (Exception e) {
+                        response.setStatus(500); //Something went wrong when writing to the out stream
+                    }
                 } else {
                     //If user == null, exception is thrown TODO: set response so that client recognizes this error
                     response.setStatus(404);
@@ -77,9 +79,9 @@ public class UserEndpoint extends HttpServlet {
 @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            //Gets reader from HttpServletRequest, saves in BufferedReader
-            BufferedReader br = request.getReader();
+        try (BufferedReader br = request.getReader();
+             PrintWriter out = response.getWriter()) {
+
             System.out.println("UserEndpoint:doPost, reader accepted");
 
             StringBuilder stringBuilder = new StringBuilder();
@@ -94,18 +96,14 @@ public class UserEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-            //Close the door after yourself, thanks
-            br.close();
-
             //Sends complete string to serverApiCommunication
             serverApiCommunication.newUser(stringBuilder.toString());
             System.out.println("UserEndpoint:doPost, string sent to serverApiCommunication");
 
             //Sets response status to 201 successful
-            PrintWriter out = response.getWriter();
             response.setStatus(201);
             out.println("{user_id "  + "}"); //Fixme: This helps the developer team, but has no real function. Remove before launch
-            out.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

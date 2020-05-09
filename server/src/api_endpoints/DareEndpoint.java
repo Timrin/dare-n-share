@@ -45,10 +45,12 @@ public class DareEndpoint extends HttpServlet {
 
                 if (dare != null) {
                     //If the dare exists, write the dare to the response
-                    PrintWriter out = response.getWriter();
-                    out.println(dare);
-                    response.setStatus(200);
-                    out.close();
+                    try(PrintWriter out = response.getWriter()) {
+                        out.println(dare);
+                        response.setStatus(200);
+                    } catch (Exception e) {
+                        response.setStatus(500);
+                    }
 
                 } else {
                     //If the dare doesn't exist
@@ -67,7 +69,6 @@ public class DareEndpoint extends HttpServlet {
             response.setStatus(400); //if there is no id in the path respond with 400
         }
 
-
     }
 
     /**
@@ -79,9 +80,10 @@ public class DareEndpoint extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            //Gets reader from request, reads json object line by line and builds one string
-            BufferedReader br = request.getReader();
+        try (BufferedReader br = request.getReader();
+                PrintWriter out = response.getWriter()) {
+
+            //Read json object line by line and builds one string
             StringBuilder stringBuilder = new StringBuilder();
             String line = br.readLine();
 
@@ -89,14 +91,11 @@ public class DareEndpoint extends HttpServlet {
                 stringBuilder.append(line);
                 line = br.readLine();
             }
-            br.close();
             //Sends along complete string from request to make new dare
             int dareId = serverApiCommunication.newDare(stringBuilder.toString());
 
 
-
-            //Create response
-            PrintWriter out = response.getWriter();
+            /*Create response*/
 
             //Checks if request contained at least 2 participants
             if(dareId == -1){
@@ -106,8 +105,6 @@ public class DareEndpoint extends HttpServlet {
                 response.setStatus(201);
                 out.println("{dare_id:" + dareId + " }");
             }
-            out.close();
-
 
         } catch (Exception e) {
             e.printStackTrace();

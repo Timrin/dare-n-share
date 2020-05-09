@@ -12,17 +12,14 @@ public class FriendsEndpoint extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         String pathInfo = request.getPathInfo();
         if (pathInfo.length() >= 2) {
-            try {
+            try (PrintWriter out = response.getWriter()) {
                 int truePath = Integer.parseInt(pathInfo.substring(1));
 
                 // Set response content type
                 response.setContentType("application/json");
 
-
-
                 /*if (dare != null) {
                     //If the dare exists, write the dare to the response
-                    PrintWriter out = response.getWriter();
                     out.println(dare);*/
 
               /*  } else {
@@ -46,9 +43,10 @@ public class FriendsEndpoint extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            //Gets reader from request, reads json object line by line and builds one string
-            BufferedReader br = request.getReader();
+        try (BufferedReader br = request.getReader();
+             PrintWriter out = response.getWriter()) {
+
+            //Read the json object line by line and builds one string
             StringBuilder stringBuilder = new StringBuilder();
             String line = br.readLine();
 
@@ -57,13 +55,9 @@ public class FriendsEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-
             //Create response
-            PrintWriter out = response.getWriter();
             response.setStatus(201);
-            out.println("{" + " }");
-            out.close();
-
+            out.println("{" + " }"); //TODO: what should be returned?
 
         } catch (Exception e) {
             e.printStackTrace();
