@@ -27,7 +27,7 @@ public class UserTable {
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-            String query = "INSERT INTO user(UserID,username,EmailUser) VALUES ('" + userId + "','" + name + "','" + email + "')";
+            String query = "INSERT INTO user(UserID,username,EmailUser) VALUES ('" + userId + "','" + name + "','" + email.toLowerCase() + "')";
             assert conn != null;
             statement = conn.createStatement();
             statement.execute(query);
@@ -162,7 +162,7 @@ public class UserTable {
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-            String query = "SELECT UserID from User where EmailUser ='" + email + "';";
+            String query = "SELECT UserID from User where EmailUser ='" + email.toLowerCase() + "';";
             statement = conn.createStatement();
             statement.execute(query);
             resultFromQuery = statement.getResultSet();
