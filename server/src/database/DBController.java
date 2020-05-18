@@ -1,11 +1,9 @@
 package database;
 
-import Converter.Controller;
-import Converter.Dare;
+import controller.Controller;
+import entity.Dare;
 import org.json.simple.JSONArray;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,38 +23,54 @@ public class DBController {
     }
 
     /**
-     *
+     * This method sends a user to the databse with the users ID, name and email
+     * @param userID
+     * @param name
+     * @param email
      */
     public void sendUserToDB(String userID, String name, String email) {
-        System.out.println("1 "+email);
         UserTable.addUserToDB(userID, name, email);
-        System.out.println("2 "+email);
     }
 
     /**
-     *
+     * This method gets a user from the database. It uses a userID to get the user,
+     * and returns a string with the users name
+     * @param uid
+     * @return
      */
     public String getUserFromDB(String uid) {
 
         String userName = "";
-
-
         userName = UserTable.getUser(uid);
-
-
-        System.out.println(userName + " DBcontroller get user from db");
         return userName;
     }
 
-    public String getEmail(String uid){
+    /**
+     * This method gets a users email from the database. It uses a userID to get the user,
+     * and returns a string with the users email
+     * @param uid
+     * @return
+     */
+    public String getEmail(String uid) {
         String email = "";
         email = UserTable.getUserEmailById(uid);
-        System.out.println(email + " Se her da");
         return email;
     }
 
     /**
-     *FIXME: kontrollera userID om det finns innan insättning till dare tabell.
+     * FIXME: kontrollera userID om det finns innan insättning till dare tabell.
+     */
+
+    /**
+     * This method sends a new dare to the database
+     * @param objectiveType
+     * @param objectiveGoal
+     * @param scopeType
+     * @param scopeLength
+     * @param start
+     * @param end
+     * @param participants
+     * @return
      */
     public int sendNewDareToDB(String objectiveType, String objectiveGoal, String scopeType,
                                int scopeLength, String start, String end, ArrayList<Map> participants) {
@@ -68,10 +82,8 @@ public class DBController {
             String userID = participants.get(i).get("uid").toString();
             ParticipantTable.addParticipant(userID, id);
         }
-
         return id;
     }
-
 
     /**
      * Gets dare data from database. Saves all dare values from query and
@@ -81,39 +93,7 @@ public class DBController {
      * @return returns the requested Dare object
      */
     public Dare getDare(int dareId) {
-
-        //Gets ResultSet from Database
-        // ResultSet resultFromQuery = DareTable.getDareFromDB(dareId);
-
-       Dare dare = DareTable.getDareFromDB(dareId);
-
-//        try {
-//            while (resultFromQuery.next()) {
-//
-//                //Gets Objective
-//                String objectiveType = resultFromQuery.getString("ObjectiveType");
-//                System.out.println("YOYO " + objectiveType);
-//                String objectiveGoal = resultFromQuery.getString("Objective");
-//
-//                //Gets Scope
-//                String scopeType = resultFromQuery.getString("ScopeType");
-//                int scopeLength = resultFromQuery.getInt("ScopeLength");
-//
-//                //Gets start and end date
-//                String start = resultFromQuery.getString("Start");
-//                String end = resultFromQuery.getString("End");
-//
-//                //Sets dare value
-//                dare.setObjectiveFromDB(objectiveType, objectiveGoal);
-//                System.out.println("DARETABLE: " + dare.getObjectiveFromDB() + " type:  " + dare.getObjectiveFromDB().get("type"));
-//                dare.setScopeFromDB(scopeType, scopeLength);
-//                dare.setStartDate(start);
-//                dare.setEndDate(end);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+        Dare dare = DareTable.getDareFromDB(dareId);
         ArrayList<Map> participantsList = getAllUserFromDare(dareId);
         System.out.println(participantsList.get(0).get("uid"));
 
@@ -131,12 +111,10 @@ public class DBController {
     private ArrayList<Map> getAllUserFromDare(int dareId) {
 
         //Gets full ResultSet of participants in the dare from the database
-       // ResultSet resultFromQuery = ParticipantTable.getParticipantUserIdFromDare(dareId);
-       ArrayList <String> users =ParticipantTable.getParticipantUserIdFromDare(dareId);
+        ArrayList<String> users = ParticipantTable.getParticipantUserIdFromDare(dareId);
         ArrayList<Map> list = new ArrayList();
 
-
-        for(int i = 0; i<users.size();i++){
+        for (int i = 0; i < users.size(); i++) {
             String userId = users.get(i);
             Map m = new LinkedHashMap();
 
@@ -150,37 +128,19 @@ public class DBController {
             m.put("score", scores); //fixme vi jobber her
             list.add(m);
         }
-
-
-
-//        try {
-//            while (resultFromQuery.next()) {
-//                String userId = resultFromQuery.getString("UserId");
-//                Map m = new LinkedHashMap();
-//                m.put("uid", userId);
-//
-//                String userName = UserTable.getUser(userId);
-//                m.put("name", userName);
-//                System.out.println(userName);
-//
-//                JSONArray scores = getScore(dareId, userId);
-//                m.put("score", scores); //fixme vi jobber her
-//                list.add(m);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         return list;
     }
 
     /**
-     *
+     * //fixme explain
+     * @param dareId
+     * @param userId
+     * @return
      */
     public JSONArray getScore(int dareId, String userId) {
-       // ResultSet resultSetScore = ParticipantTable.getScoreFromDB(dareId, userId);
-        String score = ParticipantTable.getScoreFromDB(dareId,userId);
+        String score = ParticipantTable.getScoreFromDB(dareId, userId);
         JSONArray jsonScore = new JSONArray();
-        String stringScore [] = score.split(":");
+        String stringScore[] = score.split(":");
         for (int i = 0; i < stringScore.length; i++) {
             if (stringScore[i] != null) {
 
@@ -189,36 +149,20 @@ public class DBController {
                 } else if (stringScore[i].equals("false")) {
                     jsonScore.add(false);
                 }
-//
-//        try {
-//            while (resultSetScore.next()) {
-//                String fullScoreString = resultSetScore.getString("Score");
-//                if (fullScoreString==null){
-//                    return jsonScore;
-//                }
-//
-//
-//                score = fullScoreString.split(":");
-//
-//
+            }
+        }
 
-                        //jsonScore.add(score[i]);
-                    }
-                }
-//
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         return jsonScore;
     }
 
     /**
-     *return array of all dares for one userId
+     * fixme explain
+     * @param uid
+     * @return
      */
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
 
-        ArrayList<Integer> dares= ParticipantTable.getAllDareIdForUser(uid);
+        ArrayList<Integer> dares = ParticipantTable.getAllDareIdForUser(uid);
         ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
         for (Integer dare : dares) {
             list.add(String.valueOf(dare));
@@ -228,41 +172,29 @@ public class DBController {
     }
 
     /**
-     *FIXME: resultset, kan behöva ändras.
+     * FIXME: resultset, kan behöva ändras.
      */
     public ArrayList<Map> getFriendsFromDB(String uid) {
-      //  ResultSet resultFromQuery = FriendsTable.getFriends(uid);
         ArrayList<String> friendsUserIdList = FriendsTable.getFriends(uid);
 
         ArrayList<Map> friendslist = new ArrayList<>();
 
-        for (String friends: friendsUserIdList){
-            HashMap<String,String> mapOfFriend = new HashMap<>();
+        for (String friends : friendsUserIdList) {
+            HashMap<String, String> mapOfFriend = new HashMap<>();
             mapOfFriend.put("uid", friends);
             String username = UserTable.getUser(friends);
-            mapOfFriend.put("name",username);
+            mapOfFriend.put("name", username);
             friendslist.add(mapOfFriend);
         }
 
-//        try {
-//            while (resultFromQuery.next()) {
-//                HashMap<String, String> mapOfFriend = new HashMap<>();
-//                String userId = resultFromQuery.getString("user");
-//                mapOfFriend.put("uid", userId);
-//                String username = UserTable.getUser(userId);
-//                mapOfFriend.put("name", username);
-//                friendslist.add(mapOfFriend);
-//                resultFromQuery.close();
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return friendslist;
     }
 
-    /***
-     * retrieves previous score (String) for user, add ":" + new score to String and add to database.
-     *
+    /**
+     * Retrieves previous score (String) for user, add ":" + new score to String and add to database.
+     * @param dareid
+     * @param userId
+     * @param score
      */
     public void addUserScoreToDB(int dareid, String userId, String score) {
 
@@ -272,15 +204,18 @@ public class DBController {
             ParticipantTable.addToScore(dareid, userId, score);
         } else {
 
-                newScore = scoreFromDB + ":" + score;
-                System.out.println("NEW SCORE " + newScore);
+            newScore = scoreFromDB + ":" + score;
 
         }
         ParticipantTable.addToScore(dareid, userId, newScore);
 
     }
 
-    public void addFriendsToDB(HashMap friendId){
+    /**
+     * Updates the database with users that have become friends
+     * @param friendId
+     */
+    public void addFriendsToDB(HashMap friendId) {
 
         String userId = (String) friendId.get("senderID");
         String friendEmail = (String) friendId.get("friendEmail");
@@ -288,10 +223,6 @@ public class DBController {
         String friendID = UserTable.getUserIDWithEmail(friendEmail);
 
         FriendsTable.addFriends(userId, friendID);
-       // FriendsTable.addFriends(friendID,userId);
-
-
-
 
     }
 

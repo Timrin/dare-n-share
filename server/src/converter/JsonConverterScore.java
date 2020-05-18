@@ -1,5 +1,6 @@
-package Converter;
+package converter;
 
+import entity.Score;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -35,14 +36,12 @@ public class JsonConverterScore {
         score.setUid((String) jo.get("uid"));
         score.setDid((String) jo.get("dare_id"));
 
-        //System.out.println("uid: " + score.getUid() + "\n" + "did: " + score.getDid() + "\n");
-
         score.setScore(((Map) jo.get("score")));
 
         Iterator<Map.Entry> itr1 = score.getScore().entrySet().iterator();
         while (itr1.hasNext()) {
             Map.Entry pair = itr1.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
+
         }
         return score;
     }

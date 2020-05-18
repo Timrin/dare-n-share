@@ -1,6 +1,6 @@
 package database;
 
-import Converter.Dare;
+import entity.Dare;
 
 import java.sql.*;
 

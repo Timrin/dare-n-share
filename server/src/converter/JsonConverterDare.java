@@ -1,5 +1,6 @@
-package Converter;
+package converter;
 
+import entity.Dare;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -46,14 +47,12 @@ public class JsonConverterDare {
         Iterator<Map.Entry> iteratorScope = dare.getScope().entrySet().iterator();
         while (iteratorScope.hasNext()) {
             Map.Entry pair = iteratorScope.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
         }
 
         //Parses length to an integer, and sets the startDate of the dare (to now)
         //and sets endDate to length days later
         try {
             int length = Integer.parseInt( dare.getScope().get("length").toString());
-            System.out.println("TEST LENGTH " + length);
             jo.put("start", dare.setStart());
             jo.put("end", dare.setEnd(length));
         }catch (Exception e){
@@ -70,14 +69,12 @@ public class JsonConverterDare {
         while(partIterator.hasNext()){
             Map p = (Map) partIterator.next();
             participantList.add(p);
-            System.out.println(p.get("uid").toString());
         }
 
         if(ja.size() >= 2)
         {
             dare.setParticipants(ja);
         }
-
         return dare;
     }
 
@@ -97,13 +94,12 @@ public class JsonConverterDare {
         Map m = new LinkedHashMap();
         m.putAll(dare.getObjectiveFromDB());
         jo.put("objective", m);
-        System.out.println("JsonConverterDare:JavaToJson, Objective: "+dare.getObjectiveFromDB());
+
 
         //Sets the scope of dare
         m = new LinkedHashMap();
         m.putAll(dare.getScopeFromDB());
         jo.put("scope", m);
-        System.out.println("JsonConverterDare:JavaToJson, Scope: "+ dare.getScopeFromDB());
 
         //Sets start en end date of dare
         jo.put("start",dare.getStartDate());
@@ -112,22 +108,12 @@ public class JsonConverterDare {
         //Creates a JSONArray of participants from the ArrayList
         ArrayList<Map> participantsList = dare.getParticipants();
         JSONArray ja = new JSONArray();
-        System.out.println("JsonConverterDare:JavaToJson, Participants: " + participantsList.toString());
 
         for(int i = 0; i < participantsList.size(); i++){
             ja.add(participantsList.get(i));
-            System.out.println(participantsList.get(i).toString());
         }
 
-//        for (String s : participantsList) {
-//            System.out.println(s);
-//            Map map = new LinkedHashMap();
-//            map.put("uid", s);
-//            ja.add(map);
-//        }
         jo.put("participants", ja);
-
-        System.out.println("JsonConverterDare:JavaToJson, full string: "+jo.toJSONString());
 
         return jo.toJSONString();
     }

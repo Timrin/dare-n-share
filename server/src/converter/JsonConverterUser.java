@@ -1,5 +1,6 @@
-package Converter;
+package converter;
 
+import entity.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -40,16 +41,12 @@ public class JsonConverterUser {
 
         //Sets user ID
         user.setUid((String) jo.get("uid"));
-        System.out.println("JsonConverterUser:JsonToJava, new user ID set to: " + user.getUid());
 
         //Sets user name
         user.setName((String) jo.get("name"));
-        System.out.println("JsonConverterUser:JsonToJava, new user name set to: " + user.getName());
 
         //Sets user email
         user.setEmail((String)jo.get("email"));
-        System.out.println(user.getEmail());
-
 
         //Sets array of dares linked to user
         JSONArray dares = (JSONArray) jo.get("dares");
@@ -78,8 +75,6 @@ public class JsonConverterUser {
         jo.put("name", user.getName());
         jo.put("email",user.getEmail());
 
-        System.out.println(user.getEmail());
-
         // puts dare ID in an array
         ArrayList<String> dareList = user.getDares();
         JSONArray dareId = new JSONArray();
@@ -96,28 +91,10 @@ public class JsonConverterUser {
         JSONArray friends = new JSONArray();
 
         for (int i = 0; i < friendsList.size(); i++) {
-            //Map map = new LinkedHashMap();
-            //map.put(friendsList.get(i));
             friends.add(friendsList.get(i));
         }
 
-        /*
-        * "friends": [
-        * { name:
-        * uid:
-        * email
-        * },
-        * {
-        * name:
-        * uid:
-        * email:
-        * }
-        *
-        * */
-
         jo.put("friends", friends);
-
-        System.out.println(jo.toJSONString() + " JSON CONVERTER");
 
         return jo.toJSONString();
     }

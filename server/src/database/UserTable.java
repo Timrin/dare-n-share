@@ -1,11 +1,7 @@
 package database;
 
 
-import Converter.User;
-import org.apache.jasper.runtime.JspSourceDependent;
-
 import java.sql.*;
-import java.util.HashMap;
 
 /**
  * communication class with User table in database

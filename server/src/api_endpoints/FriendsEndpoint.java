@@ -1,12 +1,16 @@
 package api_endpoints;
-
-import Converter.ServerApiCommunication;
-
+import controller.ServerApiCommunication;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+
+/**
+ * @author Kamilla, Julia, Steven
+ * This is an endpoint for friend requests.
+ *
+ * */
 
 public class FriendsEndpoint extends HttpServlet {
 
@@ -14,45 +18,14 @@ public class FriendsEndpoint extends HttpServlet {
 
     public FriendsEndpoint() {
         serverApiCommunication = ServerApiCommunication.getInstance();
-
     }
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
-        String pathInfo = request.getPathInfo();
-
-        if (pathInfo.length() >= 2) {
-
-            try (PrintWriter out = response.getWriter()) {
-
-                int truePath = Integer.parseInt(pathInfo.substring(1));
-
-                // Set response content type
-                response.setContentType("application/json");
-
-                /*if (dare != null) {
-                    //If the dare exists, write the dare to the response
-                    out.println(dare);*/
-
-              /*  } else {
-                    //If the dare doesn't exist
-                    throw new Exception("Friends not found");
-                }*/
-
-            } catch (NumberFormatException e) {
-                //If the id in path isn't an int respond with 400
-                response.setStatus(400);
-            } catch (Exception e) {
-                //If the id in path doesn't exist in the db respond with 404
-                response.setStatus(404);
-            }
-        } else {
-            response.setStatus(400); //if there is no id in the path respond with 400
-        }
-
-    }
-
+    /**
+     * Invoked when a post request is sent to the /friend api endpoint
+     * This method handles friend requests
+     * @param request
+     * @param response
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
@@ -68,12 +41,12 @@ public class FriendsEndpoint extends HttpServlet {
                 line = br.readLine();
             }
 
-            // sends complete string to ServerAPICommunication
+            // Sends complete string to ServerAPICommunication
             serverApiCommunication.newFriend(stringBuilder.toString());
 
             //Create response
             response.setStatus(201);
-            out.println("{" + " }"); //TODO: what should be returned?
+            out.println("{ Friend succesfully added }");
 
         } catch (Exception e) {
             e.printStackTrace();

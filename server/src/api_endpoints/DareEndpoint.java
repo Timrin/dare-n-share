@@ -1,6 +1,6 @@
 package api_endpoints;
 
-import Converter.ServerApiCommunication;
+import controller.ServerApiCommunication;
 
 import java.io.*;
 import javax.servlet.http.*;

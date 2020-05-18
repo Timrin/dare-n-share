@@ -1,4 +1,4 @@
-package Converter;
+package entity;
 
 import java.util.Map;
 

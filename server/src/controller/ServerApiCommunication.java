@@ -1,7 +1,11 @@
-package Converter;
+package controller;
+
+import converter.*;
+import entity.Dare;
+import entity.User;
 
 /**
- * @author Kamilla
+ * @author Kamilla, Steven, Julia
  * @version 1.0 semantic versioning
  * This class acts as a converting gateway between endpoints and controller. Using three
  * help classes, it converts incoming Strings to Java objects, and outgoing Java
@@ -24,6 +28,12 @@ public class ServerApiCommunication {
         controller = new Controller();
     }
 
+    /**
+     * Singleton.
+     * Initiate the one and only instance of this class and other classes who wants to use
+     * ServerAPICommunication can get the instance through this method.
+     * @return
+     */
     public static ServerApiCommunication getInstance (){
         if (instance == null)
             instance = new ServerApiCommunication();
@@ -33,6 +43,7 @@ public class ServerApiCommunication {
 
     /**
      * This method sends a dare from Server to be parsed from Json to Java
+     * @param dareString
      */
     public int newDare(String dareString) {
 
@@ -42,25 +53,16 @@ public class ServerApiCommunication {
             return dareId;
         }
         return -1;
-
     }
 
     /**
      * This method sends the score from Server to be parsed from Json to Java
+     * @param score
      */
     public boolean newScore(String score) {
         boolean addScoreIsOk = controller.addScore(jsonScore.JsonToJava(score));
 
         return addScoreIsOk;
-//        Score scoreObj = jsonScore.JsonToJava(score);
-//        int size = scoreObj.getScore().size();
-//        Dare dare = controller.getDare(Integer.parseInt(scoreObj.getDid()));
-//        int length = Integer.parseInt(dare.getScope().get("length").toString());
-//        if (length < size) {
-//            System.out.println("computer says no");
-//        } else {
-//            controller.addScore(jsonScore.JsonToJava(score));
-//        }
     }
 
     /**
@@ -87,29 +89,23 @@ public class ServerApiCommunication {
     /**
      * This method returns a string that is parsed to a json body, and is called upon in
      * the user endpoint
+     * @param uid
      */
     public String getUser(String uid) {
-        //String user = controller.getUserFromDB(uid);
-
 
         User user = controller.getUserFromDB(uid);
         if (user.getName() != null) {
-            System.out.println(user.getName() + " " + user.getDares() + " SEREVER API COM");
-            System.out.println(jsonUser.JavaToJson(user));
-            System.out.println(user.getDares());
             return jsonUser.JavaToJson(user);
         } else {
             return null;
         }
-
     }
 
+    /**
+     * Sends a converted hashmap with object converted from json to java to the controller
+     * @param friend
+     */
     public void newFriend(String friend){
-
-
-
         controller.addFriendToDBController(jsonFriend.JsonToJava(friend));
     }
-
-
 }
