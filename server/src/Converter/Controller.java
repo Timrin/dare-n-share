@@ -3,6 +3,7 @@ package Converter;
 import database.DBController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -87,6 +88,7 @@ public class Controller {
         // dbController.getUserFromDB(uid);
         user.setDares(dbController.getAllDareIDForOneUser(uid));
         user.setName(dbController.getUserFromDB(uid));
+        user.setEmail(dbController.getEmail(uid));
         user.setUid(uid);
         user.setFriendsList(dbController.getFriendsFromDB(uid));
         System.out.println(user.getDares() + " controller get user from db");
@@ -105,7 +107,7 @@ public class Controller {
      * @param user Java object User
      */
     public void addNewUser(User user) {
-        dbController.sendUserToDB(user.getUid(), user.getName());
+        dbController.sendUserToDB(user.getUid(), user.getName(), user.getEmail());
     }
 
 
@@ -147,6 +149,13 @@ public class Controller {
 
 
         }
+
+    }
+
+    public void addFriendToDBController(HashMap friend){
+
+        dbController.addFriendsToDB(friend);
+
 
     }
 }

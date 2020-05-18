@@ -14,11 +14,13 @@ public class ServerApiCommunication {
     private JsonConverterScore jsonScore;
     private JsonConverterUser jsonUser;
     private Controller controller;
+    private JsonConverterFriend jsonFriend;
 
     private ServerApiCommunication() {
         jsonDare = new JsonConverterDare();
         jsonScore = new JsonConverterScore();
         jsonUser = new JsonConverterUser();
+        jsonFriend = new JsonConverterFriend();
         controller = new Controller();
     }
 
@@ -100,8 +102,13 @@ public class ServerApiCommunication {
             return null;
         }
 
+    }
+
+    public void newFriend(String friend){
 
 
+
+        controller.addFriendToDBController(jsonFriend.JsonToJava(friend));
     }
 
 

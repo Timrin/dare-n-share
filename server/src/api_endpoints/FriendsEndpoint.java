@@ -1,5 +1,7 @@
 package api_endpoints;
 
+import Converter.ServerApiCommunication;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,11 +10,22 @@ import java.io.PrintWriter;
 
 public class FriendsEndpoint extends HttpServlet {
 
+    private ServerApiCommunication serverApiCommunication;
+
+    public FriendsEndpoint() {
+        serverApiCommunication = ServerApiCommunication.getInstance();
+
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
+
         String pathInfo = request.getPathInfo();
+
         if (pathInfo.length() >= 2) {
+
             try (PrintWriter out = response.getWriter()) {
+
                 int truePath = Integer.parseInt(pathInfo.substring(1));
 
                 // Set response content type
@@ -54,6 +67,9 @@ public class FriendsEndpoint extends HttpServlet {
                 stringBuilder.append(line);
                 line = br.readLine();
             }
+
+            // sends complete string to ServerAPICommunication
+            serverApiCommunication.newFriend(stringBuilder.toString());
 
             //Create response
             response.setStatus(201);

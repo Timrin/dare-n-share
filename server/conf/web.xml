@@ -57,6 +57,17 @@
     <url-pattern>/score/*</url-pattern>
   </servlet-mapping>
 
+  <!--api_endpoints.FriendsEndpoint mappings-->
+  <servlet>
+    <servlet-name>FriendsEndpoint</servlet-name>
+    <servlet-class>api_endpoints.FriendsEndpoint</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>FriendsEndpoint</servlet-name>
+    <url-pattern>/friend/*</url-pattern>
+  </servlet-mapping>
+
   <display-name>Welcome to Dare n Share</display-name>
   <description>
      Welcome to Dare n Share

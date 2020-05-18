@@ -47,7 +47,8 @@ public class JsonConverterUser {
         System.out.println("JsonConverterUser:JsonToJava, new user name set to: " + user.getName());
 
         //Sets user email
-        user.seteMail((String)jo.get("email"));
+        user.setEmail((String)jo.get("email"));
+        System.out.println(user.getEmail());
 
 
         //Sets array of dares linked to user
@@ -75,7 +76,9 @@ public class JsonConverterUser {
         JSONObject jo = new JSONObject();
         jo.put("uid", user.getUid());
         jo.put("name", user.getName());
-        jo.put("email",user.geteMail());
+        jo.put("email",user.getEmail());
+
+        System.out.println(user.getEmail());
 
         // puts dare ID in an array
         ArrayList<String> dareList = user.getDares();

@@ -27,8 +27,10 @@ public class DBController {
     /**
      *
      */
-    public void sendUserToDB(String userID, String name) {
-        UserTable.addUserToDB(userID, name);
+    public void sendUserToDB(String userID, String name, String email) {
+        System.out.println("1 "+email);
+        UserTable.addUserToDB(userID, name, email);
+        System.out.println("2 "+email);
     }
 
     /**
@@ -37,9 +39,20 @@ public class DBController {
     public String getUserFromDB(String uid) {
 
         String userName = "";
+
+
         userName = UserTable.getUser(uid);
+
+
         System.out.println(userName + " DBcontroller get user from db");
         return userName;
+    }
+
+    public String getEmail(String uid){
+        String email = "";
+        email = UserTable.getUserEmailById(uid);
+        System.out.println(email + " Se her da");
+        return email;
     }
 
     /**
@@ -267,10 +280,17 @@ public class DBController {
 
     }
 
-    public void addFriendsToDB(String userId,String friendId){
+    public void addFriendsToDB(HashMap friendId){
 
-        FriendsTable.addFriends(userId, friendId);
-        FriendsTable.addFriends(friendId,userId);
+        String userId = (String) friendId.get("senderID");
+        String friendEmail = (String) friendId.get("friendEmail");
+
+        String friendID = UserTable.getUserIDWithEmail(friendEmail);
+
+        FriendsTable.addFriends(userId, friendID);
+       // FriendsTable.addFriends(friendID,userId);
+
+
 
     }
 

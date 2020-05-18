@@ -1,7 +1,11 @@
 package database;
 
 
+import Converter.User;
+import org.apache.jasper.runtime.JspSourceDependent;
+
 import java.sql.*;
+import java.util.HashMap;
 
 /**
  * communication class with User table in database
@@ -23,7 +27,7 @@ public class UserTable {
             String path = "jdbc:sqlite:lib/dare_n_share.db";
             conn = DriverManager.getConnection(path);
 
-            String query = "INSERT INTO user(UserID,username) VALUES ('" + userId + "','" + name + "','" + email + "')";
+            String query = "INSERT INTO user(UserID,username,EmailUser) VALUES ('" + userId + "','" + name + "','" + email + "')";
             assert conn != null;
             statement = conn.createStatement();
             statement.execute(query);
@@ -53,6 +57,7 @@ public class UserTable {
 
         String name = null;
 
+
         Connection conn = null;
         Statement statement = null;
         ResultSet resultFromQuery = null;
@@ -75,7 +80,9 @@ public class UserTable {
             while (resultFromQuery.next()) {
                 name = resultFromQuery.getString("UserName");
 
+
             }
+
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -96,6 +103,53 @@ public class UserTable {
         return name;
     }
 
+    public static String getUserEmailById(String uid) {
+        String email = null;
+
+        Connection conn = null;
+        Statement statement = null;
+        ResultSet resultFromQuery = null;
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
+
+            String query = "SELECT EmailUser FROM User where UserID = '" + uid + "';";
+
+            assert conn != null;
+            statement = conn.createStatement();
+            statement.execute(query);
+
+            resultFromQuery = statement.getResultSet();
+
+            while (resultFromQuery.next()) {
+                email = resultFromQuery.getString("EmailUser");
+
+
+            }
+
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (resultFromQuery != null) resultFromQuery.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (statement != null) statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+            }
+        }
+
+        return email;
+    }
+
     public static String getUserIDWithEmail(String email) {
         String userId = null;
 
@@ -111,7 +165,11 @@ public class UserTable {
             String query = "SELECT UserID from User where EmailUser ='" + email + "';";
             statement = conn.createStatement();
             statement.execute(query);
+            resultFromQuery = statement.getResultSet();
+
+            assert resultFromQuery != null;
             userId = resultFromQuery.getString("UserID");
+            System.out.println(userId);
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -132,4 +190,38 @@ public class UserTable {
 
         return userId;
     }
+
+    public static void updateEmailUsers(String email, String userid) throws SQLException {
+        String userId = null;
+
+        Connection conn = null;
+        Statement statement = null;
+
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String path = "jdbc:sqlite:lib/dare_n_share.db";
+            conn = DriverManager.getConnection(path);
+
+            String query = "UPDATE User set EmailUser='" + email + "' where UserID ='" + userId + "';";
+            statement = conn.createStatement();
+            statement.execute(query);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+                if (statement != null) statement.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+
 }
