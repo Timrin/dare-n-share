@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class FriendsTable {
 
-
+//Jag tänker att vi kan testa att uppdatera insättningen här direkt istället för att skicka två st förfrågningar
     public static void addFriends(String userId, String friendId) {
 
         Connection conn = null;
@@ -20,6 +20,8 @@ public class FriendsTable {
             String query = "INSERT INTO Friends (userID, user) VALUES ('"+userId+"','" +friendId+"')";
             statement = conn.createStatement();
             statement.execute(query);
+            String updateQuery = "INSERT INTO Friends(userID, user) VALUES ('" +friendId+"','"+userId+"')";
+            statement.executeUpdate(updateQuery);
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -28,7 +30,7 @@ public class FriendsTable {
             try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
     }
-//FIXME: returnera något annat än resultset,
+
     public static ArrayList<String> getFriends(String userId){
 
         Connection conn = null;
