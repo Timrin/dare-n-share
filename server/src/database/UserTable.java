@@ -216,8 +216,5 @@ public class UserTable {
             } catch (Exception e) {
             }
         }
-
     }
-
-
 }
