@@ -19,7 +19,7 @@ public class ScoreEndpoint extends HttpServlet {
 
     public ScoreEndpoint() {
         serverApiCommunication = ServerApiCommunication.getInstance();
-        System.out.println("New ScoreEndpoint created");
+       // System.out.println("New ScoreEndpoint created");
     }
 
 
