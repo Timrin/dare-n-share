@@ -1,8 +1,14 @@
 package controller;
 
 import converter.*;
+import database.FriendsTable;
+import database.UserTable;
 import entity.Dare;
 import entity.User;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Kamilla, Steven, Julia
@@ -32,9 +38,10 @@ public class ServerApiCommunication {
      * Singleton.
      * Initiate the one and only instance of this class and other classes who wants to use
      * ServerAPICommunication can get the instance through this method.
+     *
      * @return
      */
-    public static ServerApiCommunication getInstance (){
+    public static ServerApiCommunication getInstance() {
         if (instance == null)
             instance = new ServerApiCommunication();
 
@@ -43,12 +50,13 @@ public class ServerApiCommunication {
 
     /**
      * This method sends a dare from Server to be parsed from Json to Java
+     *
      * @param dareString
      */
     public int newDare(String dareString) {
 
         Dare dare = jsonDare.JsonToJava(dareString);
-        if(dare.getParticipants().size() >= 2) {
+        if (dare.getParticipants().size() >= 2) {
             int dareId = controller.addNewDare(dare);
             return dareId;
         }
@@ -57,6 +65,7 @@ public class ServerApiCommunication {
 
     /**
      * This method sends the score from Server to be parsed from Json to Java
+     *
      * @param score
      */
     public boolean newScore(String score) {
@@ -89,6 +98,7 @@ public class ServerApiCommunication {
     /**
      * This method returns a string that is parsed to a json body, and is called upon in
      * the user endpoint
+     *
      * @param uid
      */
     public String getUser(String uid) {
@@ -103,9 +113,34 @@ public class ServerApiCommunication {
 
     /**
      * Sends a converted hashmap with object converted from json to java to the controller
+     *
      * @param friend
      */
-    public void newFriend(String friend){
-        controller.addFriendToDBController(jsonFriend.JsonToJava(friend));
+    public int newFriend(String friend) {
+
+        HashMap newFriend = jsonFriend.JsonToJava(friend);
+        String email = (String) newFriend.get("friendEmail");
+        String senderId = (String) newFriend.get("senderID");
+
+        ArrayList<String> databaseFriendList = FriendsTable.getFriends(senderId);
+        String friendID = UserTable.getUserIDWithEmail(email);
+
+        if (UserTable.getUserIDWithEmail(email) != null) {
+
+            if (!databaseFriendList.contains(friendID)) {
+                controller.addFriendToDBController(newFriend);
+
+                return 201;
+            } else {
+                return 409;
+            }
+
+        } else {
+            return 404;
+        }
     }
+    /*
+     * return int 404
+     * return
+     * */
 }

@@ -24,6 +24,7 @@ public class DBController {
 
     /**
      * This method sends a user to the databse with the users ID, name and email
+     *
      * @param userID
      * @param name
      * @param email
@@ -35,6 +36,7 @@ public class DBController {
     /**
      * This method gets a user from the database. It uses a userID to get the user,
      * and returns a string with the users name
+     *
      * @param uid
      * @return
      */
@@ -48,6 +50,7 @@ public class DBController {
     /**
      * This method gets a users email from the database. It uses a userID to get the user,
      * and returns a string with the users email
+     *
      * @param uid
      * @return
      */
@@ -63,6 +66,7 @@ public class DBController {
 
     /**
      * This method sends a new dare to the database
+     *
      * @param objectiveType
      * @param objectiveGoal
      * @param scopeType
@@ -133,6 +137,7 @@ public class DBController {
 
     /**
      * //fixme explain
+     *
      * @param dareId
      * @param userId
      * @return
@@ -157,6 +162,7 @@ public class DBController {
 
     /**
      * fixme explain
+     *
      * @param uid
      * @return
      */
@@ -180,11 +186,13 @@ public class DBController {
         ArrayList<Map> friendslist = new ArrayList<>();
 
         for (String friends : friendsUserIdList) {
+
             HashMap<String, String> mapOfFriend = new HashMap<>();
             mapOfFriend.put("uid", friends);
             String username = UserTable.getUser(friends);
             mapOfFriend.put("name", username);
             friendslist.add(mapOfFriend);
+
         }
 
         return friendslist;
@@ -192,6 +200,7 @@ public class DBController {
 
     /**
      * Retrieves previous score (String) for user, add ":" + new score to String and add to database.
+     *
      * @param dareid
      * @param userId
      * @param score
@@ -213,6 +222,7 @@ public class DBController {
 
     /**
      * Updates the database with users that have become friends
+     *
      * @param friendId
      */
     public void addFriendsToDB(HashMap friendId) {
@@ -221,9 +231,18 @@ public class DBController {
         String friendEmail = (String) friendId.get("friendEmail");
 
         String friendID = UserTable.getUserIDWithEmail(friendEmail);
-
         FriendsTable.addFriends(userId, friendID);
+        /*ArrayList<String> databaseFriendList = FriendsTable.getFriends(userId);
 
+       if(databaseFriendList.contains(friendID)){
+           System.out.println("SUCKER");
+
+       }
+       else{
+           FriendsTable.addFriends(userId, friendID);
+           return true;
+       }
+return false;
+    }*/
     }
-
 }

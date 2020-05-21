@@ -131,6 +131,8 @@ public class Controller {
      */
     public void addFriendToDBController(HashMap friend){
         dbController.addFriendsToDB(friend);
+
     }
+
 }
 
