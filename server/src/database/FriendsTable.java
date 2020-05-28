@@ -3,9 +3,18 @@ package database;
 import java.sql.*;
 import java.util.ArrayList;
 
+
+/**
+ * Class that handle queries of adding and requesting friends from database.
+ * @author julia
+ */
 public class FriendsTable {
 
-//Jag tänker att vi kan testa att uppdatera insättningen här direkt istället för att skicka två st förfrågningar
+    /**
+     * insert two users to Friends table.
+     * @param userId of user that are adding friend
+     * @param friendId of friend to add
+     */
     public static void addFriends(String userId, String friendId) {
 
         Connection conn = null;
@@ -31,6 +40,11 @@ public class FriendsTable {
         }
     }
 
+    /**
+     * query Friends table for one users friends.
+     * @param userId of requesting users list of friends
+     * @return ArrayList of all friends of one user
+     */
     public static ArrayList<String> getFriends(String userId){
 
         Connection conn = null;

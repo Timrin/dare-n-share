@@ -23,7 +23,7 @@ public class DBController {
     }
 
     /**
-     * This method sends a user to the databse with the users ID, name and email
+     * This method sends information about a new user to the database with the users ID, name and email
      *
      * @param userID
      * @param name
@@ -136,11 +136,10 @@ public class DBController {
     }
 
     /**
-     * //fixme explain
-     *
-     * @param dareId
-     * @param userId
-     * @return
+     * Method get String of one users score in requested dare, add answers to JSONArray
+     * @param dareId which dare the score is requested for
+     * @param userId which user the score is requested for
+     * @return JSONArray of scores
      */
     public JSONArray getScore(int dareId, String userId) {
         String score = ParticipantTable.getScoreFromDB(dareId, userId);
@@ -161,10 +160,9 @@ public class DBController {
     }
 
     /**
-     * fixme explain
-     *
-     * @param uid
-     * @return
+     * Method that returns all DareID that one user have
+     * @param uid which user is requesting all dares
+     * @return ArrayList of all dare one user have
      */
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
 
@@ -178,7 +176,7 @@ public class DBController {
     }
 
     /**
-     * FIXME: resultset, kan behöva ändras.
+     * Method that get one users friends from database and returns name and userId of one users friends.
      */
     public ArrayList<Map> getFriendsFromDB(String uid) {
         ArrayList<String> friendsUserIdList = FriendsTable.getFriends(uid);
@@ -232,17 +230,6 @@ public class DBController {
 
         String friendID = UserTable.getUserIDWithEmail(friendEmail);
         FriendsTable.addFriends(userId, friendID);
-        /*ArrayList<String> databaseFriendList = FriendsTable.getFriends(userId);
 
-       if(databaseFriendList.contains(friendID)){
-           System.out.println("SUCKER");
-
-       }
-       else{
-           FriendsTable.addFriends(userId, friendID);
-           return true;
-       }
-return false;
-    }*/
     }
 }

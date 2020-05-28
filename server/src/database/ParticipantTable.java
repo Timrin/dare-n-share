@@ -11,9 +11,7 @@ import java.util.ArrayList;
 public class ParticipantTable {
 
     /**
-     * add Participants to table
-     *
-     * @throws SQLException for SQL error that can happen during execute and create statement
+     * add Participants to Participant table with userID and dareID.
      */
     public static void addParticipant(String userID, int dareID) {
 

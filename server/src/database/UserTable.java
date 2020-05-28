@@ -44,9 +44,9 @@ public class UserTable {
 
 
     /**
-     * method to retrieve name of user from table. FIXME: email kolumn, ska det hämtas här?
+     * method to retrieve name of user from table.
      *
-     * @param userId
+     * @param userId of requested user
      * @return username
      */
     public static String getUser(String userId) {
@@ -99,6 +99,11 @@ public class UserTable {
         return name;
     }
 
+    /**
+     * method that request saved email address for one user
+     * @param uid
+     * @return user email in String
+     */
     public static String getUserEmailById(String uid) {
         String email = null;
 
@@ -146,6 +151,11 @@ public class UserTable {
         return email;
     }
 
+    /**
+     * query database about what userId is connected to email address
+     * @param email
+     * @return userID
+     */
     public static String getUserIDWithEmail(String email) {
         String userId = null;
 

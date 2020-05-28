@@ -71,10 +71,7 @@ public class DareTable {
 
     /**
      * retrieves information from specific dare using dareId in table and returns dare object
-     *
-     * FIXME: bör detta verkligen se ut så här?
-     *
-     * @param dareId
+     * @param dareId of dare to retrieve information about
      */
     public static Dare getDareFromDB(int dareId) {
 
