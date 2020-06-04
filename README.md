@@ -5,8 +5,7 @@
     /_____/\__,_/_/   \___/  /_/ /_/   /____/_/ /_/\__,_/_/   \___/ 
 
 ## Description
-Repository for the Dare n Share backend.  
-https://github.com/Timrin/dare-n-share
+Repository for the Dare n Share backend.  https://github.com/Timrin/dare-n-share
 Dare n Share is an app developed as part of a software projects course.  
 For the mobile app see: https://github.com/Timrin/dare_n_share_app. 
 
