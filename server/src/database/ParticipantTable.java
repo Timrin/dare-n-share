@@ -150,37 +150,6 @@ public class ParticipantTable {
 
     }
 
-    /**
-     * utveckla denna metod. se hur den går att använda för fler delar av db
-     * @param query
-     * @return
-     */
-    public static synchronized ResultSet dataBaseTalker(String query) {
-
-        Connection conn = null;
-        Statement statement = null;
-        ResultSet resultFromQuery = null;
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            String path = "jdbc:sqlite:lib/dare_n_share.db";
-            conn = DriverManager.getConnection(path);
-
-            // String query = "UPDATE Participants set (Score) values ('" + score+"') where DareId=" + dareId + " and UserId='" + userId + "';";
-            statement = conn.createStatement();
-            statement.execute(query);
-            resultFromQuery = statement.getResultSet();
-
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        } finally {
-            /*try { if (resultFromQuery != null) resultFromQuery.close(); } catch (Exception e) {}*/ //FIXME cannot close resultset since it is returned.
-            try { if (statement != null) statement.close(); } catch (Exception e) {}
-            try { if (conn != null) conn.close(); } catch (Exception e) {}
-        }
-
-        return resultFromQuery;
-    }
 
     /**
      * return string of score

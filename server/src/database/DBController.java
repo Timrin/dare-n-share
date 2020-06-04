@@ -129,7 +129,7 @@ public class DBController {
             System.out.println(userName);
 
             JSONArray scores = getScore(dareId, userId);
-            m.put("score", scores); //fixme vi jobber her
+            m.put("score", scores);
             list.add(m);
         }
         return list;
@@ -167,7 +167,7 @@ public class DBController {
     public ArrayList<String> getAllDareIDForOneUser(String uid) {
 
         ArrayList<Integer> dares = ParticipantTable.getAllDareIdForUser(uid);
-        ArrayList<String> list = new ArrayList<>(); //fixme kanskje map?
+        ArrayList<String> list = new ArrayList<>();
         for (Integer dare : dares) {
             list.add(String.valueOf(dare));
         }
