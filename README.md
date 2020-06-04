@@ -17,6 +17,7 @@ https://www.docker.com/get-started
 * Import the server folder as a project in IntelliJ  
   >_Make sure that you import the server folder as a project_  
   >_Also make sure that the src folder is marked as source root_  
+* Setup dependencies
 * Build the project  
 
 #### Optional
